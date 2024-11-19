@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23507" systemVersion="24B83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="IPObject" representedClassName=".IPObject" syncable="YES">
+        <attribute name="city" attributeType="String" defaultValueString=""/>
+        <attribute name="country" attributeType="String" defaultValueString=""/>
+        <attribute name="ip" attributeType="String" defaultValueString=""/>
+        <attribute name="loc" attributeType="String" defaultValueString=""/>
+        <attribute name="org" attributeType="String" defaultValueString=""/>
+        <attribute name="postal" attributeType="String" defaultValueString=""/>
+        <attribute name="region" attributeType="String" defaultValueString=""/>
+        <attribute name="timezone" attributeType="String" defaultValueString=""/>
+        <relationship name="record" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="IPRecord" inverseName="object" inverseEntity="IPRecord"/>
+    </entity>
+    <entity name="IPRecord" representedClassName=".IPRecord" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isHidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="notes" attributeType="String" defaultValueString=""/>
+        <relationship name="object" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="IPObject" inverseName="record" inverseEntity="IPObject"/>
+    </entity>
+</model>
