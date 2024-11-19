@@ -6,6 +6,7 @@ Welcome to the Scout IP project! This README will help you understand what this 
 
 - [Introduction](#introduction)
 - [Setup Instructions](#setup-instructions)
+- [App Store](#app-store)
 - [License](#license)
 
 ## Introduction
@@ -35,6 +36,10 @@ To install Scout IP, follow these steps:
     }
     ```
 5. Replace `YOUR_IPINFO_KEY` with the token found in the [account section](https://ipinfo.io/account/token) of the [IPinfo website](https://ipinfo.io) after signing in.
+
+## App Store
+
+You can download the Scout IP app from the App Store [here](https://apps.apple.com/us/app/scout-ip/id6738300344).
 
 ## License
 
