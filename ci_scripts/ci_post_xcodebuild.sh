@@ -12,5 +12,5 @@ then
 
     git tag $VERSION\-$BUILD_TAG
 
-    git push --tags https://${GIT_AUTH}@github.com/kasianov-mikhail/scout-ip-private.git
+    git push --tags https://${GIT_AUTH}@github.com/kasianov-mikhail/scout-ip.git
 fi
