@@ -21,7 +21,7 @@ struct ContentView: View {
 
     @State private var index = 0
     @State private var state: UpdateState = .idle
-    @State private var isAnalyticsPresented = false
+    @State private var isScoutPresented = false
     @StateObject private var ipInfo = IPInfo()
 
     var body: some View {
@@ -47,13 +47,13 @@ struct ContentView: View {
         }
         .onShake {
             #if DEBUG
-                isAnalyticsPresented = true
+                isScoutPresented = true
             #else
-                isAnalyticsPresented =
+                isScoutPresented =
                     Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
             #endif
         }
-        .fullScreenCover(isPresented: $isAnalyticsPresented) {
+        .fullScreenCover(isPresented: $isScoutPresented) {
             AnalyticsView(container: container)
         }
     }

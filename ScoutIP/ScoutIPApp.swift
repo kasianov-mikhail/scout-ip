@@ -35,9 +35,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        LoggingSystem.bootstrap { label in
-            CKLogHandler(label: label, container: container)
-        }
+        try? Scout.setup(container: container)
         return true
     }
 
