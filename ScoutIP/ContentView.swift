@@ -54,7 +54,7 @@ struct ContentView: View {
             #endif
         }
         .fullScreenCover(isPresented: $isScoutPresented) {
-            AnalyticsView(container: container)
+            HomeView(container: container)
         }
     }
 
