@@ -48,16 +48,20 @@ struct InfoProvider {
 
         Timer(label: "InfoProvider.ipObject").recordInterval(since: start)
 
-        let object = IPObject(context: context)
-        object.city = item.city ?? "–"
-        object.country = item.country
-        object.ip = item.ip
-        object.loc = item.loc
-        object.org = item.org ?? "–"
-        object.postal = item.postal ?? "–"
-        object.region = item.region
-        object.timezone = item.timezone
+        return IPObject(item: item, context: context)
+    }
+}
 
-        return object
+extension IPObject {
+    fileprivate convenience init(item: IPItem, context: NSManagedObjectContext) {
+        self.init(context: context)
+        city = item.city ?? "–"
+        country = item.country
+        ip = item.ip
+        loc = item.loc
+        org = item.org ?? "–"
+        postal = item.postal ?? "–"
+        region = item.region
+        timezone = item.timezone
     }
 }
