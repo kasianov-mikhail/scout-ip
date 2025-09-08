@@ -5,15 +5,15 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import Foundation
 import CoreData
+import Foundation
 
 enum IPError: LocalizedError {
     case invalidIP(String)
 
     var errorDescription: String? {
         switch self {
-        case let .invalidIP(ip):
+        case .invalidIP(let ip):
             return "Invalid IP address: \(ip)"
         }
     }
