@@ -7,6 +7,7 @@
 
 import CoreData
 import Foundation
+import Metrics
 
 enum IPError: LocalizedError {
     case invalidIP(String)
@@ -41,8 +42,11 @@ struct InfoProvider {
             throw IPError.invalidIP(ip)
         }
 
+        let start = DispatchTime.now()
         let data = try await URLSession.shared.data(from: url).0
         let item = try JSONDecoder().decode(IPItem.self, from: data)
+
+        Timer(label: "InfoProvider.ipObject").recordInterval(since: start)
 
         let object = IPObject(context: context)
         object.city = item.city ?? "–"
