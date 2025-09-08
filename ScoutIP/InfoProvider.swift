@@ -37,21 +37,6 @@ struct InfoProvider {
     let context: NSManagedObjectContext
 
     func ipObject() async throws -> IPObject {
-//        if let object = local {
-//            return object
-//        } else {
-//            return try await remote()
-//        }
-//    }
-//
-//    private var local: IPObject? {
-//        let request = NSFetchRequest<IPObject>(entityName: "IPObject")
-//        request.predicate = NSPredicate(format: "ip == %@", ip)
-//        request.fetchLimit = 1
-//        return try? context.fetch(request).first
-//    }
-//
-//    private func remote() async throws -> IPObject {
         guard let url = URL(string: "https://ipinfo.io/\(ip)?token=\(token)") else {
             throw IPError.invalidIP(ip)
         }
