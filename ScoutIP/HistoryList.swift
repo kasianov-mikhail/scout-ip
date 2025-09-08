@@ -148,24 +148,30 @@ struct HistoryList: View {
 
     func deleteSelected() {
         do {
-            let records = history.filter { selection.contains($0.ip ) }
+            let records = history.filter { selection.contains($0.ip) }
             let recordIDs = records.map(\.objectID)
             let request = NSBatchDeleteRequest(objectIDs: recordIDs)
             try viewContext.execute(request)
 
-            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs], into: [viewContext])
+            NSManagedObjectContext.mergeChanges(
+                fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs],
+                into: [viewContext]
+            )
 
             Counter(label: "DeleteRecords").increment(by: Int64(recordIDs.count))
             logger.notice("DeleteRecords", metadata: ["Count": "\(recordIDs.count)"])
 
         } catch {
-            logger.critical("DeleteRecordsError", metadata: ["Error": .string(error.localizedDescription)])
+            logger.critical(
+                "DeleteRecordsError",
+                metadata: ["Error": .string(error.localizedDescription)]
+            )
         }
     }
 }
 
-private extension EditMode {
-    mutating func toggle() {
+extension EditMode {
+    fileprivate mutating func toggle() {
         self = (self != .active) ? .active : .inactive
     }
 }
