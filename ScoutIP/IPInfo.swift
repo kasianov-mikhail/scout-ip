@@ -44,7 +44,10 @@ class IPInfo: ObservableObject {
 
         } catch {
             errorText = error.localizedDescription
-            logger.error("SaveRecordError", metadata: ["Error": .string(error.localizedDescription)])
+            logger.error(
+                "SaveRecordError",
+                metadata: ["Error": .string(error.localizedDescription)]
+            )
         }
     }
 }
