@@ -7,6 +7,7 @@
 
 import CoreData
 import SwiftUI
+import Metrics
 
 struct HistoryIPList: View {
     let records: [IPRecord]
@@ -59,6 +60,7 @@ struct HistoryIPList: View {
 
             do {
                 try viewContext.execute(request)
+                FloatingPointCounter(label: "DeleteIP").increment(by: Double(records.count))
             } catch {
                 logger.critical("DeleteRecordsError", metadata: ["error": .string(error.localizedDescription)])
             }

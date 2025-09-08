@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 import CoreData
+import Metrics
 import SwiftUI
 
 enum HistoryFilter: String, CaseIterable, Identifiable {
@@ -154,6 +155,7 @@ struct HistoryList: View {
 
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs], into: [viewContext])
 
+            Counter(label: "DeleteRecords").increment(by: Int64(recordIDs.count))
             logger.notice("DeleteRecords", metadata: ["Count": "\(recordIDs.count)"])
 
         } catch {
