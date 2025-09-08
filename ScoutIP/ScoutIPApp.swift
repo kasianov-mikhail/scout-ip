@@ -35,7 +35,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        try? Scout.setup(container: container)
+        do {
+            try Scout.setup(container: container)
+        } catch {
+            logger.error("Scout setup error: \(error.localizedDescription)")
+        }
         return true
     }
 
