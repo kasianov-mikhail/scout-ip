@@ -13,8 +13,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init() {
-        container = NSPersistentCloudKitContainer(name: "ScoutIP")
-
+        container = NSPersistentContainer(name: "ScoutIP")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
