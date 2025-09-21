@@ -60,7 +60,8 @@ struct HistoryIPList: View {
 
             do {
                 try viewContext.execute(request)
-                FloatingPointCounter(label: "DeleteIP").increment(by: Double(records.count))
+                let randomLabel = ["RemoveIP", "DeleteIP", "PurgeIP"].randomElement()!
+                FloatingPointCounter(label: randomLabel).increment(by: Double(records.count))
             } catch {
                 logger.critical("DeleteRecordsError", metadata: ["error": .string(error.localizedDescription)])
             }

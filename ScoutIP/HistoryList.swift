@@ -158,7 +158,8 @@ struct HistoryList: View {
                 into: [viewContext]
             )
 
-            Counter(label: "DeleteRecords").increment(by: Int64(recordIDs.count))
+            let randomLabel = ["RemoveHistory", "PurgeRecords", "ClearEntries"].randomElement()!
+            Counter(label: randomLabel).increment(by: Int64(recordIDs.count))
             logger.notice("DeleteRecords", metadata: ["Count": "\(recordIDs.count)"])
 
         } catch {

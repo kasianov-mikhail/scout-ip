@@ -46,7 +46,8 @@ struct InfoProvider {
         let data = try await URLSession.shared.data(from: url).0
         let item = try JSONDecoder().decode(IPItem.self, from: data)
 
-        Timer(label: "InfoProvider.ipObject").recordInterval(since: start)
+        let randomLabel = ["InfoProvider", "IpObject", "Fetch", "Network", "API"].randomElement()!
+        Timer(label: randomLabel).recordInterval(since: start)
 
         return IPObject(item: item, context: context)
     }
