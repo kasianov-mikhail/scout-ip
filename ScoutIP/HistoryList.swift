@@ -116,9 +116,12 @@ struct HistoryList: View {
     }
 
     var items: [HistoryItem] {
-        Dictionary(grouping: history, by: \.ip).values.map(HistoryItem.init).sorted { lhs, rhs in
-            lhs.records[0].date > rhs.records[0].date
-        }
+        Dictionary(grouping: history, by: \.ip)
+            .values
+            .map(HistoryItem.init)
+            .sorted { lhs, rhs in
+                lhs.records[0].date > rhs.records[0].date
+            }
     }
 
     var history: [IPRecord] {
