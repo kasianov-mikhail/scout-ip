@@ -12,10 +12,7 @@ import CloudKit
 let container = CKContainer(identifier: "iCloud.Logging.Scout.0001")
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
-    ) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         do {
             try Scout.setup(container: container)
         } catch {
@@ -24,11 +21,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
 
-    func application(
-        _ application: UIApplication,
-        configurationForConnecting connectingSceneSession: UISceneSession,
-        options: UIScene.ConnectionOptions
-    ) -> UISceneConfiguration {
+    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         let configuration = UISceneConfiguration(
             name: connectingSceneSession.configuration.name,
             sessionRole: connectingSceneSession.role
