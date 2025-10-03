@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		779FCE1A2CE52D9000029957 /* Scout in Frameworks */ = {isa = PBXBuildFile; productRef = 779FCE192CE52D9000029957 /* Scout */; };
+		7779C6992E8F49ED001726C5 /* Scout in Frameworks */ = {isa = PBXBuildFile; productRef = 7779C6982E8F49ED001726C5 /* Scout */; };
 		77AC0B912CE582B200C61FA5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 77AC0B902CE582B200C61FA5 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				779FCE1A2CE52D9000029957 /* Scout in Frameworks */,
+				7779C6992E8F49ED001726C5 /* Scout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +54,7 @@
 			children = (
 				775BB1982CE4B2AC00096886 /* ScoutIP */,
 				77AC0B902CE582B200C61FA5 /* README.md */,
+				777F93DF2E09A9BC00D9D35C /* Frameworks */,
 				775BB1972CE4B2AC00096886 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,6 +65,13 @@
 				775BB1962CE4B2AC00096886 /* ScoutIP.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		777F93DF2E09A9BC00D9D35C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,7 +94,7 @@
 			);
 			name = ScoutIP;
 			packageProductDependencies = (
-				779FCE192CE52D9000029957 /* Scout */,
+				7779C6982E8F49ED001726C5 /* Scout */,
 			);
 			productName = ScoutIP;
 			productReference = 775BB1962CE4B2AC00096886 /* ScoutIP.app */;
@@ -117,7 +125,7 @@
 			mainGroup = 775BB18D2CE4B2AC00096886;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				779FCE182CE52D9000029957 /* XCRemoteSwiftPackageReference "scout" */,
+				7779C6972E8F49ED001726C5 /* XCRemoteSwiftPackageReference "scout" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 775BB1972CE4B2AC00096886 /* Products */;
@@ -368,20 +376,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		779FCE182CE52D9000029957 /* XCRemoteSwiftPackageReference "scout" */ = {
+		7779C6972E8F49ED001726C5 /* XCRemoteSwiftPackageReference "scout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kasianov-mikhail/scout";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = revision;
+				revision = cfe38defaf94fb5c94a6ec85b677826d44e2259f;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		779FCE192CE52D9000029957 /* Scout */ = {
+		7779C6982E8F49ED001726C5 /* Scout */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 779FCE182CE52D9000029957 /* XCRemoteSwiftPackageReference "scout" */;
+			package = 7779C6972E8F49ED001726C5 /* XCRemoteSwiftPackageReference "scout" */;
 			productName = Scout;
 		};
 /* End XCSwiftPackageProductDependency section */
