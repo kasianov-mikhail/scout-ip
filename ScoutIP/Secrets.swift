@@ -15,10 +15,9 @@ struct Secrets {
         var errorDescription: String? {
             switch self {
             case .missingResource:
-                return "\(resource).json is missing"
+                "\(resource).json is missing"
             case .wrongFormat:
-                return
-                    "\(resource).json has the wrong format. Expected a dictionary of string key-value pairs."
+                "\(resource).json has the wrong format. Expected a dictionary of string key-value pairs."
             }
         }
     }
@@ -29,10 +28,13 @@ struct Secrets {
         guard let path = Bundle.main.path(forResource: resource, ofType: "json") else {
             throw Error.missingResource
         }
+
         let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+
         guard let json = try JSONSerialization.jsonObject(with: data) as? [String: String] else {
             throw Error.wrongFormat
         }
+
         return json
     }
 }
