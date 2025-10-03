@@ -20,6 +20,15 @@ struct Secrets {
                 "\(resource).json has the wrong format. Expected a dictionary of string key-value pairs."
             }
         }
+
+        var recoverySuggestion: String? {
+            switch self {
+            case .missingResource:
+                "Add a \(resource).json file to the main bundle."
+            case .wrongFormat:
+                "Fix the format of \(resource).json to be a dictionary of string key-value pairs."
+            }
+        }
     }
 
     static let resource = "Secrets"
