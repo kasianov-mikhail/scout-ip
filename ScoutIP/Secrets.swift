@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct Secrets {
+enum Secrets {
+    static let resource = "Secrets"
+
     enum Error: LocalizedError {
         case missingResource
         case wrongFormat
@@ -30,8 +32,6 @@ struct Secrets {
             }
         }
     }
-
-    static let resource = "Secrets"
 
     static func dictionary() throws -> [String: String] {
         guard let path = Bundle.main.path(forResource: resource, ofType: "json") else {
