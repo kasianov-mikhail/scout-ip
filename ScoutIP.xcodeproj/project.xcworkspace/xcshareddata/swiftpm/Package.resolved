@@ -6,7 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kasianov-mikhail/scout",
       "state" : {
-        "revision" : "cfe38defaf94fb5c94a6ec85b677826d44e2259f"
+        "branch" : "main",
+        "revision" : "39bbde27c77f6c546c6f9df987108e74606c94c2"
       }
     },
     {
