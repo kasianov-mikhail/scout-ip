@@ -380,7 +380,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kasianov-mikhail/scout";
 			requirement = {
-				branch = "queue-dispatcher";
+				branch = main;
 				kind = branch;
 			};
 		};
