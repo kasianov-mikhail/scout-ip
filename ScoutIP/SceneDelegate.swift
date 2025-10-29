@@ -7,7 +7,7 @@
 
 import UIKit
 
-var shortcut: String?
+@MainActor var shortcut: String?
 
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
