@@ -12,7 +12,7 @@ struct SearchView: View {
 
     @Binding var state: UpdateState
     @ObservedObject var ipInfo: IPInfo
-    @State private var color = Color.primary
+    @State private var text = ""
     @FocusState private var isFocused: Bool
 
     var body: some View {
@@ -33,8 +33,8 @@ struct SearchView: View {
     }
 
     private var searchField: some View {
-        TextField("My IP", text: $ipInfo.ip)
-            .foregroundColor(color)
+        TextField("My IP", text: $text)
+            .foregroundStyle(ipInfo.ip.isPartialIP ? Color.primary : Color.red)
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     if isFocused {
@@ -60,9 +60,11 @@ struct SearchView: View {
             .onTapGesture {
                 isFocused = true
             }
+            .onChange(of: text) {
+                ipInfo.ip = text.replacingOccurrences(of: ",", with: ".")
+            }
             .onChange(of: ipInfo.ip) {
-                ipInfo.ip = ipInfo.ip.replacingOccurrences(of: ",", with: ".")
-                color = ipInfo.ip.isPartialIP ? .primary : .red // iOS 17 workaround
+                text = ipInfo.ip
             }
             .onChange(of: state) {
                 if state != .idle {
@@ -70,7 +72,7 @@ struct SearchView: View {
                 }
             }
             .focused($isFocused)
-            .foregroundColor(.blue)
+            .foregroundStyle(.blue)
             .keyboardType(.decimalPad)
             .accessibilityIdentifier("IP Search Field")
     }
@@ -81,7 +83,7 @@ struct SearchView: View {
         }
         .buttonStyle(.plain)
         .disabled(!enabled)
-        .foregroundColor(enabled ? .blue : .gray)
+        .foregroundStyle(enabled ? .blue : .gray)
         .accessibilityIdentifier("IP Search Button")
     }
 
