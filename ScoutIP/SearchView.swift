@@ -43,6 +43,8 @@ struct SearchView: View {
                                 ipInfo.ip = ""
                                 logger.trace("ClearSearch")
                             }
+                            .padding(.horizontal)
+                            .fixedSize()
                         }
 
                         Spacer()
@@ -53,6 +55,8 @@ struct SearchView: View {
                                 searchIP()
                                 logger.trace("SearchIP")
                             }
+                            .padding(.horizontal)
+                            .fixedSize()
                         }
                     }
                 }
