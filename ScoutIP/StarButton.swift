@@ -16,7 +16,6 @@ struct StarButton: View {
             Image(systemName: record.isFavorite ? "star.fill" : "star")
         }
         .buttonStyle(.plain)
-        .foregroundColor(.blue)
     }
 
     func toggle() {
