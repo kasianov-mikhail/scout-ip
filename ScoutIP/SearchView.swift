@@ -60,11 +60,11 @@ struct SearchView: View {
             .onTapGesture {
                 isFocused = true
             }
-            .onChange(of: ipInfo.ip) { ip in
-                ipInfo.ip = ip.replacingOccurrences(of: ",", with: ".")
+            .onChange(of: ipInfo.ip) {
+                ipInfo.ip = ipInfo.ip.replacingOccurrences(of: ",", with: ".")
                 color = ipInfo.ip.isPartialIP ? .primary : .red // iOS 17 workaround
             }
-            .onChange(of: state) { state in
+            .onChange(of: state) {
                 if state != .idle {
                     isFocused = false
                 }

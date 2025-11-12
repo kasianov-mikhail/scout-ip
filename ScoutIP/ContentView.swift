@@ -40,8 +40,8 @@ struct ContentView: View {
                 }
                 .tag(1)
         }
-        .onChange(of: scenePhase) { phase in
-            if phase == .active {
+        .onChange(of: scenePhase) {
+            if scenePhase == .active {
                 handleActions()
             }
         }
