@@ -23,8 +23,6 @@ func requestReview() {
                     let scenes = UIApplication.shared.connectedScenes
                     let windowScene = scenes.first as! UIWindowScene
                     SKStoreReviewController.requestReview(in: windowScene)
-
-                    logger.info("RequestReview")
                 }
             }
         }

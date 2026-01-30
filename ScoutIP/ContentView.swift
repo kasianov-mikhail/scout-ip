@@ -68,12 +68,10 @@ struct ContentView: View {
                 state = .idle
                 requestReview()
             }
-            logger.info("ShortcutSearch")
         }
 
         if shortcut == "HistoryAction" {
             index = 1
-            logger.info("ShortcutHistory")
         }
 
         shortcut = nil

@@ -41,9 +41,7 @@ struct HistoryIPList: View {
         }
         .toolbar {
             if let record = records.first {
-                ShareLink(item: record.object.shareDescription).onAppear {
-                    logger.debug("ShareInfo", metadata: ["Source": .string("HistoryIPList")])
-                }
+                ShareLink(item: record.object.shareDescription)
             }
             StarListButton(isStarred: $isStarred)
         }
@@ -63,7 +61,6 @@ struct HistoryIPList: View {
                 let randomLabel = ["RemoveIP", "DeleteIP", "PurgeIP"].randomElement()!
                 FloatingPointCounter(label: randomLabel).increment(by: Double(records.count))
             } catch {
-                logger.critical("DeleteRecordsError", metadata: ["error": .string(error.localizedDescription)])
             }
 
             NSManagedObjectContext.mergeChanges(

@@ -77,10 +77,8 @@ struct HistoryRow: View {
                 fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs],
                 into: [viewContext]
             )
-            logger.notice("DeleteRecords", metadata: ["Count": "\(recordIDs.count)"])
 
         } catch {
-            logger.critical("DeleteRecordsError", metadata: ["error": .string(error.localizedDescription)])
         }
     }
 }

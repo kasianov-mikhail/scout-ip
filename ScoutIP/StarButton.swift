@@ -23,9 +23,7 @@ struct StarButton: View {
 
         do {
             try viewContext.save()
-            logger.debug("ToggleStar", metadata: ["Value": .string(record.isFavorite.description)])
         } catch {
-            logger.critical("ToggleStarError", metadata: ["Error": .string(error.localizedDescription)])
         }
     }
 }

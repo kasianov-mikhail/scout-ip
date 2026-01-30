@@ -56,9 +56,7 @@ struct InfoView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     if let record = ipInfo.record, !record.isDeleted {
-                        ShareLink(item: record.object.shareDescription).onAppear {
-                            logger.debug("ShareInfo", metadata: ["Source": .string("InfoView")])
-                        }
+                        ShareLink(item: record.object.shareDescription)
                         StarButton(record: record)
                     }
                 }

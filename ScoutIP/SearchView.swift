@@ -41,7 +41,6 @@ struct SearchView: View {
                         if !ipInfo.ip.isEmpty {
                             Button("Clear") {
                                 ipInfo.ip = ""
-                                logger.trace("ClearSearch")
                             }
                             .padding(.horizontal)
                             .fixedSize()
@@ -53,7 +52,6 @@ struct SearchView: View {
                             Button("Search") {
                                 isFocused = false
                                 searchIP()
-                                logger.trace("SearchIP")
                             }
                             .padding(.horizontal)
                             .fixedSize()

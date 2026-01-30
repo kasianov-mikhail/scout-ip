@@ -13,7 +13,6 @@ struct StarListButton: View {
     var body: some View {
         Button {
             isStarred.toggle()
-            logger.debug("ToggleStarList", metadata: ["Value": .string(isStarred.description)])
         } label: {
             Image(systemName: "list.star")
         }

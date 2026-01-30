@@ -6,7 +6,6 @@
 // https://opensource.org/licenses/MIT.
 
 import CoreData
-import Logging
 import Scout
 import SwiftUI
 
@@ -40,14 +39,8 @@ class IPInfo: ObservableObject {
 
             try context.save()
 
-            logger.info("SearchIP")
-
         } catch {
             errorText = error.localizedDescription
-            logger.error(
-                "SaveRecordError",
-                metadata: ["Error": .string(error.localizedDescription)]
-            )
         }
     }
 }

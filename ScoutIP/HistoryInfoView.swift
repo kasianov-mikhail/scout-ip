@@ -32,9 +32,7 @@ struct HistoryInfoView: View {
             }
         }
         .toolbar {
-            ShareLink(item: record.object.shareDescription).onTapGesture {
-                logger.debug("ShareInfo", metadata: ["Source": .string("HistoryInfoView")])
-            }
+            ShareLink(item: record.object.shareDescription)
             StarButton(record: record)
         }
         .scrollDismissesKeyboard(.interactively)

@@ -20,7 +20,6 @@ struct NotesField: View {
                         if !record.notes.isEmpty {
                             Button("Clear") {
                                 record.notes = ""
-                                logger.trace("ClearNotes")
                             }
                         }
 
@@ -30,9 +29,7 @@ struct NotesField: View {
                             Button("Save") {
                                 do {
                                     try viewContext.save()
-                                    logger.trace("SaveNotes")
                                 } catch {
-                                    logger.critical("SaveNotesError", metadata: ["Error": .string(error.localizedDescription)])
                                 }
 
                                 isFocused = false

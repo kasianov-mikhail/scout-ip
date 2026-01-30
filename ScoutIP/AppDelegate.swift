@@ -16,7 +16,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         do {
             try Scout.setup(container: container)
         } catch {
-            logger.error("Scout setup error: \(error.localizedDescription)")
         }
         return true
     }

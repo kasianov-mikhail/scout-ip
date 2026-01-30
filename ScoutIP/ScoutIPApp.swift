@@ -5,11 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import Logging
 import SwiftUI
 import UIKit
-
-let logger = Logger(label: "com.kasianov.ScoutIP")
 
 @main struct ScoutIPApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
