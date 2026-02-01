@@ -8,14 +8,11 @@
 import CoreData
 import Foundation
 
-enum IPError: LocalizedError {
-    case invalidIP(String)
-
+struct IPError: LocalizedError {
+    let ip: String
+    
     var errorDescription: String? {
-        switch self {
-        case .invalidIP(let ip):
-            return "Invalid IP address: \(ip)"
-        }
+        "Invalid IP address: \(ip)"
     }
 }
 
@@ -37,7 +34,7 @@ private struct IPItem: Codable {
 
     func ipObject() async throws -> IPObject {
         guard let url = URL(string: "https://ipinfo.io/\(ip)?token=\(token)") else {
-            throw IPError.invalidIP(ip)
+            throw IPError(ip: ip)
         }
 
         let tracker = IPLookupTracker(source: ip.isEmpty ? .user : .manual)
