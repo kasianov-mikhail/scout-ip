@@ -26,8 +26,8 @@ struct MapView: View {
     let location: Location
 
     var body: some View {
-        Map(coordinateRegion: .constant(region), interactionModes: [], annotationItems: [location]) { _ in
-            MapMarker(coordinate: location.coordinate)
+        Map(position: .constant(.region(region)), interactionModes: []) {
+            Marker("", coordinate: location.coordinate)
         }
         .frame(height: 216)
         .listRowInsets(EdgeInsets())
