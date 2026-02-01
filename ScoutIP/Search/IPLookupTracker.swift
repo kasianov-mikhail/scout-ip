@@ -10,17 +10,9 @@ import Logging
 import Metrics
 
 struct IPLookupTracker {
-    enum Source: String {
-        case user
-        case manual
-    }
+    let source: TrackerSource
     
-    private let source: Source
     private let networkLogger = Logger(label: "ScoutIP.Network")
-    
-    init(source: Source) {
-        self.source = source
-    }
     
     func lookupStarted() {
         networkLogger.trace("IP lookup started", metadata: ["source": "\(source.rawValue)"])

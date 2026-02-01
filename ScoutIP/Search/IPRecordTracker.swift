@@ -10,19 +10,11 @@ import Logging
 import Metrics
 
 struct IPRecordTracker {
-    enum Source: String {
-        case user
-        case manual
-    }
-    
-    private let source: Source
+    let source: TrackerSource
+
     private let appLogger = Logger(label: "ScoutIP.App")
     private let storageLogger = Logger(label: "ScoutIP.Storage")
-    
-    init(source: Source) {
-        self.source = source
-    }
-    
+
     func requested() {
         appLogger.debug("IP record requested", metadata: ["source": "\(source.rawValue)"])
     }
