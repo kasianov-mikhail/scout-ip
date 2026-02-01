@@ -6,8 +6,6 @@
 // https://opensource.org/licenses/MIT.
 
 import CloudKit
-import Logging
-import Metrics
 import Scout
 import SwiftUI
 
@@ -17,8 +15,6 @@ enum UpdateState {
     case load
 }
 
-private let appLogger = Logger(label: "ScoutIP.App")
-
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.managedObjectContext) var viewContext
@@ -27,6 +23,8 @@ struct ContentView: View {
     @State private var state: UpdateState = .idle
     @State private var isScoutPresented = false
     @StateObject private var ipInfo = IPInfo()
+
+    private let sceneTracker = AppSceneTracker()
 
     var body: some View {
         TabView(selection: $index) {
@@ -45,7 +43,7 @@ struct ContentView: View {
                 .tag(1)
         }
         .onChange(of: scenePhase) {
-            logPhaseChange()
+            sceneTracker.scenePhaseChanged(scenePhase)
 
             if scenePhase == .active {
                 handleActions()
@@ -64,32 +62,10 @@ struct ContentView: View {
         }
     }
 
-    private func logPhaseChange() {
-        switch scenePhase {
-        case .active:
-            Counter(label: "app.scene.active.count").increment()
-            appLogger.info("Scene active")
-
-        case .inactive:
-            Counter(label: "app.scene.inactive.count").increment()
-            appLogger.notice("Scene inactive")
-
-        case .background:
-            Counter(label: "app.scene.background.count").increment()
-            appLogger.notice("Scene background")
-
-        @unknown default:
-            break
-        }
-    }
-
     private func handleActions() {
-        appLogger.trace("Handling shortcuts", metadata: ["shortcut": "\(shortcut ?? "nil")"])
+        sceneTracker.shortcutTriggered(shortcut)
 
         if shortcut == "SearchAction" {
-            Counter(label: "app.shortcut.search.count").increment()
-            appLogger.debug("Shortcut SearchAction triggered")
-
             index = 0
             ipInfo.ip = ""
 
@@ -102,9 +78,6 @@ struct ContentView: View {
         }
 
         if shortcut == "HistoryAction" {
-            Counter(label: "app.shortcut.history.count").increment()
-            appLogger.debug("Shortcut HistoryAction triggered")
-
             index = 1
         }
 
