@@ -6,7 +6,6 @@
 // https://opensource.org/licenses/MIT.
 
 import CoreData
-import Metrics
 import SwiftUI
 
 enum HistoryFilter: String, CaseIterable, Identifiable {
@@ -150,6 +149,8 @@ struct HistoryList: View {
     }
 
     func deleteSelected() {
+        let tracker = HistoryDeleteTracker()
+
         do {
             let records = history.filter { selection.contains($0.ip) }
             let recordIDs = records.map(\.objectID)
@@ -161,10 +162,10 @@ struct HistoryList: View {
                 into: [viewContext]
             )
 
-            let randomLabel = ["RemoveHistory", "PurgeRecords", "ClearEntries"].randomElement()!
-            Counter(label: randomLabel).increment(by: Int64(recordIDs.count))
+            tracker.success(count: recordIDs.count)
 
         } catch {
+            tracker.failure(error: error)
         }
     }
 }

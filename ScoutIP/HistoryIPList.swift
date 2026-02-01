@@ -7,7 +7,6 @@
 
 import CoreData
 import SwiftUI
-import Metrics
 
 struct HistoryIPList: View {
     let records: [IPRecord]
@@ -55,12 +54,14 @@ struct HistoryIPList: View {
             let records = offsets.map { self.records[$0] }
             let recordIDs = records.map(\.objectID)
             let request = NSBatchDeleteRequest(objectIDs: recordIDs)
+            let tracker = HistoryDeleteTracker()
 
             do {
                 try viewContext.execute(request)
-                let randomLabel = ["RemoveIP", "DeleteIP", "PurgeIP"].randomElement()!
-                FloatingPointCounter(label: randomLabel).increment(by: Double(records.count))
+                tracker.success(count: records.count)
+
             } catch {
+                tracker.failure(error: error)
             }
 
             NSManagedObjectContext.mergeChanges(

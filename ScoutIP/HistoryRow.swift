@@ -70,15 +70,12 @@ struct HistoryRow: View {
         let recordIDs = item.records.map(\.objectID)
         let request = NSBatchDeleteRequest(objectIDs: recordIDs)
 
-        do {
-            try viewContext.execute(request)
-
+        if (try? viewContext.execute(request)) != nil {
             NSManagedObjectContext.mergeChanges(
                 fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs],
                 into: [viewContext]
             )
-
-        } catch {
         }
     }
 }
+

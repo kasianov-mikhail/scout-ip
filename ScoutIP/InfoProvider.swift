@@ -7,7 +7,6 @@
 
 import CoreData
 import Foundation
-import Metrics
 
 enum IPError: LocalizedError {
     case invalidIP(String)
@@ -31,8 +30,7 @@ private struct IPItem: Codable {
     let timezone: String
 }
 
-@MainActor
-struct InfoProvider {
+@MainActor struct InfoProvider {
     let token: String
     let ip: String
     let context: NSManagedObjectContext
@@ -42,14 +40,20 @@ struct InfoProvider {
             throw IPError.invalidIP(ip)
         }
 
+        let tracker = IPLookupTracker(source: ip.isEmpty ? .user : .manual)
         let start = DispatchTime.now()
-        let data = try await URLSession.shared.data(from: url).0
-        let item = try JSONDecoder().decode(IPItem.self, from: data)
+        tracker.lookupStarted()
 
-        let randomLabel = ["InfoProvider", "IpObject", "Fetch", "Network", "API"].randomElement()!
-        Timer(label: randomLabel).recordInterval(since: start)
+        do {
+            let data = try await URLSession.shared.data(from: url).0
+            let item = try JSONDecoder().decode(IPItem.self, from: data)
+            tracker.success(duration: start)
+            return IPObject(item: item, context: context)
 
-        return IPObject(item: item, context: context)
+        } catch {
+            tracker.failure(duration: start, error: error)
+            throw error
+        }
     }
 }
 

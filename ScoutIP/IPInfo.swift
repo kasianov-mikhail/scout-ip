@@ -20,11 +20,16 @@ class IPInfo: ObservableObject {
     }
 
     @MainActor func record(context: NSManagedObjectContext) async {
+        let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
+
         do {
             guard let token = try Secrets.dictionary()["IPINFO_KEY"] else {
                 errorText = "Token not found"
+                tracker.tokenMissing()
                 return
             }
+
+            tracker.requested()
 
             let provider = InfoProvider(token: token, ip: ip, context: context)
             let object = try await provider.ipObject()
@@ -37,10 +42,18 @@ class IPInfo: ObservableObject {
             record.object = object
             self.record = record
 
-            try context.save()
+            do {
+                try context.save()
+                tracker.saveSuccess()
+
+            } catch {
+                tracker.saveFailure(error: error)
+                throw error
+            }
 
         } catch {
             errorText = error.localizedDescription
+            tracker.failure(error: error)
         }
     }
 }

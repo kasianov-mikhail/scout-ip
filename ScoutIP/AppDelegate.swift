@@ -5,18 +5,23 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import CloudKit
 import Scout
 import UIKit
-import CloudKit
 
 let container = CKContainer(identifier: "iCloud.Logging.Scout.0001")
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        let tracker = AppLifecycleTracker()
+        tracker.launch()
+
         do {
             try Scout.setup(container: container)
         } catch {
+            tracker.scoutSetupFailure(error: error)
         }
+
         return true
     }
 

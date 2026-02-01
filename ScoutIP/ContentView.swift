@@ -6,6 +6,8 @@
 // https://opensource.org/licenses/MIT.
 
 import CloudKit
+import Logging
+import Metrics
 import Scout
 import SwiftUI
 
@@ -14,6 +16,8 @@ enum UpdateState {
     case refresh
     case load
 }
+
+private let appLogger = Logger(label: "ScoutIP.App")
 
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
@@ -41,6 +45,8 @@ struct ContentView: View {
                 .tag(1)
         }
         .onChange(of: scenePhase) {
+            logPhaseChange()
+
             if scenePhase == .active {
                 handleActions()
             }
@@ -58,10 +64,35 @@ struct ContentView: View {
         }
     }
 
+    private func logPhaseChange() {
+        switch scenePhase {
+        case .active:
+            Counter(label: "app.scene.active.count").increment()
+            appLogger.info("Scene active")
+
+        case .inactive:
+            Counter(label: "app.scene.inactive.count").increment()
+            appLogger.notice("Scene inactive")
+
+        case .background:
+            Counter(label: "app.scene.background.count").increment()
+            appLogger.notice("Scene background")
+
+        @unknown default:
+            break
+        }
+    }
+
     private func handleActions() {
+        appLogger.trace("Handling shortcuts", metadata: ["shortcut": "\(shortcut ?? "nil")"])
+
         if shortcut == "SearchAction" {
+            Counter(label: "app.shortcut.search.count").increment()
+            appLogger.debug("Shortcut SearchAction triggered")
+
             index = 0
             ipInfo.ip = ""
+
             Task {
                 state = .load
                 await ipInfo.record(context: viewContext)
@@ -71,6 +102,9 @@ struct ContentView: View {
         }
 
         if shortcut == "HistoryAction" {
+            Counter(label: "app.shortcut.history.count").increment()
+            appLogger.debug("Shortcut HistoryAction triggered")
+
             index = 1
         }
 
