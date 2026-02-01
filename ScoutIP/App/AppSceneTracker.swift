@@ -18,15 +18,15 @@ struct AppSceneTracker {
 
         case .active:
             Counter(label: "app.scene.active.count").increment()
-            appLogger.info("Scene active")
+            appLogger.info("AppSceneActive")
 
         case .inactive:
             Counter(label: "app.scene.inactive.count").increment()
-            appLogger.notice("Scene inactive")
+            appLogger.notice("AppSceneInactive")
 
         case .background:
             Counter(label: "app.scene.background.count").increment()
-            appLogger.notice("Scene background")
+            appLogger.notice("AppSceneBackground")
 
         @unknown default:
             break
@@ -34,17 +34,17 @@ struct AppSceneTracker {
     }
 
     func shortcutTriggered(_ shortcut: String?) {
-        appLogger.trace("Handling shortcuts", metadata: ["shortcut": "\(shortcut ?? "nil")"])
+        appLogger.trace("ShortcutsHandling", metadata: ["shortcut": "\(shortcut ?? "nil")"])
 
         switch shortcut {
 
         case "SearchAction":
             Counter(label: "app.shortcut.search.count").increment()
-            appLogger.debug("Shortcut SearchAction triggered")
+            appLogger.debug("ShortcutSearchTriggered")
 
         case "HistoryAction":
             Counter(label: "app.shortcut.history.count").increment()
-            appLogger.debug("Shortcut HistoryAction triggered")
+            appLogger.debug("ShortcutHistoryTriggered")
 
         default:
             break

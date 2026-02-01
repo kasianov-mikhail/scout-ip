@@ -15,18 +15,18 @@ struct IPLookupTracker {
     private let networkLogger = Logger(label: "ScoutIP.Network")
     
     func lookupStarted() {
-        networkLogger.trace("IP lookup started", metadata: ["source": "\(source.rawValue)"])
+        networkLogger.trace("IPLookupStarted", metadata: ["source": "\(source.rawValue)"])
     }
 
     func success(duration start: DispatchTime) {
         Timer(label: "ip.lookup.duration").recordInterval(since: start)
         Counter(label: "ip.lookup.success.count").increment()
-        networkLogger.info("IP lookup succeeded", metadata: ["source": "\(source.rawValue)"])
+        networkLogger.info("IPLookupSucceeded", metadata: ["source": "\(source.rawValue)"])
     }
 
     func failure(duration start: DispatchTime, error: Error) {
         Timer(label: "ip.lookup.duration").recordInterval(since: start)
         Counter(label: "ip.lookup.failure.count").increment()
-        networkLogger.error("IP lookup failed", metadata: ["source": "\(source.rawValue)", "error": "\(error)"])
+        networkLogger.error("IPLookupFailed", metadata: ["source": "\(source.rawValue)", "error": "\(error)"])
     }
 }

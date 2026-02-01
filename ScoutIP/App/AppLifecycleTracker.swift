@@ -11,13 +11,13 @@ import Metrics
 
 struct AppLifecycleTracker {
     private let appLogger = Logger(label: "ScoutIP.App")
-    
+
     func launch() {
         Counter(label: "app.launch.count").increment()
-        appLogger.info("App launched")
+        appLogger.info("AppLaunched")
     }
 
     func scoutSetupFailure(error: Error) {
-        appLogger.error("Scout setup failed", metadata: ["error": "\(error)"])
+        appLogger.error("ScoutSetupFailed", metadata: ["error": "\(error)"])
     }
 }

@@ -14,6 +14,6 @@ struct PersistenceTracker {
     
     func loadFailure(error: Error) {
         Counter(label: "persistence.load.failure.count").increment()
-        storageLogger.critical("Failed to load persistent store", metadata: ["error": "\(error)"])
+        storageLogger.critical("PersistenceLoadFailed", metadata: ["error": "\(error)"])
     }
 }

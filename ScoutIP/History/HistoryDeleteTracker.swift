@@ -14,11 +14,11 @@ struct HistoryDeleteTracker {
     
     func success(count: Int) {
         Counter(label: "history.delete.count").increment(by: Int64(count))
-        storageLogger.info("History records deleted", metadata: ["count": "\(count)"])
+        storageLogger.info("HistoryDeleted", metadata: ["count": "\(count)"])
     }
 
     func failure(error: Error) {
         Counter(label: "history.delete.failure.count").increment()
-        storageLogger.error("Failed to delete history records", metadata: ["error": "\(error)"])
+        storageLogger.error("HistoryDeleteFailed", metadata: ["error": "\(error)"])
     }
 }

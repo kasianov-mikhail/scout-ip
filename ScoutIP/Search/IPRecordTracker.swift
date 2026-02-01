@@ -16,12 +16,12 @@ struct IPRecordTracker {
     private let storageLogger = Logger(label: "ScoutIP.Storage")
 
     func requested() {
-        appLogger.debug("IP record requested", metadata: ["source": "\(source.rawValue)"])
+        appLogger.debug("IPRecordRequested", metadata: ["source": "\(source.rawValue)"])
     }
 
     func tokenMissing() {
         Counter(label: "ip.record.failure.count").increment()
-        appLogger.warning("IP info token missing", metadata: ["error": "missing_token"])
+        appLogger.warning("IPTokenMissing", metadata: ["error": "missing_token"])
     }
 
     func saveSuccess() {
@@ -30,11 +30,11 @@ struct IPRecordTracker {
 
     func saveFailure(error: Error) {
         Counter(label: "ip.record.save.failure.count").increment()
-        storageLogger.error("Failed to save IP record", metadata: ["error": "\(error)"])
+        storageLogger.error("IPRecordSaveFailed", metadata: ["error": "\(error)"])
     }
 
     func failure(error: Error) {
         Counter(label: "ip.record.failure.count").increment()
-        appLogger.error("IP record failed", metadata: ["error": "\(error)"])
+        appLogger.error("IPRecordFailed", metadata: ["error": "\(error)"])
     }
 }
