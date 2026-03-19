@@ -16,10 +16,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let tracker = AppLifecycleTracker()
         tracker.launch()
 
-        do {
-            try Scout.setup(container: container)
-        } catch {
-            tracker.scoutSetupFailure(error: error)
+        Task {
+            do {
+                try await Scout.setup(container: container)
+            } catch {
+                tracker.scoutSetupFailure(error: error)
+            }
         }
 
         return true
