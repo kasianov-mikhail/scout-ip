@@ -24,6 +24,14 @@ struct ContentView: View {
     @State private var isScoutPresented = false
     @StateObject private var ipInfo = IPInfo()
 
+    private var isBeta: Bool {
+        #if DEBUG
+            return true
+        #else
+            return Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+        #endif
+    }
+
     private let sceneTracker = AppSceneTracker()
 
     var body: some View {
@@ -41,6 +49,15 @@ struct ContentView: View {
                     Text("History")
                 }
                 .tag(1)
+
+            if isBeta {
+                CrashTestView()
+                    .tabItem {
+                        Image(systemName: "ant")
+                        Text("Crash")
+                    }
+                    .tag(2)
+            }
         }
         .onChange(of: scenePhase) {
             sceneTracker.scenePhaseChanged(scenePhase)
