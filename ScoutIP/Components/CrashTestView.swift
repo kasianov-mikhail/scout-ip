@@ -12,115 +12,24 @@ struct CrashTestView: View {
         NavigationStack {
             List {
                 Section("NSException") {
-                    crashButton(
-                        "NSGenericException",
-                        subtitle: ".raise()",
-                        systemImage: "exclamationmark.triangle"
-                    ) {
+                    row("NSGenericException", subtitle: ".raise()") {
                         NSException(
                             name: .genericException,
-                            reason: "Test crash: NSGenericException",
+                            reason: "Test crash",
                             userInfo: nil
                         ).raise()
-                    }
-
-                    crashButton(
-                        "NSRangeException",
-                        subtitle: "Array index out of bounds",
-                        systemImage: "number.circle"
-                    ) {
-                        let array = [Int]()
-                        _ = array[1]
-                    }
-
-                    crashButton(
-                        "NSInvalidArgumentException",
-                        subtitle: "Unrecognized selector",
-                        systemImage: "questionmark.circle"
-                    ) {
-                        let object = NSObject()
-                        object.perform(NSSelectorFromString("nonExistentMethod"))
-                    }
-                }
-
-                Section("Fatal Error") {
-                    crashButton(
-                        "fatalError",
-                        subtitle: "SIGTRAP",
-                        systemImage: "bolt.fill"
-                    ) {
-                        fatalError("Test crash: fatalError")
-                    }
-
-                    crashButton(
-                        "preconditionFailure",
-                        subtitle: "SIGTRAP",
-                        systemImage: "exclamationmark.octagon"
-                    ) {
-                        preconditionFailure("Test crash: preconditionFailure")
                     }
                 }
 
                 Section("Signal") {
-                    crashButton(
-                        "SIGABRT",
-                        subtitle: "abort()",
-                        systemImage: "xmark.circle"
-                    ) {
-                        abort()
+                    row("SIGABRT", subtitle: "abort()") { abort() }
+                    row("SIGTRAP", subtitle: "fatalError()") { fatalError("Test crash") }
+                    row("SIGSEGV", subtitle: "Null pointer dereference") {
+                        UnsafeMutablePointer<Int>(bitPattern: 0x1)!.pointee = 0
                     }
-
-                    crashButton(
-                        "SIGFPE",
-                        subtitle: "Division by zero",
-                        systemImage: "divide.circle"
-                    ) {
-                        // Force integer division by zero via UnsafeMutablePointer
-                        let zero = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
-                        zero.pointee = 0
-                        let one = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
-                        one.pointee = 1
-                        _ = one.pointee / zero.pointee
-                        zero.deallocate()
-                        one.deallocate()
-                    }
-
-                    crashButton(
-                        "SIGSEGV",
-                        subtitle: "Null pointer dereference",
-                        systemImage: "memorychip"
-                    ) {
-                        let pointer = UnsafeMutablePointer<Int>(bitPattern: 0x1)!
-                        pointer.pointee = 42
-                    }
-
-                    crashButton(
-                        "SIGBUS",
-                        subtitle: "Misaligned memory access",
-                        systemImage: "bus"
-                    ) {
-                        let allocation = UnsafeMutableRawPointer.allocate(
-                            byteCount: 16, alignment: 1
-                        )
-                        let misaligned = allocation.advanced(by: 1)
-                            .assumingMemoryBound(to: Int64.self)
-                        misaligned.pointee = 42
-                        allocation.deallocate()
-                    }
-
-                    crashButton(
-                        "SIGILL",
-                        subtitle: "Illegal instruction",
-                        systemImage: "cpu"
-                    ) {
-                        typealias IllegalFunc = @convention(c) () -> Void
-                        var illegalInstruction: UInt32 = 0x00000000
-                        let pointer = withUnsafeMutablePointer(to: &illegalInstruction) {
-                            UnsafeMutableRawPointer($0)
-                        }
-                        let function = unsafeBitCast(pointer, to: IllegalFunc.self)
-                        function()
-                    }
+                    row("SIGFPE", subtitle: "raise(SIGFPE)") { raise(SIGFPE) }
+                    row("SIGBUS", subtitle: "raise(SIGBUS)") { raise(SIGBUS) }
+                    row("SIGILL", subtitle: "raise(SIGILL)") { raise(SIGILL) }
                 }
             }
             .navigationTitle("Crash Test")
@@ -128,28 +37,21 @@ struct CrashTestView: View {
         }
     }
 
-    private func crashButton(
+    private func row(
         _ title: String,
         subtitle: String,
-        systemImage: String,
         action: @escaping () -> Void
     ) -> some View {
         Button {
-            // Dispatch after a short delay to let the UI update
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 action()
             }
         } label: {
-            Label {
-                VStack(alignment: .leading) {
-                    Text(title)
-                    Text(subtitle)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            } icon: {
-                Image(systemName: systemImage)
-                    .foregroundStyle(.red)
+            VStack(alignment: .leading) {
+                Text(title)
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
     }
