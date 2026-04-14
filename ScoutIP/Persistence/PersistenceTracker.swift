@@ -10,10 +10,10 @@ import Logging
 import Metrics
 
 struct PersistenceTracker {
-    private let storageLogger = Logger(label: "ScoutIP.Storage")
-    
-    func loadFailure(error: Error) {
-        Counter(label: "persistence.load.failure.count").increment()
-        storageLogger.critical("PersistenceLoadFailed", metadata: ["error": "\(error)"])
-    }
+  private let storageLogger = Logger(label: "ScoutIP.Storage")
+
+  func loadFailure(error: Error) {
+    Counter(label: "persistence.load.failure.count").increment()
+    storageLogger.critical("PersistenceLoadFailed", metadata: ["error": "\(error)"])
+  }
 }

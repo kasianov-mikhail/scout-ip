@@ -8,7 +8,7 @@
 import Foundation
 
 extension Array {
-    var countText: String {
-        count == 1 ? "1 time" : "\(count) times"
-    }
+  var countText: String {
+    count == 1 ? "1 time" : "\(count) times"
+  }
 }

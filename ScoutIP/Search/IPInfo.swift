@@ -11,45 +11,45 @@ import SwiftUI
 
 class IPInfo: ObservableObject {
 
-    @Published var ip = ""
-    @Published var record: IPRecord?
-    @Published var errorText: String?
+  @Published var ip = ""
+  @Published var record: IPRecord?
+  @Published var errorText: String?
 
-    var allowSearch: Bool {
-        ip.isEmpty || ip.isCompleteIP && record?.ip != ip
+  var allowSearch: Bool {
+    ip.isEmpty || ip.isCompleteIP && record?.ip != ip
+  }
+
+  @MainActor func record(context: NSManagedObjectContext) async {
+    let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
+
+    do {
+      guard let token = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String else { return }
+
+      tracker.requested()
+
+      let provider = InfoProvider(token: token, ip: ip, context: context)
+      let object = try await provider.ipObject()
+
+      let record = IPRecord(context: context)
+      record.date = Date()
+      record.id = UUID()
+      record.isFavorite = false
+      record.isUser = ip.isEmpty  // isUser
+      record.object = object
+      self.record = record
+
+      do {
+        try context.save()
+        tracker.saveSuccess()
+
+      } catch {
+        tracker.saveFailure(error: error)
+        throw error
+      }
+
+    } catch {
+      errorText = error.localizedDescription
+      tracker.failure(error: error)
     }
-
-    @MainActor func record(context: NSManagedObjectContext) async {
-        let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
-
-        do {
-            guard let token = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String else { return }
-
-            tracker.requested()
-
-            let provider = InfoProvider(token: token, ip: ip, context: context)
-            let object = try await provider.ipObject()
-
-            let record = IPRecord(context: context)
-            record.date = Date()
-            record.id = UUID()
-            record.isFavorite = false
-            record.isUser = ip.isEmpty  // isUser
-            record.object = object
-            self.record = record
-
-            do {
-                try context.save()
-                tracker.saveSuccess()
-
-            } catch {
-                tracker.saveFailure(error: error)
-                throw error
-            }
-
-        } catch {
-            errorText = error.localizedDescription
-            tracker.failure(error: error)
-        }
-    }
+  }
 }

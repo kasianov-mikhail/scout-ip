@@ -9,16 +9,16 @@ import Foundation
 
 enum MockProvider {
 
-    static var isMocking: Bool {
-        ProcessInfo.processInfo.arguments.contains("-UITestMocking")
-    }
+  static var isMocking: Bool {
+    ProcessInfo.processInfo.arguments.contains("-UITestMocking")
+  }
 
-    static let mockIP = "8.8.8.8"
-    static let mockCity = "Mountain View"
-    static let mockRegion = "California"
-    static let mockCountry = "US"
-    static let mockLocation = "37.3861,-122.0839"
-    static let mockOrg = "AS15169 Google LLC"
-    static let mockPostal = "94035"
-    static let mockTimezone = "America/Los_Angeles"
+  static let mockIP = "8.8.8.8"
+  static let mockCity = "Mountain View"
+  static let mockRegion = "California"
+  static let mockCountry = "US"
+  static let mockLocation = "37.3861,-122.0839"
+  static let mockOrg = "AS15169 Google LLC"
+  static let mockPostal = "94035"
+  static let mockTimezone = "America/Los_Angeles"
 }

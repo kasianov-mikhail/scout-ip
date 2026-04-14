@@ -9,58 +9,58 @@ import XCTest
 
 final class SnapshotTests: XCTestCase {
 
-    let app = XCUIApplication()
+  let app = XCUIApplication()
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-        app.launch()
-    }
+  override func setUpWithError() throws {
+    continueAfterFailure = false
+    app.launch()
+  }
 
-    @MainActor
-    func testInfoScreenSnapshot() {
-        let screenshot = app.screenshot()
-        let attachment = XCTAttachment(screenshot: screenshot)
-        attachment.name = "Info Screen"
-        attachment.lifetime = .keepAlways
-        add(attachment)
-    }
+  @MainActor
+  func testInfoScreenSnapshot() {
+    let screenshot = app.screenshot()
+    let attachment = XCTAttachment(screenshot: screenshot)
+    attachment.name = "Info Screen"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+  }
 
-    @MainActor
-    func testHistoryScreenSnapshot() {
-        app.tabBars.buttons["History"].tap()
+  @MainActor
+  func testHistoryScreenSnapshot() {
+    app.tabBars.buttons["History"].tap()
 
-        let screenshot = app.screenshot()
-        let attachment = XCTAttachment(screenshot: screenshot)
-        attachment.name = "History Screen"
-        attachment.lifetime = .keepAlways
-        add(attachment)
-    }
+    let screenshot = app.screenshot()
+    let attachment = XCTAttachment(screenshot: screenshot)
+    attachment.name = "History Screen"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+  }
 
-    @MainActor
-    func testInfoScreenDarkModeSnapshot() {
-        app.terminate()
-        app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
-        app.launch()
+  @MainActor
+  func testInfoScreenDarkModeSnapshot() {
+    app.terminate()
+    app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
+    app.launch()
 
-        let screenshot = app.screenshot()
-        let attachment = XCTAttachment(screenshot: screenshot)
-        attachment.name = "Info Screen - Dark Mode"
-        attachment.lifetime = .keepAlways
-        add(attachment)
-    }
+    let screenshot = app.screenshot()
+    let attachment = XCTAttachment(screenshot: screenshot)
+    attachment.name = "Info Screen - Dark Mode"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+  }
 
-    @MainActor
-    func testHistoryScreenDarkModeSnapshot() {
-        app.terminate()
-        app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
-        app.launch()
+  @MainActor
+  func testHistoryScreenDarkModeSnapshot() {
+    app.terminate()
+    app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
+    app.launch()
 
-        app.tabBars.buttons["History"].tap()
+    app.tabBars.buttons["History"].tap()
 
-        let screenshot = app.screenshot()
-        let attachment = XCTAttachment(screenshot: screenshot)
-        attachment.name = "History Screen - Dark Mode"
-        attachment.lifetime = .keepAlways
-        add(attachment)
-    }
+    let screenshot = app.screenshot()
+    let attachment = XCTAttachment(screenshot: screenshot)
+    attachment.name = "History Screen - Dark Mode"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+  }
 }

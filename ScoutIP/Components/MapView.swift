@@ -5,45 +5,47 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct Location: Identifiable {
-    let coordinate: CLLocationCoordinate2D
-    let id: String
+  let coordinate: CLLocationCoordinate2D
+  let id: String
 
-    init?(string: String) {
-        let components = string.components(separatedBy: ",")
-        guard components.count == 2, let latitude = Double(components[0]), let longitude = Double(components[1]) else {
-            return nil
-        }
-        coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        id = string
+  init?(string: String) {
+    let components = string.components(separatedBy: ",")
+    guard components.count == 2, let latitude = Double(components[0]),
+      let longitude = Double(components[1])
+    else {
+      return nil
     }
+    coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    id = string
+  }
 }
 
 struct MapView: View {
-    let location: Location
+  let location: Location
 
-    var body: some View {
-        Map(position: .constant(.region(region)), interactionModes: []) {
-            Marker("", coordinate: location.coordinate)
-        }
-        .frame(height: 216)
-        .listRowInsets(EdgeInsets())
+  var body: some View {
+    Map(position: .constant(.region(region)), interactionModes: []) {
+      Marker("", coordinate: location.coordinate)
     }
+    .frame(height: 216)
+    .listRowInsets(EdgeInsets())
+  }
 
-    var region: MKCoordinateRegion {
-        MKCoordinateRegion(
-            center: location.coordinate,
-            latitudinalMeters: 1_000_000,
-            longitudinalMeters: 1_000_000
-        )
-    }
+  var region: MKCoordinateRegion {
+    MKCoordinateRegion(
+      center: location.coordinate,
+      latitudinalMeters: 1_000_000,
+      longitudinalMeters: 1_000_000
+    )
+  }
 }
 
 #Preview {
-    List {
-        MapView(location: Location(string: "24.6877,46.7219")!)
-    }
+  List {
+    MapView(location: Location(string: "24.6877,46.7219")!)
+  }
 }
