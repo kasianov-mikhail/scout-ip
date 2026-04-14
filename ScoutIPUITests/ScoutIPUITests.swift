@@ -13,6 +13,7 @@ final class ScoutIPUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app.launchArguments += ["-UITestMocking"]
         app.launch()
     }
 
