@@ -21,14 +21,14 @@ final class ScoutIPUITests: XCTestCase {
 
   @MainActor
   func testTabNavigation() {
-    XCTAssertTrue(app.tabBars.buttons["Info"].exists)
-    XCTAssertTrue(app.tabBars.buttons["History"].exists)
+    XCTAssertTrue(app.tabBars.buttons["InfoTab"].exists)
+    XCTAssertTrue(app.tabBars.buttons["HistoryTab"].exists)
 
-    app.tabBars.buttons["History"].tap()
-    XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 2))
+    app.tabBars.buttons["HistoryTab"].tap()
+    XCTAssertTrue(app.navigationBars["HistoryTab"].waitForExistence(timeout: 2))
 
-    app.tabBars.buttons["Info"].tap()
-    XCTAssertTrue(app.navigationBars["Info"].waitForExistence(timeout: 2))
+    app.tabBars.buttons["InfoTab"].tap()
+    XCTAssertTrue(app.navigationBars["InfoTab"].waitForExistence(timeout: 2))
   }
 
   // MARK: - Search
@@ -82,7 +82,7 @@ final class ScoutIPUITests: XCTestCase {
     wait(for: [tableExpectation], timeout: 10)
 
     // Switch to History
-    app.tabBars.buttons["History"].tap()
+    app.tabBars.buttons["HistoryTab"].tap()
 
     let historyPredicate = NSPredicate(format: "cells.count > 0")
     let historyExpectation = XCTNSPredicateExpectation(
@@ -92,7 +92,7 @@ final class ScoutIPUITests: XCTestCase {
 
   @MainActor
   func testHistoryFilterSegments() {
-    app.tabBars.buttons["History"].tap()
+    app.tabBars.buttons["HistoryTab"].tap()
 
     XCTAssertTrue(app.buttons["all"].waitForExistence(timeout: 2))
     XCTAssertTrue(app.buttons["user"].exists)
