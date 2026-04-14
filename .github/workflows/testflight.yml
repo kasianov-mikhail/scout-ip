@@ -64,11 +64,6 @@ jobs:
           VERSION=$(grep -m1 MARKETING_VERSION ScoutIP.xcodeproj/project.pbxproj | sed 's/.*= //;s/;//;s/ //g')
           echo "value=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Write Secrets.json
-        run: printf '{"IPINFO_KEY":"%s"}' "$IPINFO_KEY" > ScoutIP/Resources/Secrets.json
-        env:
-          IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
-
       - name: Install certificates and profile
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
@@ -109,6 +104,7 @@ jobs:
       - name: Archive
         run: |
           xcodebuild archive \
+            IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \
