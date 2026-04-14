@@ -1,48 +1,24 @@
 # Scout IP
 
-Welcome to the Scout IP project! This README will help you understand what this project is about and how to get started.
+An example app for the [Scout](https://github.com/kasianov-mikhail/scout) logging and analytics package.
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Setup Instructions](#setup-instructions)
-- [App Store](#app-store)
-- [License](#license)
-
-## Introduction
-
-Scout IP is a project designed to demonstrate the usage of [Scout](https://github.com/kasianov-mikhail/scout) package. It aims to provide examples and best practices for integrating [Scout](https://github.com/kasianov-mikhail/scout) into your own projects.
-
-## Setup Instructions
-
-To install Scout IP, follow these steps:
+## Setup
 
 1. Clone the repository:
     ```sh
     git clone https://github.com/kasianov-mikhail/scout-ip.git
     ```
-2. Navigate to the project directory:
+2. Create a Secrets file:
     ```sh
-    cd scout-ip
+    echo '{"IPINFO_KEY":"YOUR_KEY"}' > ScoutIP/Resources/Secrets.json
     ```
-3. Create a Secrets file and open it:
-    ```sh
-    touch Secrets.json & open Secrets.json
-    ```
-4.  Add to the file:
-    ```json
-    {
-        "IPINFO_KEY": "YOUR_IPINFO_KEY"
-    }
-    ```
-5. Replace `YOUR_IPINFO_KEY` with the token found in the [account section](https://ipinfo.io/account/token) of the [IPinfo website](https://ipinfo.io) after signing in.
+3. Replace `YOUR_KEY` with the token from [ipinfo.io/account/token](https://ipinfo.io/account/token).
+4. Open `ScoutIP.xcodeproj` and run.
 
 ## App Store
 
-You can download the Scout IP app from the App Store [here](https://apps.apple.com/us/app/scout-ip/id6738300344).
+[![Download on the App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/scout-ip/id6738300344)
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-
+MIT — see [LICENSE](LICENSE).
