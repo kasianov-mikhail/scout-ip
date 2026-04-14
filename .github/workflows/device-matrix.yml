@@ -1,0 +1,35 @@
+name: Device Matrix
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: ${{ matrix.device }}
+    runs-on: macos-26
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        device:
+          - iPhone SE (3rd generation)
+          - iPhone 17
+          - iPad (10th generation)
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Write Secrets.json
+        run: printf '{"IPINFO_KEY":"%s"}' "$IPINFO_KEY" > ScoutIP/Resources/Secrets.json
+        env:
+          IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project ScoutIP.xcodeproj \
+            -scheme ScoutIP \
+            -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
