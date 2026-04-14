@@ -6,6 +6,16 @@ on:
     branches: [main]
 
 jobs:
+  lint:
+    runs-on: macos-26
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Lint
+        run: xcrun swift-format lint --strict --recursive ScoutIP ScoutIPUITests
+
   build:
     name: ${{ matrix.device }} (iOS ${{ matrix.ios }})
     runs-on: ${{ matrix.os }}
@@ -36,8 +46,4 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild build \
-            IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
-            -project ScoutIP.xcodeproj \
-            -scheme ScoutIP \
-            -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
+          xcodebuild build             IPINFO_KEY=${{ secrets.IPINFO_KEY }}             -project ScoutIP.xcodeproj             -scheme ScoutIP             -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
