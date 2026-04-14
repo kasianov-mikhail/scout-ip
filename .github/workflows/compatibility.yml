@@ -1,0 +1,43 @@
+name: Compatibility
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: ios-${{ matrix.ios }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        include:
+          - os: macos-15
+            device: iPhone 16
+            ios: 18
+          - os: macos-26
+            device: iPhone 17
+            ios: 26
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Write Secrets.json
+        run: printf '{"IPINFO_KEY":"%s"}' "$IPINFO_KEY" > ScoutIP/Resources/Secrets.json
+        env:
+          IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
+
+      - name: Prepare simulator
+        run: |
+          if ! xcrun simctl list devices available | grep -q "iPhone"; then
+            xcodebuild -downloadPlatform iOS
+          fi
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project ScoutIP.xcodeproj \
+            -scheme ScoutIP \
+            -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
