@@ -51,10 +51,10 @@ struct ContentView: View {
                 .tag(1)
 
             if isBeta {
-                CrashTestView()
+                DebugView()
                     .tabItem {
                         Image(systemName: "ant")
-                        Text("Crash")
+                        Text("Debug")
                     }
                     .tag(2)
             }
