@@ -106,16 +106,40 @@ jobs:
       - name: Upload to TestFlight
         id: upload
         run: |
-          xcrun altool --upload-app \
+          OUTPUT=$(xcrun altool --upload-app \
             -f $RUNNER_TEMP/export/ScoutIP.ipa \
             --type ios \
             --apiKey $APP_STORE_CONNECT_KEY_ID \
-            --apiIssuer $APP_STORE_CONNECT_ISSUER_ID
+            --apiIssuer $APP_STORE_CONNECT_ISSUER_ID 2>&1) && echo "$OUTPUT" || {
+            echo "$OUTPUT"
+            if echo "$OUTPUT" | grep -q "CFBundleShortVersionString"; then
+              echo "needs_bump=true" >> $GITHUB_OUTPUT
+            else
+              exit 1
+            fi
+          }
+
+      - name: Bump version and retry
+        if: steps.upload.outputs.needs_bump == 'true'
+        run: |
+          VERSION=${{ steps.version.outputs.value }}
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          NEW_VERSION="$MAJOR.$((MINOR + 1))"
+
+          sed -i '' "s/MARKETING_VERSION = $VERSION;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
+
+          git add ScoutIP.xcodeproj/project.pbxproj
+          git commit -m "Bump version to $NEW_VERSION"
+          git push
+
+          echo "Version bumped to $NEW_VERSION — new workflow run will be triggered"
 
       - name: Tag build
+        if: steps.upload.outputs.needs_bump != 'true'
         run: |
-          git tag "{{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
-          git push origin "{{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
+          git tag "${{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
+          git push origin "${{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
 
       - name: Clean up
         if: always()
