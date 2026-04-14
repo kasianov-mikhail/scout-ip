@@ -24,11 +24,11 @@ A companion app for the [Scout](https://github.com/kasianov-mikhail/scout) packa
     ```sh
     git clone https://github.com/kasianov-mikhail/scout-ip.git
     ```
-2. Create a Secrets file:
+2. Copy the secrets template and fill in your API key:
     ```sh
-    echo '{"IPINFO_KEY":"YOUR_KEY"}' > ScoutIP/Resources/Secrets.json
+    cp Secrets.xcconfig.template Secrets.xcconfig
     ```
-3. Replace `YOUR_KEY` with the token from [ipinfo.io/account/token](https://ipinfo.io/account/token).
+3. Get your token from [ipinfo.io/account/token](https://ipinfo.io/account/token) and set it in `Secrets.xcconfig`.
 4. Open `ScoutIP.xcodeproj` and run.
 
 ## App Store
@@ -42,9 +42,7 @@ Every push to `main` triggers a [TestFlight](https://developer.apple.com/testfli
 | Workflow | Trigger | Purpose |
 |----------|---------|---------|
 | TestFlight | Push to main / Scout update | Build, sign, and upload to TestFlight |
-| Smoke Test | Push / PR | Launch on simulator and verify no crash |
-| Compatibility | Push / PR | Build on iOS 18 and iOS 26 |
-| Device Matrix | Push / PR | Build on iPhone 17 and iPhone 17 Pro Max |
+| Build Matrix | Push / PR | Build on iPhone 16 (iOS 18), iPhone 17, iPhone 17 Pro Max (iOS 26) |
 | Bundle Size | Push / PR | Track app and binary size |
 | Performance | Push to main | Measure launch time and binary size |
 | Nightly | Daily at 4:00 UTC | Scheduled TestFlight build |
