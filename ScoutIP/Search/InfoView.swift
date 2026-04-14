@@ -12,6 +12,7 @@ struct InfoView: View {
 
   @Binding var state: UpdateState
   @ObservedObject var ipInfo: IPInfo
+  @State private var showCheckmark = false
 
   @FetchRequest(fetchRequest: IPRecord.fetchRequest(), animation: .none)
   var records: FetchedResults<IPRecord>
@@ -70,10 +71,17 @@ struct InfoView: View {
           }
         }
       }
+      .checkmark(isPresented: showCheckmark)
       .refreshable {
         state = .refresh
         await ipInfo.record(context: viewContext)
         state = .idle
+        if ipInfo.errorText == nil {
+          showCheckmark = true
+          DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            showCheckmark = false
+          }
+        }
         requestReview()
       }
       .scrollDismissesKeyboard(.interactively)
