@@ -25,9 +25,7 @@ struct SearchView: View {
       case .refresh:
         searchButton(enabled: false)
       case .load:
-        Image(systemName: "globe")
-          .symbolEffect(.rotate, isActive: true)
-          .foregroundStyle(.blue)
+        GlobeSpinner()
       }
     }
     .buttonStyle(.plain)
