@@ -154,6 +154,7 @@ struct HistoryList: View {
   }
 
   func deleteSelected() {
+    UINotificationFeedbackGenerator().notificationOccurred(.warning)
     let tracker = HistoryDeleteTracker()
 
     do {

@@ -20,6 +20,7 @@ struct StarButton: View {
   }
 
   func toggle() {
+    UIImpactFeedbackGenerator(style: .light).impactOccurred()
     record.isFavorite.toggle()
 
     do {

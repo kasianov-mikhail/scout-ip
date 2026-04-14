@@ -90,10 +90,16 @@ struct SearchView: View {
   }
 
   private func searchIP() {
+    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     Task {
       state = .load
       await ipInfo.record(context: viewContext)
       state = .idle
+      if ipInfo.errorText != nil {
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
+      } else {
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+      }
       requestReview()
     }
   }
