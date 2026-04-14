@@ -28,11 +28,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Write Secrets.json
-        run: printf '{"IPINFO_KEY":"%s"}' "$IPINFO_KEY" > ScoutIP/Resources/Secrets.json
-        env:
-          IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
-
       - name: Prepare simulator
         run: |
           if ! xcrun simctl list devices available | grep -q "iPhone"; then
@@ -42,6 +37,7 @@ jobs:
       - name: Build
         run: |
           xcodebuild build \
+            IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
