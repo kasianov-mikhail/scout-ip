@@ -114,8 +114,8 @@ jobs:
 
       - name: Tag build
         run: |
-          git tag "v${{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
-          git push origin "v${{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
+          git tag "{{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
+          git push origin "{{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
 
       - name: Clean up
         if: always()
