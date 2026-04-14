@@ -15,9 +15,9 @@ jobs:
       fail-fast: false
       matrix:
         device:
-          - iPhone SE (3rd generation)
           - iPhone 17
-          - iPad (10th generation)
+          - iPhone 17 Pro Max
+          - iPad Air (M3)
 
     steps:
       - uses: actions/checkout@v6
@@ -29,7 +29,4 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild build \
-            -project ScoutIP.xcodeproj \
-            -scheme ScoutIP \
-            -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
+          xcodebuild build             -project ScoutIP.xcodeproj             -scheme ScoutIP             -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
