@@ -12,6 +12,7 @@ struct InfoView: View {
 
   @Binding var state: UpdateState
   @ObservedObject var ipInfo: IPInfo
+  @State private var showConfetti = false
 
   @FetchRequest(fetchRequest: IPRecord.fetchRequest(), animation: .none)
   var records: FetchedResults<IPRecord>
@@ -78,7 +79,16 @@ struct InfoView: View {
       .navigationTitle("Info")
     }
     .navigationViewStyle(.stack)
+    .confetti(isPresented: showConfetti)
     .snackbar(text: $ipInfo.errorText)
+    .onChange(of: records.count) {
+      if records.count > 0 && records.count % 100 == 0 {
+        showConfetti = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+          showConfetti = false
+        }
+      }
+    }
   }
 
   var ipRecords: [IPRecord] {
