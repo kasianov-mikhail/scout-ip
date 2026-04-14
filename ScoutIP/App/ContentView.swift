@@ -42,6 +42,7 @@ struct ContentView: View {
                     Text("Info")
                 }
                 .tag(0)
+                .accessibilityIdentifier("InfoTab")
 
             HistoryList()
                 .tabItem {
@@ -49,6 +50,7 @@ struct ContentView: View {
                     Text("History")
                 }
                 .tag(1)
+                .accessibilityIdentifier("HistoryTab")
 
             if isBeta {
                 CrashTestView()
