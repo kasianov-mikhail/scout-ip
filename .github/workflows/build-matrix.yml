@@ -46,4 +46,24 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild build             IPINFO_KEY=${{ secrets.IPINFO_KEY }}             -project ScoutIP.xcodeproj             -scheme ScoutIP             -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
+          xcodebuild build \
+            IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
+            -project ScoutIP.xcodeproj \
+            -scheme ScoutIP \
+            -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
+
+  ui-tests:
+    runs-on: macos-26
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run UI tests
+        run: |
+          xcodebuild test \
+            -project ScoutIP.xcodeproj \
+            -scheme ScoutIP \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            -only-testing:ScoutIPUITests \
+            IPINFO_KEY=${{ secrets.IPINFO_KEY }}
