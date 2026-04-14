@@ -1,41 +1,109 @@
 //
-//  ScoutIPUITests.swift
-//  ScoutIPUITests
+// Copyright 2026 Mikhail Kasianov
 //
-//  Created by Михаил Касьянов on 14.04.2026.
-//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://opensource.org/licenses/MIT.
 
 import XCTest
 
 final class ScoutIPUITests: XCTestCase {
 
+    let app = XCUIApplication()
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        app.launch()
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    // MARK: - Tabs
+
+    @MainActor
+    func testTabNavigation() {
+        XCTAssertTrue(app.tabBars.buttons["Info"].exists)
+        XCTAssertTrue(app.tabBars.buttons["History"].exists)
+
+        app.tabBars.buttons["History"].tap()
+        XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 2))
+
+        app.tabBars.buttons["Info"].tap()
+        XCTAssertTrue(app.navigationBars["Info"].waitForExistence(timeout: 2))
+    }
+
+    // MARK: - Search
+
+    @MainActor
+    func testSearchFieldExists() {
+        let searchField = app.textFields["IP Search Field"]
+        XCTAssertTrue(searchField.waitForExistence(timeout: 2))
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
+    func testSearchButtonExists() {
+        let searchButton = app.buttons["IP Search Button"]
+        XCTAssertTrue(searchButton.waitForExistence(timeout: 2))
     }
+
+    @MainActor
+    func testSearchMyIP() {
+        let searchButton = app.buttons["IP Search Button"]
+        searchButton.tap()
+
+        let predicate = NSPredicate(format: "cells.count > 0")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: app.tables.firstMatch)
+        wait(for: [expectation], timeout: 10)
+    }
+
+    @MainActor
+    func testSearchSpecificIP() {
+        let searchField = app.textFields["IP Search Field"]
+        searchField.tap()
+        searchField.typeText("8.8.8.8")
+
+        let searchButton = app.buttons["IP Search Button"]
+        searchButton.tap()
+
+        let predicate = NSPredicate(format: "cells.count > 0")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: app.tables.firstMatch)
+        wait(for: [expectation], timeout: 10)
+    }
+
+    // MARK: - History
+
+    @MainActor
+    func testHistoryShowsRecords() {
+        // Search first to create a record
+        app.buttons["IP Search Button"].tap()
+
+        let predicate = NSPredicate(format: "cells.count > 0")
+        let tableExpectation = XCTNSPredicateExpectation(predicate: predicate, object: app.tables.firstMatch)
+        wait(for: [tableExpectation], timeout: 10)
+
+        // Switch to History
+        app.tabBars.buttons["History"].tap()
+
+        let historyPredicate = NSPredicate(format: "cells.count > 0")
+        let historyExpectation = XCTNSPredicateExpectation(predicate: historyPredicate, object: app.tables.firstMatch)
+        wait(for: [historyExpectation], timeout: 5)
+    }
+
+    @MainActor
+    func testHistoryFilterSegments() {
+        app.tabBars.buttons["History"].tap()
+
+        XCTAssertTrue(app.buttons["all"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["user"].exists)
+        XCTAssertTrue(app.buttons["search"].exists)
+
+        app.buttons["user"].tap()
+        app.buttons["search"].tap()
+        app.buttons["all"].tap()
+    }
+
+    // MARK: - Launch Performance
 
     @MainActor
     func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }
