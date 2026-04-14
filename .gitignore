@@ -60,11 +60,9 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 
-# Secrets
-Secrets.json
 
 # MacOS
 .DS_Store
 
 # Secrets
-Secrets.json
+Secrets.xcconfig
