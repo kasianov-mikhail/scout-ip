@@ -23,7 +23,9 @@ struct InfoView: View {
           SearchView(state: $state, ipInfo: ipInfo)
         }
 
-        if let record = ipInfo.record, !record.isDeleted {
+        if state == .load {
+          SkeletonView()
+        } else if let record = ipInfo.record, !record.isDeleted {
           Section("Info") {
             ForEach(record.object.pairs, id: \.key) { pair in
               HStack {
