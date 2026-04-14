@@ -1,0 +1,48 @@
+name: Smoke Test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  smoke:
+    runs-on: macos-26
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Write Secrets.json
+        run: printf '{"IPINFO_KEY":"%s"}' "$IPINFO_KEY" > ScoutIP/Resources/Secrets.json
+        env:
+          IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
+
+      - name: Build for simulator
+        run: |
+          xcodebuild build \
+            -project ScoutIP.xcodeproj \
+            -scheme ScoutIP \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            -derivedDataPath $RUNNER_TEMP/DerivedData
+
+      - name: Boot simulator
+        run: |
+          xcrun simctl boot "iPhone 17" || true
+          xcrun simctl bootstatus "iPhone 17" -b
+
+      - name: Install and launch
+        run: |
+          APP_PATH=$(find $RUNNER_TEMP/DerivedData -name "ScoutIP.app" -path "*/Debug-iphonesimulator/*" | head -1)
+          xcrun simctl install booted "$APP_PATH"
+          xcrun simctl launch booted com.kasianov.ScoutIP
+
+      - name: Verify app is running
+        run: |
+          sleep 10
+          if xcrun simctl spawn booted launchctl list | grep -q ScoutIP; then
+            echo "App is running"
+          else
+            echo "App crashed or failed to launch"
+            exit 1
+          fi
