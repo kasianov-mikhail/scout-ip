@@ -1,0 +1,42 @@
+name: Bundle Size
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  size:
+    runs-on: macos-26
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Write Secrets.json
+        run: printf '{"IPINFO_KEY":"%s"}' "$IPINFO_KEY" > ScoutIP/Resources/Secrets.json
+        env:
+          IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
+
+      - name: Build for simulator
+        run: |
+          xcodebuild build \
+            -project ScoutIP.xcodeproj \
+            -scheme ScoutIP \
+            -configuration Release \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath $RUNNER_TEMP/DerivedData
+
+      - name: Report bundle size
+        run: |
+          APP_PATH=$(find $RUNNER_TEMP/DerivedData -name "ScoutIP.app" -path "*/Release-iphonesimulator/*" | head -1)
+          APP_SIZE=$(du -sh "$APP_PATH" | cut -f1)
+          BINARY_SIZE=$(ls -lh "$APP_PATH/ScoutIP" | awk '{print $5}')
+          FRAMEWORKS_SIZE=$(du -sh "$APP_PATH/Frameworks" 2>/dev/null | cut -f1 || echo "0")
+
+          echo "## Bundle Size Report" >> $GITHUB_STEP_SUMMARY
+          echo "| Component | Size |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|------|" >> $GITHUB_STEP_SUMMARY
+          echo "| App bundle | $APP_SIZE |" >> $GITHUB_STEP_SUMMARY
+          echo "| Binary | $BINARY_SIZE |" >> $GITHUB_STEP_SUMMARY
+          echo "| Frameworks | $FRAMEWORKS_SIZE |" >> $GITHUB_STEP_SUMMARY
