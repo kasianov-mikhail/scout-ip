@@ -23,7 +23,15 @@ class IPInfo: ObservableObject {
     let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
 
     do {
-      guard let token = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String else { return }
+      let token: String
+      if let keychainToken = KeychainHelper.load(key: "IPINFO_KEY") {
+          token = keychainToken
+      } else if let plistToken = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String, !plistToken.isEmpty {
+          KeychainHelper.save(key: "IPINFO_KEY", value: plistToken)
+          token = plistToken
+      } else {
+          return
+      }
 
       tracker.requested()
 
