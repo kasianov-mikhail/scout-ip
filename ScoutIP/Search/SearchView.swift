@@ -94,7 +94,9 @@ struct SearchView: View {
     Task {
       state = .load
       await ipInfo.record(context: viewContext)
-      state = .idle
+      withAnimation(.easeInOut(duration: 0.3)) {
+        state = .idle
+      }
       if ipInfo.errorText != nil {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
       } else {
