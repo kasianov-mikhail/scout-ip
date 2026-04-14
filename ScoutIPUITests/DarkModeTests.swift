@@ -20,8 +20,8 @@ final class DarkModeTests: XCTestCase {
     app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
-    XCTAssertTrue(app.tabBars.buttons["Info"].waitForExistence(timeout: 2))
-    XCTAssertTrue(app.tabBars.buttons["History"].exists)
+    XCTAssertTrue(app.tabBars.buttons["InfoTab"].waitForExistence(timeout: 2))
+    XCTAssertTrue(app.tabBars.buttons["HistoryTab"].exists)
   }
 
   @MainActor
@@ -29,11 +29,11 @@ final class DarkModeTests: XCTestCase {
     app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
-    app.tabBars.buttons["History"].tap()
-    XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 2))
+    app.tabBars.buttons["HistoryTab"].tap()
+    XCTAssertTrue(app.navigationBars["HistoryTab"].waitForExistence(timeout: 2))
 
-    app.tabBars.buttons["Info"].tap()
-    XCTAssertTrue(app.navigationBars["Info"].waitForExistence(timeout: 2))
+    app.tabBars.buttons["InfoTab"].tap()
+    XCTAssertTrue(app.navigationBars["InfoTab"].waitForExistence(timeout: 2))
   }
 
   @MainActor
