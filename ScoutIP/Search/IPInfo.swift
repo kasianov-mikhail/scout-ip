@@ -23,7 +23,7 @@ class IPInfo: ObservableObject {
         let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
 
         do {
-            let token = try Secrets.value(for: "IPINFO_KEY")
+            guard let token = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String else { return }
 
             tracker.requested()
 
