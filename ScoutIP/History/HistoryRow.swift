@@ -29,7 +29,10 @@ struct HistoryRow: View {
 
   var body: some View {
     NavigationLink(destination: HistoryIPList(records: item.records)) {
-      HStack {
+      HStack(spacing: 8) {
+        Circle()
+          .fill(countryColor)
+          .frame(width: 8, height: 8)
         Text(title).font(.system(size: 17))
         if item.records.contains(where: { !$0.notes.isEmpty }) {
           Circle().foregroundColor(.yellow).frame(width: 6, height: 6)
@@ -64,6 +67,13 @@ struct HistoryRow: View {
     }
 
     return string
+  }
+
+  var countryColor: Color {
+    let country = item.records.first?.object.country ?? ""
+    let hash = abs(country.hashValue)
+    let colors: [Color] = [.blue, .green, .orange, .purple, .pink, .teal, .indigo, .mint, .cyan, .brown]
+    return colors[hash % colors.count]
   }
 
   func hide() {
