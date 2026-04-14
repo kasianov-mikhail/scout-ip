@@ -1,62 +1,70 @@
 //
-// Copyright 2025 Mikhail Kasianov
+// Copyright 2024 Mikhail Kasianov
 //
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import Logging
+import Metrics
 import SwiftUI
 
-struct CrashTestView: View {
+struct DebugView: View {
+    @State private var logCount = 0
+    @State private var metricCount = 0
+
     var body: some View {
-        NavigationStack {
-            List {
-                Section("NSException") {
-                    row("NSGenericException", subtitle: ".raise()") {
-                        NSException(
-                            name: .genericException,
-                            reason: "Test crash",
-                            userInfo: nil
-                        ).raise()
+        List {
+            Section("Logging") {
+                Button("Log 10 events") {
+                    let logger = Logger(label: "DebugView")
+                    for i in 1...10 {
+                        logger.info("Debug event \(logCount + i)")
                     }
+                    logCount += 10
                 }
 
-                Section("Signal") {
-                    row("SIGABRT", subtitle: "abort()") { abort() }
-                    row("SIGTRAP", subtitle: "fatalError()") { fatalError("Test crash") }
-                    row("SIGSEGV", subtitle: "Null pointer dereference") {
-                        UnsafeMutablePointer<Int>(bitPattern: 0x1)!.pointee = 0
-                    }
-                    row("SIGFPE", subtitle: "raise(SIGFPE)") { raise(SIGFPE) }
-                    row("SIGBUS", subtitle: "raise(SIGBUS)") { raise(SIGBUS) }
-                    row("SIGILL", subtitle: "raise(SIGILL)") { raise(SIGILL) }
+                Button("Log warning") {
+                    Logger(label: "DebugView").warning("Test warning from debug menu")
                 }
-            }
-            .navigationTitle("Crash Test")
-            .navigationBarTitleDisplayMode(.inline)
-        }
-    }
 
-    private func row(
-        _ title: String,
-        subtitle: String,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                action()
-            }
-        } label: {
-            VStack(alignment: .leading) {
-                Text(title)
-                Text(subtitle)
-                    .font(.caption)
+                Button("Log error") {
+                    Logger(label: "DebugView").error("Test error from debug menu")
+                }
+
+                Text("Logged: \(logCount) events")
                     .foregroundStyle(.secondary)
             }
-        }
-    }
-}
 
-#Preview {
-    CrashTestView()
+            Section("Metrics") {
+                Button("Increment counter") {
+                    Counter(label: "debug_counter").increment()
+                    metricCount += 1
+                }
+
+                Button("Record timer (1s)") {
+                    Timer(label: "debug_timer").recordSeconds(1.0)
+                    metricCount += 1
+                }
+
+                Text("Recorded: \(metricCount) metrics")
+                    .foregroundStyle(.secondary)
+            }
+
+            Section("Crash") {
+                Button("NSGenericException") {
+                    NSException(name: .genericException, reason: "Test crash", userInfo: nil).raise()
+                }
+
+                Button("SIGABRT") {
+                    abort()
+                }
+
+                Button("Fatal Error") {
+                    fatalError("Test fatal error")
+                }
+            }
+        }
+        .navigationTitle("Debug")
+    }
 }

@@ -53,10 +53,10 @@ struct ContentView: View {
                 .accessibilityIdentifier("HistoryTab")
 
             if isBeta {
-                CrashTestView()
+                DebugView()
                     .tabItem {
                         Image(systemName: "ant")
-                        Text("Crash")
+                        Text("Debug")
                     }
                     .tag(2)
             }
