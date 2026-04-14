@@ -14,6 +14,7 @@ struct NotesField: View {
 
     var body: some View {
         TextField("Add notes", text: $record.notes, axis: .vertical)
+            .accessibilityIdentifier("NotesField")
             .toolbar {
                 if isFocused {
                     ToolbarItemGroup(placement: .keyboard) {

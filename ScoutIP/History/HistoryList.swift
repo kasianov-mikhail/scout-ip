@@ -107,6 +107,7 @@ struct HistoryList: View {
             .listStyle(.plain)
             .environment(\.editMode, $editMode)
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            .accessibilityIdentifier("HistorySearchField")
             .keyboardType(.numberPad)
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
