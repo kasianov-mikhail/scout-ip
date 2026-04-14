@@ -1,15 +1,6 @@
 {
-  "originHash" : "8146b52b686ef86b233426688ef013d889a0bca91c7c717e1e3488ea17903620",
+  "originHash" : "44d1b9ba7f2d6b67a9ddf576ef2a3ee25a9adac30ca33f7570463850a2bf16ec",
   "pins" : [
-    {
-      "identity" : "scout",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kasianov-mikhail/scout",
-      "state" : {
-        "branch" : "main",
-        "revision" : "82d68de8e4ab2430d2ce5da1dd7baf3c281f3de3"
-      }
-    },
     {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
