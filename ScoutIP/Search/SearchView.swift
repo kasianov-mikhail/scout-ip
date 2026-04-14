@@ -25,7 +25,9 @@ struct SearchView: View {
       case .refresh:
         searchButton(enabled: false)
       case .load:
-        ProgressView()
+        Image(systemName: "globe")
+          .symbolEffect(.rotate, isActive: true)
+          .foregroundStyle(.blue)
       }
     }
     .buttonStyle(.plain)
