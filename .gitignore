@@ -65,3 +65,6 @@ Secrets.json
 
 # MacOS
 .DS_Store
+
+# Secrets
+Secrets.json
