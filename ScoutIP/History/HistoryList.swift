@@ -78,7 +78,11 @@ struct HistoryList: View {
       .overlay {
         if history.isEmpty {
           VStack(spacing: 8) {
-            Text("NO DATA")
+            EmptyStateView(
+              icon: "clock.arrow.circlepath",
+              title: "NO DATA",
+              subtitle: "Search for an IP to see history"
+            )
               .font(.system(size: 14, weight: .medium))
 
             if records.count > 0 {

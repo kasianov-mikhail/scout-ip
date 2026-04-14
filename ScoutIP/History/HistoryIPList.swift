@@ -32,10 +32,11 @@ struct HistoryIPList: View {
     }
     .overlay {
       if records.isEmpty {
-        Text("NO DATA")
-          .font(.system(size: 14, weight: .medium, design: .default))
-          .foregroundColor(.gray)
-          .frame(maxHeight: .infinity)
+        EmptyStateView(
+          icon: "magnifyingglass",
+          title: "NO DATA",
+          subtitle: "No records for this IP"
+        )
       }
     }
     .toolbar {
