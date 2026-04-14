@@ -10,12 +10,18 @@ import UIKit
 @MainActor var shortcut: String?
 
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
-    func scene(_ scene: UIScene,willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        shortcut = connectionOptions.shortcutItem?.type
-    }
+  func scene(
+    _ scene: UIScene, willConnectTo session: UISceneSession,
+    options connectionOptions: UIScene.ConnectionOptions
+  ) {
+    shortcut = connectionOptions.shortcutItem?.type
+  }
 
-    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        shortcut = shortcutItem.type
-        completionHandler(true)
-    }
+  func windowScene(
+    _ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem,
+    completionHandler: @escaping (Bool) -> Void
+  ) {
+    shortcut = shortcutItem.type
+    completionHandler(true)
+  }
 }

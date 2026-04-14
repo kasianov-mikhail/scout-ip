@@ -8,93 +8,93 @@
 import SwiftUI
 
 struct SearchView: View {
-    @Environment(\.managedObjectContext) var viewContext
+  @Environment(\.managedObjectContext) var viewContext
 
-    @Binding var state: UpdateState
-    @ObservedObject var ipInfo: IPInfo
-    @State private var text = ""
-    @FocusState private var isFocused: Bool
+  @Binding var state: UpdateState
+  @ObservedObject var ipInfo: IPInfo
+  @State private var text = ""
+  @FocusState private var isFocused: Bool
 
-    var body: some View {
-        HStack {
-            searchField
+  var body: some View {
+    HStack {
+      searchField
 
-            switch state {
-            case .idle:
-                searchButton(enabled: ipInfo.allowSearch)
-            case .refresh:
-                searchButton(enabled: false)
-            case .load:
-                ProgressView()
+      switch state {
+      case .idle:
+        searchButton(enabled: ipInfo.allowSearch)
+      case .refresh:
+        searchButton(enabled: false)
+      case .load:
+        ProgressView()
+      }
+    }
+    .buttonStyle(.plain)
+    .frame(height: 44)
+  }
+
+  private var searchField: some View {
+    TextField("My IP", text: $text)
+      .foregroundStyle(ipInfo.ip.isPartialIP ? Color.primary : Color.red)
+      .toolbar {
+        ToolbarItemGroup(placement: .keyboard) {
+          if isFocused {
+            if !ipInfo.ip.isEmpty {
+              Button("Clear") {
+                ipInfo.ip = ""
+              }
+              .padding(.horizontal)
+              .fixedSize()
             }
+
+            Spacer()
+
+            if ipInfo.allowSearch && state == .idle {
+              Button("Search") {
+                isFocused = false
+                searchIP()
+              }
+              .padding(.horizontal)
+              .fixedSize()
+            }
+          }
         }
-        .buttonStyle(.plain)
-        .frame(height: 44)
-    }
-
-    private var searchField: some View {
-        TextField("My IP", text: $text)
-            .foregroundStyle(ipInfo.ip.isPartialIP ? Color.primary : Color.red)
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    if isFocused {
-                        if !ipInfo.ip.isEmpty {
-                            Button("Clear") {
-                                ipInfo.ip = ""
-                            }
-                            .padding(.horizontal)
-                            .fixedSize()
-                        }
-
-                        Spacer()
-
-                        if ipInfo.allowSearch && state == .idle {
-                            Button("Search") {
-                                isFocused = false
-                                searchIP()
-                            }
-                            .padding(.horizontal)
-                            .fixedSize()
-                        }
-                    }
-                }
-            }
-            .onTapGesture {
-                isFocused = true
-            }
-            .onChange(of: text) {
-                ipInfo.ip = text.replacingOccurrences(of: ",", with: ".")
-            }
-            .onChange(of: ipInfo.ip) {
-                text = ipInfo.ip
-            }
-            .onChange(of: state) {
-                if state != .idle {
-                    isFocused = false
-                }
-            }
-            .focused($isFocused)
-            .foregroundStyle(.blue)
-            .keyboardType(.decimalPad)
-            .accessibilityIdentifier("IP Search Field")
-    }
-
-    private func searchButton(enabled: Bool) -> some View {
-        Button(action: searchIP) {
-            Image(systemName: "magnifyingglass")
+      }
+      .onTapGesture {
+        isFocused = true
+      }
+      .onChange(of: text) {
+        ipInfo.ip = text.replacingOccurrences(of: ",", with: ".")
+      }
+      .onChange(of: ipInfo.ip) {
+        text = ipInfo.ip
+      }
+      .onChange(of: state) {
+        if state != .idle {
+          isFocused = false
         }
-        .buttonStyle(.plain)
-        .disabled(!enabled)
-        .foregroundStyle(enabled ? .blue : .gray)
-        .accessibilityIdentifier("IP Search Button")
-    }
+      }
+      .focused($isFocused)
+      .foregroundStyle(.blue)
+      .keyboardType(.decimalPad)
+      .accessibilityIdentifier("IP Search Field")
+  }
 
-    private func searchIP() {
-        Task {
-            state = .load
-            await ipInfo.record(context: viewContext)
-            state = .idle
-            requestReview()
-        }
+  private func searchButton(enabled: Bool) -> some View {
+    Button(action: searchIP) {
+      Image(systemName: "magnifyingglass")
     }
+    .buttonStyle(.plain)
+    .disabled(!enabled)
+    .foregroundStyle(enabled ? .blue : .gray)
+    .accessibilityIdentifier("IP Search Button")
+  }
+
+  private func searchIP() {
+    Task {
+      state = .load
+      await ipInfo.record(context: viewContext)
+      state = .idle
+      requestReview()
+    }
+  }
 }

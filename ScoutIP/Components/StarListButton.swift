@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct StarListButton: View {
-    @Binding var isStarred: Bool
+  @Binding var isStarred: Bool
 
-    var body: some View {
-        Button {
-            isStarred.toggle()
-        } label: {
-            Image(systemName: "list.star")
-        }
-        .buttonStyle(.plain)
-        .foregroundColor(isStarred ? .blue : .secondary)
+  var body: some View {
+    Button {
+      isStarred.toggle()
+    } label: {
+      Image(systemName: "list.star")
     }
+    .buttonStyle(.plain)
+    .foregroundColor(isStarred ? .blue : .secondary)
+  }
 }

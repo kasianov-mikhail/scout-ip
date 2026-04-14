@@ -10,23 +10,24 @@ import Logging
 import Metrics
 
 struct IPLookupTracker {
-    let source: TrackerSource
-    
-    private let networkLogger = Logger(label: "ScoutIP.Network")
-    
-    func lookupStarted() {
-        networkLogger.trace("IPLookupStarted", metadata: ["source": "\(source.rawValue)"])
-    }
+  let source: TrackerSource
 
-    func success(duration start: DispatchTime) {
-        Timer(label: "ip.lookup.duration").recordInterval(since: start)
-        Counter(label: "ip.lookup.success.count").increment()
-        networkLogger.info("IPLookupSucceeded", metadata: ["source": "\(source.rawValue)"])
-    }
+  private let networkLogger = Logger(label: "ScoutIP.Network")
 
-    func failure(duration start: DispatchTime, error: Error) {
-        Timer(label: "ip.lookup.duration").recordInterval(since: start)
-        Counter(label: "ip.lookup.failure.count").increment()
-        networkLogger.error("IPLookupFailed", metadata: ["source": "\(source.rawValue)", "error": "\(error)"])
-    }
+  func lookupStarted() {
+    networkLogger.trace("IPLookupStarted", metadata: ["source": "\(source.rawValue)"])
+  }
+
+  func success(duration start: DispatchTime) {
+    Timer(label: "ip.lookup.duration").recordInterval(since: start)
+    Counter(label: "ip.lookup.success.count").increment()
+    networkLogger.info("IPLookupSucceeded", metadata: ["source": "\(source.rawValue)"])
+  }
+
+  func failure(duration start: DispatchTime, error: Error) {
+    Timer(label: "ip.lookup.duration").recordInterval(since: start)
+    Counter(label: "ip.lookup.failure.count").increment()
+    networkLogger.error(
+      "IPLookupFailed", metadata: ["source": "\(source.rawValue)", "error": "\(error)"])
+  }
 }

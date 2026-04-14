@@ -12,27 +12,33 @@ import UIKit
 let container = CKContainer(identifier: "iCloud.Logging.Scout.0001")
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        let tracker = AppLifecycleTracker()
-        tracker.launch()
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+  ) -> Bool {
+    let tracker = AppLifecycleTracker()
+    tracker.launch()
 
-        Task {
-            do {
-                try await Scout.setup(container: container)
-            } catch {
-                tracker.scoutSetupFailure(error: error)
-            }
-        }
-
-        return true
+    Task {
+      do {
+        try await Scout.setup(container: container)
+      } catch {
+        tracker.scoutSetupFailure(error: error)
+      }
     }
 
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        let configuration = UISceneConfiguration(
-            name: connectingSceneSession.configuration.name,
-            sessionRole: connectingSceneSession.role
-        )
-        configuration.delegateClass = SceneDelegate.self
-        return configuration
-    }
+    return true
+  }
+
+  func application(
+    _ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession,
+    options: UIScene.ConnectionOptions
+  ) -> UISceneConfiguration {
+    let configuration = UISceneConfiguration(
+      name: connectingSceneSession.configuration.name,
+      sessionRole: connectingSceneSession.role
+    )
+    configuration.delegateClass = SceneDelegate.self
+    return configuration
+  }
 }
