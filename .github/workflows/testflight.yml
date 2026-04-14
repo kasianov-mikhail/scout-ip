@@ -3,6 +3,8 @@ name: TestFlight
 on:
   push:
     branches: [main]
+  repository_dispatch:
+    types: [scout-updated]
   workflow_dispatch:
 
 jobs:
@@ -16,9 +18,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Update Scout dependency
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          xcodebuild -resolvePackageDependencies -project ScoutIP.xcodeproj
+          if git diff --quiet; then
+            echo "No dependency changes"
+          else
+            git add ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+            git commit -m "Update Scout dependency"
+            git push
+          fi
 
       - name: Set build number
         run: agvtool new-version -all $GITHUB_RUN_NUMBER
+
+      - name: Read version
+        id: version
+        run: |
+          VERSION=$(grep -m1 MARKETING_VERSION ScoutIP.xcodeproj/project.pbxproj | sed 's/.*= //;s/;//;s/ //g')
+          echo "value=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Write Secrets.json
         run: printf '{"IPINFO_KEY":"%s"}' "$IPINFO_KEY" > ScoutIP/Resources/Secrets.json
@@ -82,12 +104,18 @@ jobs:
             -exportPath $RUNNER_TEMP/export
 
       - name: Upload to TestFlight
+        id: upload
         run: |
           xcrun altool --upload-app \
             -f $RUNNER_TEMP/export/ScoutIP.ipa \
             --type ios \
             --apiKey $APP_STORE_CONNECT_KEY_ID \
             --apiIssuer $APP_STORE_CONNECT_ISSUER_ID
+
+      - name: Tag build
+        run: |
+          git tag "v${{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
+          git push origin "v${{ steps.version.outputs.value }}-$GITHUB_RUN_NUMBER"
 
       - name: Clean up
         if: always()
