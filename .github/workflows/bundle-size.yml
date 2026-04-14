@@ -13,14 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Write Secrets.json
-        run: printf '{"IPINFO_KEY":"%s"}' "$IPINFO_KEY" > ScoutIP/Resources/Secrets.json
-        env:
-          IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
-
       - name: Build for simulator
         run: |
           xcodebuild build \
+            IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -configuration Release \
