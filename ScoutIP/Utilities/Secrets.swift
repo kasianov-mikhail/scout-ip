@@ -8,42 +8,29 @@
 import Foundation
 
 enum Secrets {
-    static let resource = "Secrets"
 
     enum Error: LocalizedError {
-        case missingResource
-        case wrongFormat
+        case missingKey(String)
 
         var errorDescription: String? {
             switch self {
-            case .missingResource:
-                "\(resource).json is missing"
-            case .wrongFormat:
-                "\(resource).json has the wrong format. Expected a dictionary of string key-value pairs."
+            case .missingKey(let key):
+                "\(key) is not configured"
             }
         }
 
         var recoverySuggestion: String? {
             switch self {
-            case .missingResource:
-                "Add a \(resource).json file to the main bundle."
-            case .wrongFormat:
-                "Fix the format of \(resource).json to be a dictionary of string key-value pairs."
+            case .missingKey(let key):
+                "Set \(key) in Secrets.xcconfig or pass it as a build setting."
             }
         }
     }
 
-    static func dictionary() throws -> [String: String] {
-        guard let path = Bundle.main.path(forResource: resource, ofType: "json") else {
-            throw Error.missingResource
+    static func value(for key: String) throws -> String {
+        guard let value = Bundle.main.infoDictionary?[key] as? String, !value.isEmpty else {
+            throw Error.missingKey(key)
         }
-
-        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: String] else {
-            throw Error.wrongFormat
-        }
-
-        return json
+        return value
     }
 }
