@@ -32,6 +32,13 @@ struct InfoView: View {
                 Text(pair.value).font(.system(size: 16)).multilineTextAlignment(.trailing)
               }
               .textSelection(.enabled)
+              .contextMenu {
+                Button {
+                  UIPasteboard.general.string = pair.value
+                } label: {
+                  Label("Copy \(pair.key)", systemImage: "doc.on.doc")
+                }
+              }
             }
           }
           Section("Location") {
