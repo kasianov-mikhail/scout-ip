@@ -27,7 +27,7 @@ final class SnapshotTests: XCTestCase {
 
   @MainActor
   func testHistoryScreenSnapshot() {
-    app.tabBars.buttons["History"].tap()
+    app.tabBars.buttons["HistoryTab"].tap()
 
     let screenshot = app.screenshot()
     let attachment = XCTAttachment(screenshot: screenshot)
@@ -55,7 +55,7 @@ final class SnapshotTests: XCTestCase {
     app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
-    app.tabBars.buttons["History"].tap()
+    app.tabBars.buttons["HistoryTab"].tap()
 
     let screenshot = app.screenshot()
     let attachment = XCTAttachment(screenshot: screenshot)
