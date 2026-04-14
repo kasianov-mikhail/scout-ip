@@ -45,6 +45,14 @@ struct HistoryRow: View {
       }
       .tint(.red)
     }
+    .swipeActions(edge: .leading) {
+      Button {
+        toggleFavorite()
+      } label: {
+        Image(systemName: isFavorite ? "star.slash" : "star.fill")
+      }
+      .tint(.yellow)
+    }
     .confirmationDialog("Are your sure?", isPresented: $isConfirmationPresented) {
       Button("Delete", role: .destructive) {
         withAnimation {
@@ -64,6 +72,17 @@ struct HistoryRow: View {
     }
 
     return string
+  }
+
+  var isFavorite: Bool {
+    item.records.contains(where: \.isFavorite)
+  }
+
+  func toggleFavorite() {
+    for record in item.records {
+      record.isFavorite = !isFavorite
+    }
+    try? viewContext.save()
   }
 
   func hide() {
