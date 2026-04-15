@@ -8,6 +8,7 @@
 import CloudKit
 import Scout
 import SwiftUI
+import NonExistentModule
 
 enum UpdateState {
   case idle
