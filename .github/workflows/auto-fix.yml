@@ -32,4 +32,3 @@ jobs:
             3. If the fix is in code or CI config, make the changes and create a PR targeting the failed branch
             4. If the failure is environmental (network, Apple services, flaky test), just post a summary comment on the run
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          allowedTools: "Bash,Read,Write,Edit,Glob,Grep"
