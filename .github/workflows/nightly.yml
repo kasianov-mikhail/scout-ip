@@ -25,8 +25,27 @@ jobs:
             echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Trigger TestFlight
+      - name: Check upload limit
         if: steps.changes.outputs.has_changes == 'true'
+        id: limit
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          LAST_RUN=$(gh run list --workflow testflight.yml --limit 1 --json conclusion,createdAt --jq '.[0]')
+          CONCLUSION=$(echo "$LAST_RUN" | jq -r '.conclusion')
+          CREATED=$(echo "$LAST_RUN" | jq -r '.createdAt')
+          TODAY=$(date -u +%Y-%m-%d)
+
+          if [ "$CONCLUSION" = "failure" ] && [[ "$CREATED" == "$TODAY"* ]]; then
+            LOGS=$(gh run list --workflow testflight.yml --limit 1 --json databaseId --jq '.[0].databaseId')
+            if gh run view "$LOGS" --log 2>/dev/null | grep -q "Upload limit"; then
+              echo "rate_limited=true" >> $GITHUB_OUTPUT
+              echo "Upload limit reached today, skipping"
+            fi
+          fi
+
+      - name: Trigger TestFlight
+        if: steps.changes.outputs.has_changes == 'true' && steps.limit.outputs.rate_limited != 'true'
         run: gh workflow run testflight.yml --repo ${{ github.repository }}
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
