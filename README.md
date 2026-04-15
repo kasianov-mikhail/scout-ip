@@ -2,6 +2,7 @@
 
 [![Build Matrix](https://github.com/kasianov-mikhail/scout-ip/actions/workflows/build-matrix.yml/badge.svg)](https://github.com/kasianov-mikhail/scout-ip/actions/workflows/build-matrix.yml)
 [![TestFlight](https://github.com/kasianov-mikhail/scout-ip/actions/workflows/testflight.yml/badge.svg)](https://github.com/kasianov-mikhail/scout-ip/actions/workflows/testflight.yml)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Platform](https://img.shields.io/badge/platform-iOS%2017%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-6.0-orange)
