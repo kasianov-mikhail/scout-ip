@@ -5,6 +5,10 @@ on:
     types: [scout-updated]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: macos-26
@@ -130,6 +134,9 @@ jobs:
             echo "$OUTPUT"
             if echo "$OUTPUT" | grep -q "CFBundleShortVersionString"; then
               echo "needs_bump=true" >> $GITHUB_OUTPUT
+            elif echo "$OUTPUT" | grep -q "agreement"; then
+              echo "::error::A required agreement is missing or has expired. Accept it at https://appstoreconnect.apple.com/agreements"
+              exit 1
             else
               exit 1
             fi
