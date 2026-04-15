@@ -5,6 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import CoreData
 import Foundation
 
 enum MockProvider {
@@ -21,4 +22,19 @@ enum MockProvider {
   static let mockOrg = "AS15169 Google LLC"
   static let mockPostal = "94035"
   static let mockTimezone = "America/Los_Angeles"
+}
+
+extension IPObject {
+  @MainActor static func mock(ip: String, context: NSManagedObjectContext) -> IPObject {
+    let object = IPObject(context: context)
+    object.ip = ip
+    object.city = MockProvider.mockCity
+    object.region = MockProvider.mockRegion
+    object.country = MockProvider.mockCountry
+    object.loc = MockProvider.mockLocation
+    object.org = MockProvider.mockOrg
+    object.postal = MockProvider.mockPostal
+    object.timezone = MockProvider.mockTimezone
+    return object
+  }
 }

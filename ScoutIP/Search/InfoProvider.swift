@@ -33,6 +33,10 @@ private struct IPItem: Codable {
   let context: NSManagedObjectContext
 
   func ipObject() async throws -> IPObject {
+    if MockProvider.isMocking {
+      return IPObject.mock(ip: ip.isEmpty ? MockProvider.mockIP : ip, context: context)
+    }
+
     guard let url = URL(string: "https://ipinfo.io/\(ip)?token=\(token)") else {
       throw IPError(ip: ip)
     }

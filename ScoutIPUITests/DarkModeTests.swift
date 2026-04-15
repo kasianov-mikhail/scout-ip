@@ -17,7 +17,7 @@ final class DarkModeTests: XCTestCase {
 
   @MainActor
   func testLaunchInDarkMode() {
-    app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
+    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
     XCTAssertTrue(app.tabBars.buttons["Info"].waitForExistence(timeout: 2))
@@ -26,7 +26,7 @@ final class DarkModeTests: XCTestCase {
 
   @MainActor
   func testTabNavigationInDarkMode() {
-    app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
+    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
     app.tabBars.buttons["History"].tap()
@@ -38,7 +38,7 @@ final class DarkModeTests: XCTestCase {
 
   @MainActor
   func testSearchInDarkMode() {
-    app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
+    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
     let searchField = app.textFields["IP Search Field"]
