@@ -46,11 +46,6 @@
 			path = ScoutIP;
 			sourceTree = "<group>";
 		};
-		7797ADED2F8ED8DB00F557D4 /* ScoutIPUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ScoutIPUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +72,6 @@
 			children = (
 				775BB1982CE4B2AC00096886 /* ScoutIP */,
 				77AC0B902CE582B200C61FA5 /* README.md */,
-				7797ADED2F8ED8DB00F557D4 /* ScoutIPUITests */,
 				777F93DF2E09A9BC00D9D35C /* Frameworks */,
 				775BB1972CE4B2AC00096886 /* Products */,
 			);
@@ -137,9 +131,6 @@
 			);
 			dependencies = (
 				7797ADF32F8ED8DB00F557D4 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				7797ADED2F8ED8DB00F557D4 /* ScoutIPUITests */,
 			);
 			name = ScoutIPUITests;
 			packageProductDependencies = (
