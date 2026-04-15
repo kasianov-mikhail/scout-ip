@@ -42,6 +42,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Install xcbeautify
+        run: brew install xcbeautify
+
       - name: Prepare simulator
         run: |
           if ! xcrun simctl list devices available | grep -q "iPhone"; then
@@ -50,8 +53,10 @@ jobs:
 
       - name: Build
         run: |
+          set -o pipefail
           xcodebuild build \
             IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
-            -destination 'platform=iOS Simulator,name=${{ matrix.device }}'
+            -destination 'platform=iOS Simulator,name=${{ matrix.device }}' \
+            | xcbeautify
