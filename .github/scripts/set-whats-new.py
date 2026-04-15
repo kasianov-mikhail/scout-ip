@@ -46,7 +46,7 @@ def api_request(url, method="GET", body=None):
 
 
 def find_build():
-    for attempt in range(10):
+    for attempt in range(20):
         try:
             resp = api_request(
                 f"https://api.appstoreconnect.apple.com/v1/builds"
