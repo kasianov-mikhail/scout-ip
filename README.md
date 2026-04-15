@@ -1,5 +1,8 @@
 # Scout IP
 
+[![Build Matrix](https://github.com/kasianov-mikhail/scout-ip/actions/workflows/build-matrix.yml/badge.svg)](https://github.com/kasianov-mikhail/scout-ip/actions/workflows/build-matrix.yml)
+[![TestFlight](https://github.com/kasianov-mikhail/scout-ip/actions/workflows/testflight.yml/badge.svg)](https://github.com/kasianov-mikhail/scout-ip/actions/workflows/testflight.yml)
+
 A companion app for the [Scout](https://github.com/kasianov-mikhail/scout) package. Scout IP uses your device's public IP address to generate real-world logs, metrics, and activity data — providing a live environment to test and verify Scout's features through its built-in dashboard.
 
 ## Table of Contents
