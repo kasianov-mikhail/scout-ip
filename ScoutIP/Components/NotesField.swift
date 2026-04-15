@@ -8,41 +8,41 @@
 import SwiftUI
 
 struct NotesField: View {
-  @ObservedObject var record: IPRecord
-  @Environment(\.managedObjectContext) var viewContext
-  @FocusState private var isFocused: Bool
+    @ObservedObject var record: IPRecord
+    @Environment(\.managedObjectContext) var viewContext
+    @FocusState private var isFocused: Bool
 
-  var body: some View {
-    TextField("Add notes", text: $record.notes, axis: .vertical)
-      .accessibilityIdentifier("NotesField")
-      .toolbar {
-        if isFocused {
-          ToolbarItemGroup(placement: .keyboard) {
-            if !record.notes.isEmpty {
-              Button("Clear") {
-                record.notes = ""
-              }
-            }
+    var body: some View {
+        TextField("Add notes", text: $record.notes, axis: .vertical)
+            .accessibilityIdentifier("NotesField")
+            .toolbar {
+                if isFocused {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        if !record.notes.isEmpty {
+                            Button("Clear") {
+                                record.notes = ""
+                            }
+                        }
 
-            Spacer()
+                        Spacer()
 
-            if !record.changedValues().isEmpty {
-              Button("Save") {
-                do {
-                  try viewContext.save()
-                } catch {
+                        if !record.changedValues().isEmpty {
+                            Button("Save") {
+                                do {
+                                    try viewContext.save()
+                                } catch {
+                                }
+
+                                isFocused = false
+                            }
+                        }
+                    }
                 }
-
-                isFocused = false
-              }
             }
-          }
-        }
-      }
-      .autocorrectionDisabled()
-      .keyboardType(.alphabet)
-      .lineLimit(5)
-      .frame(minHeight: 44)
-      .focused($isFocused)
-  }
+            .autocorrectionDisabled()
+            .keyboardType(.alphabet)
+            .lineLimit(5)
+            .frame(minHeight: 44)
+            .focused($isFocused)
+    }
 }

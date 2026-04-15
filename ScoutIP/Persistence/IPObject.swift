@@ -10,38 +10,38 @@ import Foundation
 
 class IPObject: NSManagedObject, Identifiable {
 
-  @NSManaged var city: String
-  @NSManaged var country: String
-  @NSManaged var ip: String
-  @NSManaged var loc: String
-  @NSManaged var org: String
-  @NSManaged var postal: String
-  @NSManaged var region: String
-  @NSManaged var timezone: String
+    @NSManaged var city: String
+    @NSManaged var country: String
+    @NSManaged var ip: String
+    @NSManaged var loc: String
+    @NSManaged var org: String
+    @NSManaged var postal: String
+    @NSManaged var region: String
+    @NSManaged var timezone: String
 
-  var pairs: KeyValuePairs<String, String> {
-    [
-      "IP": ip,
-      "City": city,
-      "Region": region,
-      "Country": "\(country.emoji) \(country)",
-      "Location": loc.replacingOccurrences(of: ",", with: ", "),
-      "Organisation": org,
-      "Postal": postal,
-      "Timezone": timezone,
-    ]
-  }
-
-  var params: [String: String] {
-    pairs.reduce(into: [:]) { result, pair in
-      result[pair.key] = pair.value
+    var pairs: KeyValuePairs<String, String> {
+        [
+            "IP": ip,
+            "City": city,
+            "Region": region,
+            "Country": "\(country.emoji) \(country)",
+            "Location": loc.replacingOccurrences(of: ",", with: ", "),
+            "Organisation": org,
+            "Postal": postal,
+            "Timezone": timezone,
+        ]
     }
-  }
 
-  var shareDescription: String {
-    pairs.reduce(into: "") { result, pair in
-      result += "\(pair.key) – \(pair.value)\n"
+    var params: [String: String] {
+        pairs.reduce(into: [:]) { result, pair in
+            result[pair.key] = pair.value
+        }
     }
-    .trimmingCharacters(in: .newlines)
-  }
+
+    var shareDescription: String {
+        pairs.reduce(into: "") { result, pair in
+            result += "\(pair.key) – \(pair.value)\n"
+        }
+        .trimmingCharacters(in: .newlines)
+    }
 }

@@ -8,24 +8,24 @@
 import SwiftUI
 
 struct SkeletonView: View {
-  @State private var animating = false
+    @State private var animating = false
 
-  var body: some View {
-    Section("Info") {
-      ForEach(["IP", "City", "Region", "Country"], id: \.self) { key in
-        HStack {
-          Text(key)
-          Spacer()
-          RoundedRectangle(cornerRadius: 4)
-            .fill(Color.gray.opacity(animating ? 0.3 : 0.15))
-            .frame(width: CGFloat.random(in: 60...120), height: 16)
+    var body: some View {
+        Section("Info") {
+            ForEach(["IP", "City", "Region", "Country"], id: \.self) { key in
+                HStack {
+                    Text(key)
+                    Spacer()
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.gray.opacity(animating ? 0.3 : 0.15))
+                        .frame(width: CGFloat.random(in: 60...120), height: 16)
+                }
+            }
         }
-      }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
+                animating = true
+            }
+        }
     }
-    .onAppear {
-      withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
-        animating = true
-      }
-    }
-  }
 }

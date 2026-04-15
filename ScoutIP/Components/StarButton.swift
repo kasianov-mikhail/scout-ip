@@ -8,24 +8,24 @@
 import SwiftUI
 
 struct StarButton: View {
-  @ObservedObject var record: IPRecord
-  @Environment(\.managedObjectContext) var viewContext
+    @ObservedObject var record: IPRecord
+    @Environment(\.managedObjectContext) var viewContext
 
-  var body: some View {
-    Button(action: toggle) {
-      Image(systemName: record.isFavorite ? "star.fill" : "star")
+    var body: some View {
+        Button(action: toggle) {
+            Image(systemName: record.isFavorite ? "star.fill" : "star")
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("StarButton")
     }
-    .buttonStyle(.plain)
-    .accessibilityIdentifier("StarButton")
-  }
 
-  func toggle() {
-    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-    record.isFavorite.toggle()
+    func toggle() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        record.isFavorite.toggle()
 
-    do {
-      try viewContext.save()
-    } catch {
+        do {
+            try viewContext.save()
+        } catch {
+        }
     }
-  }
 }

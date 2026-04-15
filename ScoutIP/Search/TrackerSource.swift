@@ -8,6 +8,6 @@
 import Foundation
 
 enum TrackerSource: String {
-  case user
-  case manual
+    case user
+    case manual
 }

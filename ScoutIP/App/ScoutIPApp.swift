@@ -9,14 +9,14 @@ import SwiftUI
 import UIKit
 
 @main struct ScoutIPApp: App {
-  @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-  var body: some Scene {
-    WindowGroup {
-      ContentView().environment(
-        \.managedObjectContext,
-        PersistenceController.shared.container.viewContext
-      )
+    var body: some Scene {
+        WindowGroup {
+            ContentView().environment(
+                \.managedObjectContext,
+                PersistenceController.shared.container.viewContext
+            )
+        }
     }
-  }
 }
