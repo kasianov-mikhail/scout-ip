@@ -21,14 +21,14 @@ final class ScoutIPUITests: XCTestCase {
 
   @MainActor
   func testTabNavigation() {
-    XCTAssertTrue(app.tabBars.buttons["InfoTab"].exists)
-    XCTAssertTrue(app.tabBars.buttons["HistoryTab"].exists)
+    XCTAssertTrue(app.tabBars.buttons["Info"].exists)
+    XCTAssertTrue(app.tabBars.buttons["History"].exists)
 
-    app.tabBars.buttons["HistoryTab"].tap()
-    XCTAssertTrue(app.navigationBars["HistoryTab"].waitForExistence(timeout: 2))
+    app.tabBars.buttons["History"].tap()
+    XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 2))
 
-    app.tabBars.buttons["InfoTab"].tap()
-    XCTAssertTrue(app.navigationBars["InfoTab"].waitForExistence(timeout: 2))
+    app.tabBars.buttons["Info"].tap()
+    XCTAssertTrue(app.navigationBars["Info"].waitForExistence(timeout: 2))
   }
 
   // MARK: - Search
@@ -50,9 +50,7 @@ final class ScoutIPUITests: XCTestCase {
     let searchButton = app.buttons["IP Search Button"]
     searchButton.tap()
 
-    let predicate = NSPredicate(format: "cells.count > 0")
-    let expectation = XCTNSPredicateExpectation(predicate: predicate, object: app.tables.firstMatch)
-    wait(for: [expectation], timeout: 10)
+    XCTAssertTrue(app.cells.firstMatch.waitForExistence(timeout: 10))
   }
 
   @MainActor
@@ -64,9 +62,7 @@ final class ScoutIPUITests: XCTestCase {
     let searchButton = app.buttons["IP Search Button"]
     searchButton.tap()
 
-    let predicate = NSPredicate(format: "cells.count > 0")
-    let expectation = XCTNSPredicateExpectation(predicate: predicate, object: app.tables.firstMatch)
-    wait(for: [expectation], timeout: 10)
+    XCTAssertTrue(app.cells.firstMatch.waitForExistence(timeout: 10))
   }
 
   // MARK: - History
@@ -76,31 +72,25 @@ final class ScoutIPUITests: XCTestCase {
     // Search first to create a record
     app.buttons["IP Search Button"].tap()
 
-    let predicate = NSPredicate(format: "cells.count > 0")
-    let tableExpectation = XCTNSPredicateExpectation(
-      predicate: predicate, object: app.tables.firstMatch)
-    wait(for: [tableExpectation], timeout: 10)
+    XCTAssertTrue(app.cells.firstMatch.waitForExistence(timeout: 10))
 
     // Switch to History
-    app.tabBars.buttons["HistoryTab"].tap()
+    app.tabBars.buttons["History"].tap()
 
-    let historyPredicate = NSPredicate(format: "cells.count > 0")
-    let historyExpectation = XCTNSPredicateExpectation(
-      predicate: historyPredicate, object: app.tables.firstMatch)
-    wait(for: [historyExpectation], timeout: 5)
+    XCTAssertTrue(app.cells.firstMatch.waitForExistence(timeout: 5))
   }
 
   @MainActor
   func testHistoryFilterSegments() {
-    app.tabBars.buttons["HistoryTab"].tap()
+    app.tabBars.buttons["History"].tap()
 
-    XCTAssertTrue(app.buttons["all"].waitForExistence(timeout: 2))
-    XCTAssertTrue(app.buttons["user"].exists)
-    XCTAssertTrue(app.buttons["search"].exists)
+    XCTAssertTrue(app.buttons["All"].waitForExistence(timeout: 2))
+    XCTAssertTrue(app.buttons["User"].exists)
+    XCTAssertTrue(app.buttons["Search"].exists)
 
-    app.buttons["user"].tap()
-    app.buttons["search"].tap()
-    app.buttons["all"].tap()
+    app.buttons["User"].tap()
+    app.buttons["Search"].tap()
+    app.buttons["All"].tap()
   }
 
   // MARK: - Launch Performance
