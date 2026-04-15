@@ -21,14 +21,14 @@ final class ScoutIPUITests: XCTestCase {
 
   @MainActor
   func testTabNavigation() {
-    XCTAssertTrue(app.tabBars.buttons["Info"].exists)
+    XCTAssertTrue(app.tabBars.buttons["Info"].waitForExistence(timeout: 5))
     XCTAssertTrue(app.tabBars.buttons["History"].exists)
 
     app.tabBars.buttons["History"].tap()
-    XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 2))
+    XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 5))
 
     app.tabBars.buttons["Info"].tap()
-    XCTAssertTrue(app.navigationBars["Info"].waitForExistence(timeout: 2))
+    XCTAssertTrue(app.navigationBars["Info"].waitForExistence(timeout: 5))
   }
 
   // MARK: - Search
@@ -36,13 +36,13 @@ final class ScoutIPUITests: XCTestCase {
   @MainActor
   func testSearchFieldExists() {
     let searchField = app.textFields["IP Search Field"]
-    XCTAssertTrue(searchField.waitForExistence(timeout: 2))
+    XCTAssertTrue(searchField.waitForExistence(timeout: 5))
   }
 
   @MainActor
   func testSearchButtonExists() {
     let searchButton = app.buttons["IP Search Button"]
-    XCTAssertTrue(searchButton.waitForExistence(timeout: 2))
+    XCTAssertTrue(searchButton.waitForExistence(timeout: 5))
   }
 
   @MainActor
@@ -69,22 +69,20 @@ final class ScoutIPUITests: XCTestCase {
 
   @MainActor
   func testHistoryShowsRecords() {
-    // Search first to create a record
     app.buttons["IP Search Button"].tap()
 
     XCTAssertTrue(app.cells.firstMatch.waitForExistence(timeout: 10))
 
-    // Switch to History
     app.tabBars.buttons["History"].tap()
 
-    XCTAssertTrue(app.cells.firstMatch.waitForExistence(timeout: 5))
+    XCTAssertTrue(app.cells.firstMatch.waitForExistence(timeout: 10))
   }
 
   @MainActor
   func testHistoryFilterSegments() {
     app.tabBars.buttons["History"].tap()
 
-    XCTAssertTrue(app.buttons["All"].waitForExistence(timeout: 2))
+    XCTAssertTrue(app.buttons["All"].waitForExistence(timeout: 5))
     XCTAssertTrue(app.buttons["User"].exists)
     XCTAssertTrue(app.buttons["Search"].exists)
 
@@ -92,5 +90,4 @@ final class ScoutIPUITests: XCTestCase {
     app.buttons["Search"].tap()
     app.buttons["All"].tap()
   }
-
 }

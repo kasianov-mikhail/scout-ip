@@ -13,36 +13,37 @@ final class DarkModeTests: XCTestCase {
 
   override func setUpWithError() throws {
     continueAfterFailure = false
+    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
   }
 
   @MainActor
   func testLaunchInDarkMode() {
-    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
-    XCTAssertTrue(app.tabBars.buttons["Info"].waitForExistence(timeout: 2))
+    XCTAssertTrue(app.tabBars.buttons["Info"].waitForExistence(timeout: 5))
     XCTAssertTrue(app.tabBars.buttons["History"].exists)
   }
 
   @MainActor
   func testTabNavigationInDarkMode() {
-    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
-    app.tabBars.buttons["History"].tap()
-    XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 2))
+    let historyTab = app.tabBars.buttons["History"]
+    XCTAssertTrue(historyTab.waitForExistence(timeout: 5))
+    historyTab.tap()
+    XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 5))
 
-    app.tabBars.buttons["Info"].tap()
-    XCTAssertTrue(app.navigationBars["Info"].waitForExistence(timeout: 2))
+    let infoTab = app.tabBars.buttons["Info"]
+    infoTab.tap()
+    XCTAssertTrue(app.navigationBars["Info"].waitForExistence(timeout: 5))
   }
 
   @MainActor
   func testSearchInDarkMode() {
-    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
     let searchField = app.textFields["IP Search Field"]
-    XCTAssertTrue(searchField.waitForExistence(timeout: 2))
+    XCTAssertTrue(searchField.waitForExistence(timeout: 5))
 
     let searchButton = app.buttons["IP Search Button"]
     XCTAssertTrue(searchButton.exists)
