@@ -89,9 +89,6 @@ jobs:
         env:
           APP_STORE_CONNECT_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_KEY_BASE64 }}
 
-      - name: Install xcbeautify
-        run: brew install xcbeautify
-
       - name: Archive
         run: |
           set -o pipefail
