@@ -13,6 +13,7 @@ final class SnapshotTests: XCTestCase {
 
   override func setUpWithError() throws {
     continueAfterFailure = false
+    app.launchArguments += ["-UITestMocking"]
     app.launch()
   }
 
@@ -39,7 +40,7 @@ final class SnapshotTests: XCTestCase {
   @MainActor
   func testInfoScreenDarkModeSnapshot() {
     app.terminate()
-    app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
+    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
     let screenshot = app.screenshot()
@@ -52,7 +53,7 @@ final class SnapshotTests: XCTestCase {
   @MainActor
   func testHistoryScreenDarkModeSnapshot() {
     app.terminate()
-    app.launchArguments += ["-UIUserInterfaceStyle", "Dark"]
+    app.launchArguments += ["-UITestMocking", "-UIUserInterfaceStyle", "Dark"]
     app.launch()
 
     app.tabBars.buttons["History"].tap()

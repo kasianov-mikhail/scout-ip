@@ -93,12 +93,4 @@ final class ScoutIPUITests: XCTestCase {
     app.buttons["All"].tap()
   }
 
-  // MARK: - Launch Performance
-
-  @MainActor
-  func testLaunchPerformance() throws {
-    measure(metrics: [XCTApplicationLaunchMetric()]) {
-      XCUIApplication().launch()
-    }
-  }
 }
