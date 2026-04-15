@@ -5,6 +5,10 @@ on:
     types: [scout-updated]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: macos-26
@@ -38,20 +42,6 @@ jobs:
             git checkout main
             git pull
           fi
-
-      - name: Prepare release notes
-        id: notes
-        run: |
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            NOTES="Scout changes:"
-            NOTES="$NOTES
-          ${{ github.event.client_payload.changes }}"
-          else
-            NOTES=$(git log --format="- %s" -5)
-          fi
-          echo "value<<EOF" >> $GITHUB_OUTPUT
-          echo "$NOTES" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Set build number
         run: agvtool new-version -all $GITHUB_RUN_NUMBER
@@ -130,17 +120,13 @@ jobs:
             echo "$OUTPUT"
             if echo "$OUTPUT" | grep -q "CFBundleShortVersionString"; then
               echo "needs_bump=true" >> $GITHUB_OUTPUT
+            elif echo "$OUTPUT" | grep -q "agreement"; then
+              echo "::error::A required agreement is missing or has expired. Accept it at https://appstoreconnect.apple.com/agreements"
+              exit 1
             else
               exit 1
             fi
           }
-
-      - name: Set What to Test
-        if: steps.upload.outputs.needs_bump != 'true'
-        env:
-          NOTES: ${{ steps.notes.outputs.value }}
-          KEY_PATH: ~/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_KEY_ID }}.p8
-        run: python3 .github/scripts/set-whats-new.py
 
       - name: Bump version via PR
         if: steps.upload.outputs.needs_bump == 'true'
