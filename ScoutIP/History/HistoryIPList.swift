@@ -9,66 +9,66 @@ import CoreData
 import SwiftUI
 
 struct HistoryIPList: View {
-  let records: [IPRecord]
+    let records: [IPRecord]
 
-  @Environment(\.managedObjectContext) var viewContext
-  @AppStorage("star_only") var isStarred = false
+    @Environment(\.managedObjectContext) var viewContext
+    @AppStorage("star_only") var isStarred = false
 
-  var body: some View {
-    List {
-      ForEach(records) { record in
-        NavigationLink(destination: HistoryInfoView(record: record)) {
-          HStack {
-            Text(record.ip).font(.system(size: 17))
-            if !record.notes.isEmpty {
-              Image(systemName: "note.text").foregroundColor(.yellow)
+    var body: some View {
+        List {
+            ForEach(records) { record in
+                NavigationLink(destination: HistoryInfoView(record: record)) {
+                    HStack {
+                        Text(record.ip).font(.system(size: 17))
+                        if !record.notes.isEmpty {
+                            Image(systemName: "note.text").foregroundColor(.yellow)
+                        }
+                        Spacer()
+                        Text(record.dateText).font(.system(size: 16))
+                    }
+                }
             }
-            Spacer()
-            Text(record.dateText).font(.system(size: 16))
-          }
+            .onDelete(perform: delete)
         }
-      }
-      .onDelete(perform: delete)
+        .overlay {
+            if records.isEmpty {
+                EmptyStateView(
+                    icon: "magnifyingglass",
+                    title: "NO DATA",
+                    subtitle: "No records for this IP"
+                )
+            }
+        }
+        .toolbar {
+            if let record = records.first {
+                ShareLink(item: record.object.shareDescription)
+            }
+            StarListButton(isStarred: $isStarred)
+        }
+        .listStyle(.plain)
+        .navigationTitle("IP History")
+        .navigationBarTitleDisplayMode(.inline)
     }
-    .overlay {
-      if records.isEmpty {
-        EmptyStateView(
-          icon: "magnifyingglass",
-          title: "NO DATA",
-          subtitle: "No records for this IP"
-        )
-      }
+
+    func delete(offsets: IndexSet) {
+        withAnimation {
+            let records = offsets.map { self.records[$0] }
+            let recordIDs = records.map(\.objectID)
+            let request = NSBatchDeleteRequest(objectIDs: recordIDs)
+            let tracker = HistoryDeleteTracker()
+
+            do {
+                try viewContext.execute(request)
+                tracker.success(count: records.count)
+
+            } catch {
+                tracker.failure(error: error)
+            }
+
+            NSManagedObjectContext.mergeChanges(
+                fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs],
+                into: [viewContext]
+            )
+        }
     }
-    .toolbar {
-      if let record = records.first {
-        ShareLink(item: record.object.shareDescription)
-      }
-      StarListButton(isStarred: $isStarred)
-    }
-    .listStyle(.plain)
-    .navigationTitle("IP History")
-    .navigationBarTitleDisplayMode(.inline)
-  }
-
-  func delete(offsets: IndexSet) {
-    withAnimation {
-      let records = offsets.map { self.records[$0] }
-      let recordIDs = records.map(\.objectID)
-      let request = NSBatchDeleteRequest(objectIDs: recordIDs)
-      let tracker = HistoryDeleteTracker()
-
-      do {
-        try viewContext.execute(request)
-        tracker.success(count: records.count)
-
-      } catch {
-        tracker.failure(error: error)
-      }
-
-      NSManagedObjectContext.mergeChanges(
-        fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs],
-        into: [viewContext]
-      )
-    }
-  }
 }

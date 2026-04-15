@@ -10,96 +10,96 @@ import Scout
 import SwiftUI
 
 enum UpdateState {
-  case idle
-  case refresh
-  case load
+    case idle
+    case refresh
+    case load
 }
 
 struct ContentView: View {
-  @Environment(\.scenePhase) var scenePhase
-  @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.scenePhase) var scenePhase
+    @Environment(\.managedObjectContext) var viewContext
 
-  @State private var index = 0
-  @State private var state: UpdateState = .idle
-  @State private var isScoutPresented = false
-  @StateObject private var ipInfo = IPInfo()
+    @State private var index = 0
+    @State private var state: UpdateState = .idle
+    @State private var isScoutPresented = false
+    @StateObject private var ipInfo = IPInfo()
 
-  private var isBeta: Bool {
-    #if DEBUG
-      return true
-    #else
-      return Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
-    #endif
-  }
+    private var isBeta: Bool {
+        #if DEBUG
+            return true
+        #else
+            return Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+        #endif
+    }
 
-  private let sceneTracker = AppSceneTracker()
+    private let sceneTracker = AppSceneTracker()
 
-  var body: some View {
-    TabView(selection: $index) {
-      InfoView(state: $state, ipInfo: ipInfo)
-        .tabItem {
-          Image(systemName: "info.circle").environment(\.symbolVariants, .none)
-          Text("Info")
+    var body: some View {
+        TabView(selection: $index) {
+            InfoView(state: $state, ipInfo: ipInfo)
+                .tabItem {
+                    Image(systemName: "info.circle").environment(\.symbolVariants, .none)
+                    Text("Info")
+                }
+                .tag(0)
+                .accessibilityIdentifier("InfoTab")
+
+            HistoryList()
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("History")
+                }
+                .tag(1)
+                .accessibilityIdentifier("HistoryTab")
+
+            if isBeta {
+                DebugView()
+                    .tabItem {
+                        Image(systemName: "ant")
+                        Text("Debug")
+                    }
+                    .tag(2)
+            }
         }
-        .tag(0)
-        .accessibilityIdentifier("InfoTab")
+        .onChange(of: scenePhase) {
+            sceneTracker.scenePhaseChanged(scenePhase)
 
-      HistoryList()
-        .tabItem {
-          Image(systemName: "list.bullet")
-          Text("History")
+            if scenePhase == .active {
+                handleActions()
+            }
         }
-        .tag(1)
-        .accessibilityIdentifier("HistoryTab")
-
-      if isBeta {
-        DebugView()
-          .tabItem {
-            Image(systemName: "ant")
-            Text("Debug")
-          }
-          .tag(2)
-      }
-    }
-    .onChange(of: scenePhase) {
-      sceneTracker.scenePhaseChanged(scenePhase)
-
-      if scenePhase == .active {
-        handleActions()
-      }
-    }
-    .onShake {
-      #if DEBUG
-        isScoutPresented = true
-      #else
-        isScoutPresented =
-          Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
-      #endif
-    }
-    .fullScreenCover(isPresented: $isScoutPresented) {
-      HomeView(container: container)
-    }
-  }
-
-  private func handleActions() {
-    sceneTracker.shortcutTriggered(shortcut)
-
-    if shortcut == "SearchAction" {
-      index = 0
-      ipInfo.ip = ""
-
-      Task {
-        state = .load
-        await ipInfo.record(context: viewContext)
-        state = .idle
-        requestReview()
-      }
+        .onShake {
+            #if DEBUG
+                isScoutPresented = true
+            #else
+                isScoutPresented =
+                    Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+            #endif
+        }
+        .fullScreenCover(isPresented: $isScoutPresented) {
+            HomeView(container: container)
+        }
     }
 
-    if shortcut == "HistoryAction" {
-      index = 1
-    }
+    private func handleActions() {
+        sceneTracker.shortcutTriggered(shortcut)
 
-    shortcut = nil
-  }
+        if shortcut == "SearchAction" {
+            index = 0
+            ipInfo.ip = ""
+
+            Task {
+                state = .load
+                await ipInfo.record(context: viewContext)
+                state = .idle
+                requestReview()
+            }
+        }
+
+        if shortcut == "HistoryAction" {
+            index = 1
+        }
+
+        shortcut = nil
+    }
 }

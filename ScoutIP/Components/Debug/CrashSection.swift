@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct CrashSection: View {
-  var body: some View {
-    Section("Crash") {
-      Button("NSGenericException") {
-        NSException(name: .genericException, reason: "Test crash", userInfo: nil).raise()
-      }
+    var body: some View {
+        Section("Crash") {
+            Button("NSGenericException") {
+                NSException(name: .genericException, reason: "Test crash", userInfo: nil).raise()
+            }
 
-      Button("SIGABRT") {
-        abort()
-      }
+            Button("SIGABRT") {
+                abort()
+            }
 
-      Button("Fatal Error") {
-        fatalError("Test fatal error")
-      }
+            Button("Fatal Error") {
+                fatalError("Test fatal error")
+            }
+        }
     }
-  }
 }
