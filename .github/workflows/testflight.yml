@@ -116,17 +116,22 @@ jobs:
             -f $RUNNER_TEMP/export/ScoutIP.ipa \
             --type ios \
             --apiKey $APP_STORE_CONNECT_KEY_ID \
-            --apiIssuer $APP_STORE_CONNECT_ISSUER_ID 2>&1) && echo "$OUTPUT" || {
-            echo "$OUTPUT"
-            if echo "$OUTPUT" | grep -q "CFBundleShortVersionString"; then
-              echo "needs_bump=true" >> $GITHUB_OUTPUT
-            elif echo "$OUTPUT" | grep -q "agreement"; then
-              echo "::error::A required agreement is missing or has expired. Accept it at https://appstoreconnect.apple.com/agreements"
-              exit 1
-            else
-              exit 1
-            fi
-          }
+            --apiIssuer $APP_STORE_CONNECT_ISSUER_ID 2>&1) || true
+          echo "$OUTPUT"
+          if echo "$OUTPUT" | grep -q "No errors"; then
+            echo "Upload succeeded"
+          elif echo "$OUTPUT" | grep -q "CFBundleShortVersionString"; then
+            echo "needs_bump=true" >> $GITHUB_OUTPUT
+          elif echo "$OUTPUT" | grep -q "agreement"; then
+            echo "::error::A required agreement is missing or has expired. Accept it at https://appstoreconnect.apple.com/agreements"
+            exit 1
+          elif echo "$OUTPUT" | grep -q "Upload limit"; then
+            echo "::error::Upload limit reached. Try again tomorrow."
+            exit 1
+          else
+            echo "::error::Upload failed with unknown error"
+            exit 1
+          fi
 
       - name: Bump version via PR
         if: steps.upload.outputs.needs_bump == 'true'
