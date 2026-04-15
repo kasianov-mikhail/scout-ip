@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Platform](https://img.shields.io/badge/platform-iOS%2017%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-6.0-orange)
-![Version](https://img.shields.io/github/v/tag/kasianov-mikhail/scout-ip?label=version)
+
 
 A companion app for the [Scout](https://github.com/kasianov-mikhail/scout) package. Scout IP uses your device's public IP address to generate real-world logs, metrics, and activity data — providing a live environment to test and verify Scout's features through its built-in dashboard.
 
