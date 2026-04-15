@@ -28,15 +28,6 @@ struct InfoView: View {
                 if state == .load {
                     SkeletonView()
                 } else if let record = ipInfo.record, !record.isDeleted {
-                    if !record.object.country.isEmpty {
-                        HStack {
-                            Spacer()
-                            Text(record.object.country.emoji)
-                                .font(.system(size: 64))
-                            Spacer()
-                        }
-                        .listRowBackground(Color.clear)
-                    }
                     Section("Info") {
                         ForEach(record.object.pairs, id: \.key) { pair in
                             HStack {
