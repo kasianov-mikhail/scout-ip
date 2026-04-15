@@ -23,20 +23,26 @@ class IPInfo: ObservableObject {
     let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
 
     do {
-      let token: String
-      if let keychainToken = KeychainHelper.load(key: "IPINFO_KEY") {
-          token = keychainToken
-      } else if let plistToken = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String, !plistToken.isEmpty {
-          KeychainHelper.save(key: "IPINFO_KEY", value: plistToken)
-          token = plistToken
+      let object: IPObject
+
+      if MockProvider.isMocking {
+        object = IPObject.mock(ip: ip.isEmpty ? MockProvider.mockIP : ip, context: context)
       } else {
-          return
+        let token: String
+        if let keychainToken = KeychainHelper.load(key: "IPINFO_KEY") {
+            token = keychainToken
+        } else if let plistToken = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String, !plistToken.isEmpty {
+            KeychainHelper.save(key: "IPINFO_KEY", value: plistToken)
+            token = plistToken
+        } else {
+            return
+        }
+
+        tracker.requested()
+
+        let provider = InfoProvider(token: token, ip: ip, context: context)
+        object = try await provider.ipObject()
       }
-
-      tracker.requested()
-
-      let provider = InfoProvider(token: token, ip: ip, context: context)
-      let object = try await provider.ipObject()
 
       let record = IPRecord(context: context)
       record.date = Date()
