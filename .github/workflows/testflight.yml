@@ -157,7 +157,7 @@ jobs:
           git commit -m "Bump version to $NEW_VERSION"
           git push -u origin "$BRANCH"
           gh pr create --title "Bump version to $NEW_VERSION" --body "Auto-bump: App Store rejected version $VERSION" --head "$BRANCH" --base main
-          gh pr merge "$BRANCH" --rebase --delete-branch
+          gh pr merge "$BRANCH" --auto --rebase --delete-branch
 
       - name: Tag build
         if: steps.upload.outputs.needs_bump != 'true'
