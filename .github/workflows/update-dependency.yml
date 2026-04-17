@@ -1,0 +1,35 @@
+name: Update Scout
+
+on:
+  repository_dispatch:
+    types: [scout-updated]
+
+jobs:
+  update:
+    runs-on: macos-26
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Update Scout dependency
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          git config user.name "Mikhail Kasianov"
+          git config user.email "96941969+kasianov-mikhail@users.noreply.github.com"
+          rm ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+          xcodebuild -resolvePackageDependencies -project ScoutIP.xcodeproj
+          if git diff --quiet; then
+            echo "No dependency changes"
+          else
+            BRANCH="auto/update-scout-$(date +%s)"
+            git checkout -b "$BRANCH"
+            git add ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+            git commit -m "Update Scout dependency"
+            git push -u origin "$BRANCH"
+            gh pr create --title "Update Scout dependency" --body "Triggered by Scout update" --head "$BRANCH" --base main
+            gh pr merge "$BRANCH" --auto --rebase --delete-branch
+          fi
