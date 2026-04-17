@@ -1,0 +1,42 @@
+name: Debounce TestFlight
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: debounce-testflight
+  cancel-in-progress: true
+
+jobs:
+  debounce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Wait for more changes
+        run: sleep 900
+
+      - name: Check upload limit
+        id: limit
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          LAST_RUN=$(gh run list --repo ${{ github.repository }} --workflow testflight.yml --limit 1 --json conclusion,createdAt --jq '.[0]')
+          CONCLUSION=$(echo "$LAST_RUN" | jq -r '.conclusion')
+          CREATED=$(echo "$LAST_RUN" | jq -r '.createdAt')
+          TODAY=$(date -u +%Y-%m-%d)
+
+          if [ "$CONCLUSION" = "failure" ] && [[ "$CREATED" == "$TODAY"* ]]; then
+            LOGS=$(gh run list --repo ${{ github.repository }} --workflow testflight.yml --limit 1 --json databaseId --jq '.[0].databaseId')
+            if gh run view "$LOGS" --repo ${{ github.repository }} --log 2>/dev/null | grep -q "Upload limit"; then
+              echo "rate_limited=true" >> $GITHUB_OUTPUT
+              echo "Upload limit reached today, skipping"
+            fi
+          fi
+
+      - name: Trigger TestFlight
+        if: steps.limit.outputs.rate_limited != 'true'
+        run: gh workflow run testflight.yml --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
