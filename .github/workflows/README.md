@@ -18,13 +18,3 @@ Bumps the version automatically if App Store Connect rejects it.
 
 Waits 15 minutes after the last push to main, then triggers TestFlight.
 Batches rapid changes into a single build.
-
-## 🔧 Auto Fix
-
-Triggers when Build Matrix fails.
-Runs Claude Code to diagnose the failure and create a fix PR.
-
-## 🔀 Resolve Conflicts
-
-Triggers on push to main.
-Finds open PRs with merge conflicts and runs Claude Code to resolve them.
