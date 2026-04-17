@@ -60,10 +60,3 @@ jobs:
             3. Commit the merge and push
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           claude_args: "--model claude-opus-4-6"
-
-      - name: Request review
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          gh pr merge ${{ matrix.pr }} --disable-auto 2>/dev/null || true
-          gh pr edit ${{ matrix.pr }} --add-reviewer kasianov-mikhail
