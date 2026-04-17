@@ -15,3 +15,7 @@ Waits 15 minutes after the last push to main, then triggers TestFlight. Batches 
 ## Auto Fix
 
 Runs Claude Code to diagnose and fix build failures automatically. Triggers when Build Matrix fails.
+
+## Resolve Conflicts
+
+Triggers on push to main. Finds open PRs with merge conflicts and runs Claude Code to resolve them. Requests review after resolving.
