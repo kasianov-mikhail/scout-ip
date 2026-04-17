@@ -18,3 +18,5 @@ Bumps the version automatically if App Store Connect rejects it.
 
 Waits 15 minutes after the last push to main, then triggers TestFlight.
 Batches rapid changes into a single build.
+
+<!-- test debounce reset -->
