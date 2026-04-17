@@ -3,10 +3,15 @@
 Lints and builds the app on a matrix of simulators.
 Required to pass before merging.
 
+## 📦 Update Scout
+
+Triggers on repository_dispatch from scout.
+Updates Package.resolved to the latest scout commit and merges via PR.
+
 ## 🚀 TestFlight
 
 Builds and uploads the app to TestFlight.
-Triggered when the Scout package updates or manually.
+Triggered by Debounce TestFlight or manually.
 Bumps the version automatically if App Store Connect rejects it.
 
 ## ⏳ Debounce TestFlight
