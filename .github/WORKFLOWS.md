@@ -14,4 +14,4 @@ Waits 15 minutes after the last push to main, then triggers TestFlight. Batches 
 
 ## Auto Fix
 
-Currently disabled. Runs Claude Code to diagnose and fix build failures automatically.
+Runs Claude Code to diagnose and fix build failures automatically. Triggers when Build Matrix fails.
