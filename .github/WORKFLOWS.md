@@ -1,5 +1,3 @@
-# Workflows
-
 ## Build Matrix
 
 Lints and builds the app on a matrix of simulators.
