@@ -28,6 +28,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
+          rm ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
           xcodebuild -resolvePackageDependencies -project ScoutIP.xcodeproj
           if git diff --quiet; then
             echo "No dependency changes"
