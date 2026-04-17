@@ -1,8 +1,6 @@
 name: TestFlight
 
 on:
-  repository_dispatch:
-    types: [scout-updated]
   workflow_dispatch:
 
 concurrency:
@@ -22,27 +20,6 @@ jobs:
       - uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_PAT }}
-
-      - name: Update Scout dependency
-        if: github.event_name == 'repository_dispatch'
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          git config user.name "Mikhail Kasianov"
-          git config user.email "96941969+kasianov-mikhail@users.noreply.github.com"
-          rm ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
-          xcodebuild -resolvePackageDependencies -project ScoutIP.xcodeproj
-          if git diff --quiet; then
-            echo "No dependency changes"
-          else
-            BRANCH="auto/update-scout-$(date +%s)"
-            git checkout -b "$BRANCH"
-            git add ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
-            git commit -m "Update Scout dependency"
-            git push -u origin "$BRANCH"
-            gh pr create --title "Update Scout dependency" --body "Triggered by Scout update" --head "$BRANCH" --base main
-            gh pr merge "$BRANCH" --auto --rebase --delete-branch
-          fi
 
       - name: Set build number
         run: agvtool new-version -all $GITHUB_RUN_NUMBER
@@ -143,6 +120,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
+          git config user.name "Mikhail Kasianov"
+          git config user.email "96941969+kasianov-mikhail@users.noreply.github.com"
+
           VERSION=${{ steps.version.outputs.value }}
           MAJOR=$(echo $VERSION | cut -d. -f1)
           MINOR=$(echo $VERSION | cut -d. -f2)
