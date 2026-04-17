@@ -41,9 +41,7 @@ jobs:
             git commit -m "Update Scout dependency"
             git push -u origin "$BRANCH"
             gh pr create --title "Update Scout dependency" --body "Triggered by Scout update" --head "$BRANCH" --base main
-            gh pr merge "$BRANCH" --rebase --delete-branch
-            git checkout main
-            git pull
+            gh pr merge "$BRANCH" --auto --rebase --delete-branch
           fi
 
       - name: Set build number
