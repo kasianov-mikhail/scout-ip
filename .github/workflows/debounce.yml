@@ -22,16 +22,18 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
+          LAST_RUN=$(gh run list --repo ${{ github.repository }} --workflow testflight.yml --limit 1 --json conclusion,createdAt --jq '.[0]')
+          CONCLUSION=$(echo "$LAST_RUN" | jq -r '.conclusion')
+          CREATED=$(echo "$LAST_RUN" | jq -r '.createdAt')
           TODAY=$(date -u +%Y-%m-%d)
-          FAILED_IDS=$(gh run list --repo ${{ github.repository }} --workflow testflight.yml --limit 10 --json databaseId,conclusion,createdAt             --jq "[.[] | select(.conclusion == \"failure\" and (.createdAt | startswith(\"$TODAY\"))) | .databaseId][]")
 
-          for RUN_ID in $FAILED_IDS; do
-            if gh run view "$RUN_ID" --repo ${{ github.repository }} --log 2>/dev/null | grep -q "Upload limit"; then
+          if [ "$CONCLUSION" = "failure" ] && [[ "$CREATED" == "$TODAY"* ]]; then
+            LOGS=$(gh run list --repo ${{ github.repository }} --workflow testflight.yml --limit 1 --json databaseId --jq '.[0].databaseId')
+            if gh run view "$LOGS" --repo ${{ github.repository }} --log 2>/dev/null | grep -q "Upload limit"; then
               echo "rate_limited=true" >> $GITHUB_OUTPUT
-              echo "Upload limit already reached today (run $RUN_ID)"
-              exit 0
+              echo "Upload limit reached today, skipping"
             fi
-          done
+          fi
 
       - name: Trigger TestFlight
         if: steps.limit.outputs.rate_limited != 'true'
