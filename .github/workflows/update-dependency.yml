@@ -25,11 +25,12 @@ jobs:
           if git diff --quiet; then
             echo "No dependency changes"
           else
+            SHA=$(jq -r '.pins[] | select(.identity == "scout") | .state.revision' ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved | cut -c1-7)
             BRANCH="auto/update-scout-$(date +%s)"
             git checkout -b "$BRANCH"
             git add ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
-            git commit -m "Update Scout dependency"
+            git commit -m "Update Scout dependency to $SHA"
             git push -u origin "$BRANCH"
-            gh pr create --title "Update Scout dependency" --body "Triggered by Scout update" --head "$BRANCH" --base main
+            gh pr create --title "Update Scout dependency to $SHA" --body "Triggered by Scout update" --head "$BRANCH" --base main
             gh pr merge "$BRANCH" --auto --rebase --delete-branch
           fi
