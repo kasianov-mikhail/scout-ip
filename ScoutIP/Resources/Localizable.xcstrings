@@ -1,294 +1,1170 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "Add notes": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Ajouter des notes" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Notizen hinzufügen" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Añadir notas" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Aggiungi note" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Добавить заметки" } }
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "%lld times" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Mal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld veces"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld fois"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld volte"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld раз"
+          }
+        }
       }
     },
-    "All": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Tout" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Alle" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Todo" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Tutto" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Все" } }
+    "1 time" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Mal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 vez"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 fois"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 volta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 раз"
+          }
+        }
       }
     },
-    "Are your sure?": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Êtes-vous sûr ?" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Sind Sie sicher?" } },
-        "es": { "stringUnit": { "state": "translated", "value": "¿Estás seguro?" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Sei sicuro?" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Вы уверены?" } }
+    "Add notes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notizen hinzufügen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir notas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter des notes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi note"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить заметки"
+          }
+        }
       }
     },
-    "Cancel": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Annuler" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Abbrechen" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Cancelar" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Annulla" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Отмена" } }
+    "All" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все"
+          }
+        }
       }
     },
-    "City": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Ville" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Stadt" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Ciudad" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Città" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Город" } }
+    "Are your sure?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sind Sie sicher?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Estás seguro?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Êtes-vous sûr ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei sicuro?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы уверены?"
+          }
+        }
       }
     },
-    "Clear": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Effacer" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Löschen" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Borrar" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Cancella" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Очистить" } }
+    "Cancel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annulla"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
+          }
+        }
       }
     },
-    "Country": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Pays" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Land" } },
-        "es": { "stringUnit": { "state": "translated", "value": "País" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Paese" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Страна" } }
+    "City" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stadt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciudad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ville"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Città"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Город"
+          }
+        }
       }
     },
-    "Crash": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Crash" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Crash" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Crash" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Crash" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Сбой" } }
+    "Clear" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effacer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancella"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить"
+          }
+        }
       }
     },
-    "Crash Test": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Test de crash" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Crash-Test" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Prueba de crash" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Test di crash" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Тест сбоя" } }
+    "Copy %@" : {
+
+    },
+    "Country" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Land"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "País"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pays"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paese"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Страна"
+          }
+        }
       }
     },
-    "Delete": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Supprimer" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Löschen" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Eliminar" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Elimina" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Удалить" } }
+    "Crash" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сбой"
+          }
+        }
       }
     },
-    "Filter": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Filtrer" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Filter" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Filtrar" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Filtra" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Фильтр" } }
+    "Crash Test" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash-Test"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prueba de crash"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test de crash"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test di crash"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тест сбоя"
+          }
+        }
       }
     },
-    "History": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Historique" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Verlauf" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Historial" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Cronologia" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "История" } }
+    "Debug" : {
+
+    },
+    "Delete" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
+          }
+        }
       }
     },
-    "Info": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Info" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Info" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Info" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Info" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Инфо" } }
+    "Fatal Error" : {
+
+    },
+    "Filter" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtra"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фильтр"
+          }
+        }
       }
     },
-    "IP": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "IP" } },
-        "de": { "stringUnit": { "state": "translated", "value": "IP" } },
-        "es": { "stringUnit": { "state": "translated", "value": "IP" } },
-        "it": { "stringUnit": { "state": "translated", "value": "IP" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "IP" } }
+    "History" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlauf"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historial"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cronologia"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История"
+          }
+        }
       }
     },
-    "IP History": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Historique IP" } },
-        "de": { "stringUnit": { "state": "translated", "value": "IP-Verlauf" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Historial de IP" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Cronologia IP" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "История IP" } }
+    "Increment counter" : {
+
+    },
+    "Info" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Инфо"
+          }
+        }
       }
     },
-    "Location": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Localisation" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Standort" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Ubicación" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Posizione" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Местоположение" } }
+    "IP" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IP"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IP"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IP"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IP"
+          }
+        }
       }
     },
-    "My IP": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Mon IP" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Meine IP" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Mi IP" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Il mio IP" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Мой IP" } }
+    "IP History" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IP-Verlauf"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historial de IP"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique IP"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cronologia IP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История IP"
+          }
+        }
       }
     },
-    "NO DATA": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "AUCUNE DONNÉE" } },
-        "de": { "stringUnit": { "state": "translated", "value": "KEINE DATEN" } },
-        "es": { "stringUnit": { "state": "translated", "value": "SIN DATOS" } },
-        "it": { "stringUnit": { "state": "translated", "value": "NESSUN DATO" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "НЕТ ДАННЫХ" } }
+    "Location" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standort"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubicación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Localisation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posizione"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Местоположение"
+          }
+        }
       }
     },
-    "Notes": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Notes" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Notizen" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Notas" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Note" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Заметки" } }
+    "Log 10 events" : {
+
+    },
+    "Log 100 + 100 metrics" : {
+
+    },
+    "Log 1000 events" : {
+
+    },
+    "Log error" : {
+
+    },
+    "Log warning" : {
+
+    },
+    "Logged: %lld events" : {
+
+    },
+    "Logging" : {
+
+    },
+    "Metrics" : {
+
+    },
+    "My IP" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meine IP"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mi IP"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mon IP"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il mio IP"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мой IP"
+          }
+        }
       }
     },
-    "NSException": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "NSException" } },
-        "de": { "stringUnit": { "state": "translated", "value": "NSException" } },
-        "es": { "stringUnit": { "state": "translated", "value": "NSException" } },
-        "it": { "stringUnit": { "state": "translated", "value": "NSException" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "NSException" } }
+    "NO DATA" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KEINE DATEN"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SIN DATOS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AUCUNE DONNÉE"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NESSUN DATO"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "НЕТ ДАННЫХ"
+          }
+        }
       }
     },
-    "Organisation": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Organisation" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Organisation" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Organización" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Organizzazione" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Организация" } }
+    "Notes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notizen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заметки"
+          }
+        }
       }
     },
-    "Postal": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Code postal" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Postleitzahl" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Código postal" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Codice postale" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Почтовый индекс" } }
+    "NSException" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NSException"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NSException"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NSException"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NSException"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NSException"
+          }
+        }
       }
     },
-    "Region": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Région" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Region" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Región" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Regione" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Регион" } }
+    "NSGenericException" : {
+
+    },
+    "Organisation" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Organisation"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Organización"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Organisation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Organizzazione"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Организация"
+          }
+        }
       }
     },
-    "Save": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Enregistrer" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Speichern" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Guardar" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Salva" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Сохранить" } }
+    "Postal" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postleitzahl"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código postal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code postal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codice postale"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Почтовый индекс"
+          }
+        }
       }
     },
-    "Search": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Rechercher" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Suchen" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Buscar" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Cerca" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Поиск" } }
+    "Rapid fire (10 per second for 30s)" : {
+
+    },
+    "Record timer (1s)" : {
+
+    },
+    "Recorded: %lld metrics" : {
+
+    },
+    "Region" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Región"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Région"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regione"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион"
+          }
+        }
       }
     },
-    "Signal": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Signal" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Signal" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Signal" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Signal" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Сигнал" } }
+    "Running..." : {
+
+    },
+    "Save" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
+        }
       }
     },
-    "SOME RESULTS ARE HIDDEN": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "CERTAINS RÉSULTATS SONT MASQUÉS" } },
-        "de": { "stringUnit": { "state": "translated", "value": "EINIGE ERGEBNISSE SIND AUSGEBLENDET" } },
-        "es": { "stringUnit": { "state": "translated", "value": "ALGUNOS RESULTADOS ESTÁN OCULTOS" } },
-        "it": { "stringUnit": { "state": "translated", "value": "ALCUNI RISULTATI SONO NASCOSTI" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "НЕКОТОРЫЕ РЕЗУЛЬТАТЫ СКРЫТЫ" } }
+    "Search" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suchen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechercher"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск"
+          }
+        }
       }
     },
-    "Timezone": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Fuseau horaire" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Zeitzone" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Zona horaria" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Fuso orario" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Часовой пояс" } }
+    "SIGABRT" : {
+
+    },
+    "Signal" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сигнал"
+          }
+        }
       }
     },
-    "User": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Utilisateur" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Benutzer" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Usuario" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Utente" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Пользователь" } }
+    "SOME RESULTS ARE HIDDEN" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EINIGE ERGEBNISSE SIND AUSGEBLENDET"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALGUNOS RESULTADOS ESTÁN OCULTOS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CERTAINS RÉSULTATS SONT MASQUÉS"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALCUNI RISULTATI SONO NASCOSTI"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "НЕКОТОРЫЕ РЕЗУЛЬТАТЫ СКРЫТЫ"
+          }
+        }
       }
     },
-    "You can't undo this action": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "Cette action est irréversible" } },
-        "de": { "stringUnit": { "state": "translated", "value": "Diese Aktion kann nicht rückgängig gemacht werden" } },
-        "es": { "stringUnit": { "state": "translated", "value": "No puedes deshacer esta acción" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Non puoi annullare questa azione" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Это действие нельзя отменить" } }
+    "Stress Test" : {
+
+    },
+    "Timezone" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitzone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zona horaria"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuseau horaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuso orario"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Часовой пояс"
+          }
+        }
       }
     },
-    "1 time": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "1 fois" } },
-        "de": { "stringUnit": { "state": "translated", "value": "1 Mal" } },
-        "es": { "stringUnit": { "state": "translated", "value": "1 vez" } },
-        "it": { "stringUnit": { "state": "translated", "value": "1 volta" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "1 раз" } }
+    "User" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuario"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisateur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utente"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользователь"
+          }
+        }
       }
     },
-    "%lld times": {
-      "localizations": {
-        "fr": { "stringUnit": { "state": "translated", "value": "%lld fois" } },
-        "de": { "stringUnit": { "state": "translated", "value": "%lld Mal" } },
-        "es": { "stringUnit": { "state": "translated", "value": "%lld veces" } },
-        "it": { "stringUnit": { "state": "translated", "value": "%lld volte" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "%lld раз" } }
+    "You can't undo this action" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aktion kann nicht rückgängig gemacht werden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No puedes deshacer esta acción"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette action est irréversible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non puoi annullare questa azione"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это действие нельзя отменить"
+          }
+        }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }
