@@ -14,6 +14,9 @@ struct PersistenceController {
 
     init() {
         container = NSPersistentContainer(name: "ScoutIP")
+        container.persistentStoreDescriptions.first?.setOption(
+            true as NSNumber, forKey: NSPersistentHistoryTrackingKey
+        )
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 let tracker = PersistenceTracker()
