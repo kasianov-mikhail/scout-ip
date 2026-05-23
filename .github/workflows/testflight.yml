@@ -131,6 +131,10 @@ jobs:
           BRANCH="auto/bump-$NEW_VERSION"
           git checkout -b "$BRANCH"
 
+          # Discard the agvtool build-number bump so only MARKETING_VERSION
+          # is committed; CURRENT_PROJECT_VERSION stays at the repo value.
+          git checkout HEAD -- ScoutIP.xcodeproj/project.pbxproj
+
           sed -i '' "s/MARKETING_VERSION = $VERSION;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
 
           git add ScoutIP.xcodeproj/project.pbxproj
