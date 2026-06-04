@@ -19,6 +19,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let tracker = AppLifecycleTracker()
         tracker.launch()
 
+        OnboardingTracker().startedIfFirstLaunch()
+
         Task {
             do {
                 try await Scout.setup(container: container)
