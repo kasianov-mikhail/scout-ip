@@ -68,6 +68,9 @@ struct ContentView: View {
                 handleActions()
             }
         }
+        .onChange(of: index) { _, newIndex in
+            sceneTracker.tabChanged(newIndex)
+        }
         .onShake {
             #if DEBUG
                 isScoutPresented = true
