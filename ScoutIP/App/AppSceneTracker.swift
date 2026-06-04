@@ -33,6 +33,18 @@ struct AppSceneTracker {
         }
     }
 
+    func tabChanged(_ index: Int) {
+        let name: String =
+            switch index {
+            case 0: "info"
+            case 1: "history"
+            case 2: "debug"
+            default: "unknown"
+            }
+        Counter(label: "app.tab.\(name).count").increment()
+        appLogger.debug("TabChanged", metadata: ["tab": "\(name)"])
+    }
+
     func shortcutTriggered(_ shortcut: String?) {
         appLogger.trace("ShortcutsHandling", metadata: ["shortcut": "\(shortcut ?? "nil")"])
 
