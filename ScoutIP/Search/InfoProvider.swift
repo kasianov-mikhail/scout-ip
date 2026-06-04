@@ -40,6 +40,7 @@ private struct IPItem: Codable {
         let tracker = IPLookupTracker(source: ip.isEmpty ? .user : .manual)
         let start = DispatchTime.now()
         tracker.lookupStarted()
+        FunnelTracker().searchPerformed(term: ip)
 
         do {
             let data = try await URLSession.shared.data(from: url).0
