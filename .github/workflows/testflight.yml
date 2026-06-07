@@ -24,11 +24,36 @@ jobs:
       - name: Set build number
         run: agvtool new-version -all $GITHUB_RUN_NUMBER
 
-      - name: Read version
+      - name: Resolve version
         id: version
         run: |
-          VERSION=$(grep -m1 MARKETING_VERSION ScoutIP.xcodeproj/project.pbxproj | sed 's/.*= //;s/;//;s/ //g')
-          echo "value=$VERSION" >> $GITHUB_OUTPUT
+          BUNDLE_ID=com.kasianov.ScoutIP
+          REPO_VERSION=$(grep -m1 MARKETING_VERSION ScoutIP.xcodeproj/project.pbxproj | sed 's/.*= //;s/;//;s/ //g')
+
+          LIVE_VERSION=$(curl -s "https://itunes.apple.com/lookup?bundleId=$BUNDLE_ID" \
+            | grep -o '"version":"[^"]*"' | head -1 | sed 's/.*:"//;s/"//')
+
+          NEW_VERSION="$REPO_VERSION"
+          DRIFT=false
+
+          if [ -n "$LIVE_VERSION" ]; then
+            HIGHEST=$(printf '%s\n%s\n' "$REPO_VERSION" "$LIVE_VERSION" | sort -V | tail -1)
+            if [ "$REPO_VERSION" = "$LIVE_VERSION" ] || [ "$HIGHEST" != "$REPO_VERSION" ]; then
+              LIVE_MAJOR=$(echo "$LIVE_VERSION" | cut -d. -f1)
+              NEW_VERSION="$((LIVE_MAJOR + 1)).0"
+              DRIFT=true
+              sed -i '' "s/MARKETING_VERSION = $REPO_VERSION;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
+              echo "Repo $REPO_VERSION is behind App Store $LIVE_VERSION; building $NEW_VERSION"
+            else
+              echo "Repo $REPO_VERSION is ahead of App Store $LIVE_VERSION; building $REPO_VERSION"
+            fi
+          else
+            echo "Could not resolve App Store version; building repo version $REPO_VERSION"
+          fi
+
+          echo "value=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "original=$REPO_VERSION" >> $GITHUB_OUTPUT
+          echo "drift=$DRIFT" >> $GITHUB_OUTPUT
 
       - name: Install certificates and profile
         env:
@@ -115,32 +140,42 @@ jobs:
             exit 1
           fi
 
-      - name: Bump version via PR
-        if: steps.upload.outputs.needs_bump == 'true'
+      - name: Persist version via PR
+        if: steps.upload.outputs.needs_bump == 'true' || steps.version.outputs.drift == 'true'
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git config user.name "Mikhail Kasianov"
           git config user.email "96941969+kasianov-mikhail@users.noreply.github.com"
 
-          VERSION=${{ steps.version.outputs.value }}
-          MAJOR=$(echo $VERSION | cut -d. -f1)
-          MINOR=$(echo $VERSION | cut -d. -f2)
-          NEW_VERSION="$MAJOR.$((MINOR + 1))"
+          ORIGINAL=${{ steps.version.outputs.original }}
+          BUILT=${{ steps.version.outputs.value }}
 
-          BRANCH="auto/bump-$NEW_VERSION"
+          if [ "${{ steps.upload.outputs.needs_bump }}" = "true" ]; then
+            BUILT_MAJOR=$(echo "$BUILT" | cut -d. -f1)
+            NEW_VERSION="$((BUILT_MAJOR + 1)).0"
+            BODY="Auto-bump: App Store rejected version $BUILT"
+          else
+            NEW_VERSION="$BUILT"
+            BODY="Auto-bump: repo version $ORIGINAL was behind the App Store"
+          fi
+
+          if gh pr list --base main --state open --json title --jq '.[].title' | grep -qx "Bump version to $NEW_VERSION"; then
+            echo "PR to bump to $NEW_VERSION already open; skipping"
+            exit 0
+          fi
+
+          BRANCH="auto/bump-$NEW_VERSION-$GITHUB_RUN_NUMBER"
           git checkout -b "$BRANCH"
 
-          # Discard the agvtool build-number bump so only MARKETING_VERSION
-          # is committed; CURRENT_PROJECT_VERSION stays at the repo value.
           git checkout HEAD -- ScoutIP.xcodeproj/project.pbxproj
 
-          sed -i '' "s/MARKETING_VERSION = $VERSION;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
+          sed -i '' "s/MARKETING_VERSION = $ORIGINAL;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
 
           git add ScoutIP.xcodeproj/project.pbxproj
           git commit -m "Bump version to $NEW_VERSION"
           git push -u origin "$BRANCH"
-          gh pr create --title "Bump version to $NEW_VERSION" --body "Auto-bump: App Store rejected version $VERSION" --head "$BRANCH" --base main
+          gh pr create --title "Bump version to $NEW_VERSION" --body "$BODY" --head "$BRANCH" --base main
           gh pr merge "$BRANCH" --auto --rebase --delete-branch
 
       - name: Tag build
