@@ -56,7 +56,7 @@ jobs:
           echo "drift=$DRIFT" >> $GITHUB_OUTPUT
 
       - name: Set up signing
-        uses: ./.github/actions/setup-signing
+        uses: ./.github/signing
         with:
           build-certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           dev-certificate-base64: ${{ secrets.DEV_CERTIFICATE_BASE64 }}
