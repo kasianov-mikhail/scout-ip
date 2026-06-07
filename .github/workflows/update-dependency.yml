@@ -4,6 +4,10 @@ on:
   repository_dispatch:
     types: [scout-updated]
 
+concurrency:
+  group: update-scout
+  cancel-in-progress: true
+
 jobs:
   update:
     runs-on: macos-26
