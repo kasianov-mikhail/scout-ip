@@ -42,6 +42,7 @@ struct HistoryIPList: View {
         .toolbar {
             if let record = records.first {
                 ShareLink(item: record.object.shareDescription)
+                    .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
             }
             StarListButton(isStarred: $isStarred)
         }

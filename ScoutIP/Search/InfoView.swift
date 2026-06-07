@@ -40,6 +40,7 @@ struct InfoView: View {
                             .contextMenu {
                                 Button {
                                     UIPasteboard.general.string = pair.value
+                                    InfoActionTracker().fieldCopied(key: pair.key)
                                 } label: {
                                     Label("Copy \(pair.key)", systemImage: "doc.on.doc")
                                 }
@@ -69,6 +70,7 @@ struct InfoView: View {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     if let record = ipInfo.record, !record.isDeleted {
                         ShareLink(item: record.object.shareDescription)
+                            .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
                         StarButton(record: record)
                     }
                 }

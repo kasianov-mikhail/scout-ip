@@ -21,4 +21,9 @@ struct HistoryActionTracker {
         Counter(label: "history.favorite.toggled.count").increment()
         appLogger.debug("HistoryFavoriteToggled", metadata: ["favorite": "\(isFavorite)"])
     }
+
+    func favoriteFilterToggled(_ isEnabled: Bool) {
+        Counter(label: "history.favorite.filter.count").increment()
+        appLogger.debug("HistoryFavoriteFilterToggled", metadata: ["enabled": "\(isEnabled)"])
+    }
 }

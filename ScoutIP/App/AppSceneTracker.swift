@@ -20,15 +20,7 @@ struct AppSceneTracker {
             Counter(label: "app.scene.active.count").increment()
             appLogger.info("AppSceneActive")
 
-        case .inactive:
-            Counter(label: "app.scene.inactive.count").increment()
-            appLogger.notice("AppSceneInactive")
-
-        case .background:
-            Counter(label: "app.scene.background.count").increment()
-            appLogger.notice("AppSceneBackground")
-
-        @unknown default:
+        default:
             break
         }
     }
