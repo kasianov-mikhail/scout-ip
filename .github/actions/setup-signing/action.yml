@@ -1,0 +1,68 @@
+name: Set up signing
+description: Imports signing certificates, the provisioning profile, and the App Store Connect API key into the runner.
+
+inputs:
+  build-certificate-base64:
+    description: Base64-encoded distribution certificate (.p12).
+    required: true
+  dev-certificate-base64:
+    description: Base64-encoded development certificate (.p12).
+    required: true
+  p12-password:
+    description: Password for the .p12 certificates.
+    required: true
+  keychain-password:
+    description: Password for the temporary signing keychain.
+    required: true
+  provisioning-profile-base64:
+    description: Base64-encoded provisioning profile.
+    required: true
+  api-key-base64:
+    description: Base64-encoded App Store Connect API key (.p8).
+    required: true
+  api-key-id:
+    description: App Store Connect API key ID.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Install certificates and profile
+      shell: bash
+      env:
+        BUILD_CERTIFICATE_BASE64: ${{ inputs.build-certificate-base64 }}
+        DEV_CERTIFICATE_BASE64: ${{ inputs.dev-certificate-base64 }}
+        P12_PASSWORD: ${{ inputs.p12-password }}
+        KEYCHAIN_PASSWORD: ${{ inputs.keychain-password }}
+        PROVISIONING_PROFILE_BASE64: ${{ inputs.provisioning-profile-base64 }}
+      run: |
+        DIST_PATH=$RUNNER_TEMP/distribution.p12
+        DEV_PATH=$RUNNER_TEMP/development.p12
+        KEYCHAIN_PATH=$RUNNER_TEMP/signing.keychain-db
+        PP_PATH=$RUNNER_TEMP/profile.mobileprovision
+
+        echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $DIST_PATH
+        echo -n "$DEV_CERTIFICATE_BASE64" | base64 --decode -o $DEV_PATH
+        echo -n "$PROVISIONING_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+
+        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+        security import $DIST_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security import $DEV_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+
+        security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security list-keychain -d user -s $KEYCHAIN_PATH
+
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
+
+    - name: Write API key
+      shell: bash
+      env:
+        APP_STORE_CONNECT_KEY_BASE64: ${{ inputs.api-key-base64 }}
+        APP_STORE_CONNECT_KEY_ID: ${{ inputs.api-key-id }}
+      run: |
+        mkdir -p ~/private_keys
+        echo -n "$APP_STORE_CONNECT_KEY_BASE64" | base64 --decode -o ~/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_ID.p8
