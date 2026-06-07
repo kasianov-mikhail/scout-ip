@@ -33,6 +33,7 @@ struct HistoryInfoView: View {
         }
         .toolbar {
             ShareLink(item: record.object.shareDescription)
+                .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
             StarButton(record: record)
         }
         .scrollDismissesKeyboard(.interactively)

@@ -20,7 +20,7 @@ struct IPRecordTracker {
     }
 
     func tokenMissing() {
-        Counter(label: "ip.record.failure.count").increment()
+        Counter(label: "ip.record.token_missing.count").increment()
         appLogger.warning("IPTokenMissing", metadata: ["error": "missing_token"])
     }
 

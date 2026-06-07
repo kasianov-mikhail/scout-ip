@@ -10,9 +10,6 @@ import SwiftUI
 struct DebugView: View {
     var body: some View {
         List {
-            LoggingSection()
-            MetricsSection()
-            StressSection()
             CrashSection()
         }
         .navigationTitle("Debug")
