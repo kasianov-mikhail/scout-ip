@@ -82,7 +82,8 @@ struct InfoView: View {
                 state = .idle
                 if ipInfo.errorText == nil {
                     showCheckmark = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    Task {
+                        try? await Task.sleep(for: .seconds(1.5))
                         showCheckmark = false
                     }
                 }
@@ -96,7 +97,8 @@ struct InfoView: View {
         .onChange(of: records.count) {
             if records.count > 0 && records.count % 100 == 0 {
                 showConfetti = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                Task {
+                    try? await Task.sleep(for: .seconds(2))
                     showConfetti = false
                 }
             }

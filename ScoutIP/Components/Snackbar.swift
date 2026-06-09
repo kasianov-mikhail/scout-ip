@@ -45,10 +45,9 @@ struct Snackbar: View {
                     .onTapGesture {
                         self.text = nil
                     }
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                            self.text = nil
-                        }
+                    .task {
+                        try? await Task.sleep(for: .seconds(4))
+                        self.text = nil
                     }
             }
         }
