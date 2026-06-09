@@ -6,14 +6,15 @@
 // https://opensource.org/licenses/MIT.
 
 import CoreData
+import Observation
 import Scout
 import SwiftUI
 
-class IPInfo: ObservableObject {
+@Observable class IPInfo {
 
-    @Published var ip = ""
-    @Published var record: IPRecord?
-    @Published var errorText: String?
+    var ip = ""
+    var record: IPRecord?
+    var errorText: String?
 
     var allowSearch: Bool {
         ip.isEmpty || ip.isCompleteIP && record?.ip != ip

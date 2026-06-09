@@ -22,7 +22,7 @@ struct ContentView: View {
     @State private var index = 0
     @State private var state: UpdateState = .idle
     @State private var isScoutPresented = false
-    @StateObject private var ipInfo = IPInfo()
+    @State private var ipInfo = IPInfo()
 
     private var isBeta: Bool {
         #if DEBUG

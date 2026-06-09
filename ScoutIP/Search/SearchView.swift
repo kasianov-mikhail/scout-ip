@@ -11,7 +11,7 @@ struct SearchView: View {
     @Environment(\.managedObjectContext) var viewContext
 
     @Binding var state: UpdateState
-    @ObservedObject var ipInfo: IPInfo
+    let ipInfo: IPInfo
     @State private var text = ""
     @FocusState private var isFocused: Bool
 
