@@ -19,7 +19,7 @@ struct InfoView: View {
     var records: FetchedResults<IPRecord>
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section("Search") {
                     SearchView(state: $state, ipInfo: ipInfo)
@@ -91,7 +91,6 @@ struct InfoView: View {
             .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Info")
         }
-        .navigationViewStyle(.stack)
         .confetti(isPresented: showConfetti)
         .snackbar(text: $ipInfo.errorText)
         .onChange(of: records.count) {

@@ -30,7 +30,7 @@ struct HistoryList: View {
     var records: FetchedResults<IPRecord>
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(selection: $selection) {
                 Picker("Filter", selection: $filter) {
                     ForEach(HistoryFilter.allCases) { filter in
@@ -116,7 +116,6 @@ struct HistoryList: View {
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationViewStyle(.stack)
     }
 
     var items: [HistoryItem] {
