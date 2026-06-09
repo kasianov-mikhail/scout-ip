@@ -11,7 +11,7 @@ struct InfoView: View {
     @Environment(\.managedObjectContext) var viewContext
 
     @Binding var state: UpdateState
-    @ObservedObject var ipInfo: IPInfo
+    @Bindable var ipInfo: IPInfo
     @State private var showCheckmark = false
     @State private var showConfetti = false
 
