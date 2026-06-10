@@ -40,3 +40,5 @@ A companion app for the [Scout](https://github.com/kasianov-mikhail/scout) packa
 ## App Store
 
 [![Download on the App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/us/app/scout-ip/id6738300344)
+
+<!-- test: auto-merge toggle check -->
