@@ -21,8 +21,13 @@ struct PersistenceController {
             try FileManager.default.createDirectory(
                 at: .applicationSupportDirectory, withIntermediateDirectories: true
             )
+            // The app carries a CloudKit entitlement for Scout logging, which
+            // makes the default .automatic mirroring claim that container and
+            // refuse to load the store (the schema is not CloudKit-compatible).
+            // The store has never synced, so mirroring stays off.
             let configuration = ModelConfiguration(
-                url: URL.applicationSupportDirectory.appendingPathComponent("ScoutIP.sqlite")
+                url: URL.applicationSupportDirectory.appendingPathComponent("ScoutIP.sqlite"),
+                cloudKitDatabase: .none
             )
             container = try ModelContainer(
                 for: IPRecord.self, IPObject.self,
