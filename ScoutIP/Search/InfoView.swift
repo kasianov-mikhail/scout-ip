@@ -5,18 +5,19 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import SwiftData
 import SwiftUI
 
 struct InfoView: View {
-    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.modelContext) var modelContext
 
     @Binding var state: UpdateState
     @Bindable var ipInfo: IPInfo
     @State private var showCheckmark = false
     @State private var showConfetti = false
 
-    @FetchRequest(fetchRequest: IPRecord.fetchRequest(), animation: .none)
-    var records: FetchedResults<IPRecord>
+    @Query(IPRecord.visible)
+    var records: [IPRecord]
 
     var body: some View {
         NavigationStack {
@@ -27,7 +28,7 @@ struct InfoView: View {
 
                 if state == .load {
                     SkeletonView()
-                } else if let record = ipInfo.record, !record.isDeleted {
+                } else if let record = ipInfo.activeRecord {
                     Section("Info") {
                         ForEach(record.object.pairs, id: \.key) { pair in
                             HStack {
@@ -68,7 +69,7 @@ struct InfoView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    if let record = ipInfo.record, !record.isDeleted {
+                    if let record = ipInfo.activeRecord {
                         ShareLink(item: record.object.shareDescription)
                             .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
                         StarButton(record: record)
@@ -78,7 +79,7 @@ struct InfoView: View {
             .checkmark(isPresented: showCheckmark)
             .refreshable {
                 state = .refresh
-                await ipInfo.record(context: viewContext)
+                await ipInfo.record(context: modelContext)
                 state = .idle
                 if ipInfo.errorText == nil {
                     showCheckmark = true
@@ -107,7 +108,7 @@ struct InfoView: View {
 
     var ipRecords: [IPRecord] {
         records.filter {
-            $0.ip == ipInfo.record?.ip
+            $0.ip == ipInfo.activeRecord?.ip
         }
     }
 }

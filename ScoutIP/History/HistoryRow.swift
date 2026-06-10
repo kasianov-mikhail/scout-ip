@@ -5,7 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import CoreData
+import SwiftData
 import SwiftUI
 
 class HistoryItem: Identifiable {
@@ -24,7 +24,7 @@ struct HistoryRow: View {
     let item: HistoryItem
     let highlight: String
 
-    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.modelContext) var modelContext
     @State private var isConfirmationPresented = false
 
     private let tracker = HistoryActionTracker()
@@ -91,7 +91,7 @@ struct HistoryRow: View {
         for record in item.records {
             record.isFavorite = newValue
         }
-        try? viewContext.save()
+        try? modelContext.save()
         tracker.favoriteToggled(newValue)
     }
 
@@ -105,14 +105,9 @@ struct HistoryRow: View {
     }
 
     func hide() {
-        let recordIDs = item.records.map(\.objectID)
-        let request = NSBatchDeleteRequest(objectIDs: recordIDs)
-
-        if (try? viewContext.execute(request)) != nil {
-            NSManagedObjectContext.mergeChanges(
-                fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs],
-                into: [viewContext]
-            )
+        for record in item.records {
+            modelContext.delete(record)
         }
+        try? modelContext.save()
     }
 }

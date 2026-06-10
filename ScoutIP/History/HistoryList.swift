@@ -5,7 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import CoreData
+import SwiftData
 import SwiftUI
 
 enum HistoryFilter: String, CaseIterable, Identifiable {
@@ -24,10 +24,10 @@ struct HistoryList: View {
     @State private var isConfirmationPresented = false
 
     @AppStorage("star_only") private var isStarred = false
-    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.modelContext) var modelContext
 
-    @FetchRequest(fetchRequest: IPRecord.fetchRequest(), animation: .default)
-    var records: FetchedResults<IPRecord>
+    @Query(IPRecord.visible, animation: .default)
+    var records: [IPRecord]
 
     var body: some View {
         NavigationStack {
@@ -155,19 +155,15 @@ struct HistoryList: View {
     func deleteSelected() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         let tracker = HistoryDeleteTracker()
+        let selected = history.filter { selection.contains($0.ip) }
 
         do {
-            let records = history.filter { selection.contains($0.ip) }
-            let recordIDs = records.map(\.objectID)
-            let request = NSBatchDeleteRequest(objectIDs: recordIDs)
-            try viewContext.execute(request)
+            for record in selected {
+                modelContext.delete(record)
+            }
+            try modelContext.save()
 
-            NSManagedObjectContext.mergeChanges(
-                fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs],
-                into: [viewContext]
-            )
-
-            tracker.success(count: recordIDs.count)
+            tracker.success(count: selected.count)
 
         } catch {
             tracker.failure(error: error)

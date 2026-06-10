@@ -5,10 +5,11 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import SwiftData
 import SwiftUI
 
 struct SearchView: View {
-    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.modelContext) var modelContext
 
     @Binding var state: UpdateState
     let ipInfo: IPInfo
@@ -93,7 +94,7 @@ struct SearchView: View {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         Task {
             state = .load
-            await ipInfo.record(context: viewContext)
+            await ipInfo.record(context: modelContext)
             withAnimation(.easeInOut(duration: 0.3)) {
                 state = .idle
             }

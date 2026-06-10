@@ -7,6 +7,7 @@
 
 import CloudKit
 import Scout
+import SwiftData
 import SwiftUI
 
 enum UpdateState {
@@ -17,7 +18,7 @@ enum UpdateState {
 
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
-    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.modelContext) var modelContext
 
     @State private var index = 0
     @State private var state: UpdateState = .idle
@@ -93,7 +94,7 @@ struct ContentView: View {
 
             Task {
                 state = .load
-                await ipInfo.record(context: viewContext)
+                await ipInfo.record(context: modelContext)
                 state = .idle
                 requestReview()
             }

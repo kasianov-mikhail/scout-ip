@@ -4,12 +4,14 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
+//
 
+import SwiftData
 import SwiftUI
 
 struct StarButton: View {
-    @ObservedObject var record: IPRecord
-    @Environment(\.managedObjectContext) var viewContext
+    var record: IPRecord
+    @Environment(\.modelContext) var modelContext
 
     private let tracker = HistoryActionTracker()
 
@@ -26,7 +28,7 @@ struct StarButton: View {
         record.isFavorite.toggle()
 
         do {
-            try viewContext.save()
+            try modelContext.save()
         } catch {
         }
 

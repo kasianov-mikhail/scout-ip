@@ -4,25 +4,34 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
+//
 
-import CoreData
 import Foundation
+import SwiftData
 
-class IPRecord: NSManagedObject, Identifiable {
+@Model final class IPRecord {
 
-    class func fetchRequest() -> NSFetchRequest<IPRecord> {
-        let request = NSFetchRequest<IPRecord>(entityName: "IPRecord")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \IPRecord.date, ascending: false)]
-        request.predicate = NSPredicate(format: "isHidden == false")
-        return request
+    static var visible: FetchDescriptor<IPRecord> {
+        FetchDescriptor(
+            predicate: #Predicate { $0.isHidden == false },
+            sortBy: [SortDescriptor(\.date, order: .reverse)]
+        )
     }
 
-    @NSManaged var id: UUID
-    @NSManaged var date: Date
-    @NSManaged var isUser: Bool
-    @NSManaged var isFavorite: Bool
-    @NSManaged var object: IPObject
-    @NSManaged var notes: String
+    var date = Date()
+    var isUser = false
+    var isFavorite = false
+    var isHidden = false
+    var notes = ""
+
+    @Relationship(deleteRule: .cascade)
+    var object: IPObject
+
+    init(date: Date, isUser: Bool, object: IPObject) {
+        self.date = date
+        self.isUser = isUser
+        self.object = object
+    }
 
     var ip: String {
         object.ip

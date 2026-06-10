@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HistoryInfoView: View {
-    @ObservedObject var record: IPRecord
+    let record: IPRecord
 
     var body: some View {
         List {
