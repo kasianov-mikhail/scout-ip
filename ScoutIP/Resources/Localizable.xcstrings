@@ -495,9 +495,6 @@
         }
       }
     },
-    "Increment counter" : {
-
-    },
     "Info" : {
       "localizations" : {
         "de" : {
@@ -634,30 +631,6 @@
           }
         }
       }
-    },
-    "Log 10 events" : {
-
-    },
-    "Log 100 + 100 metrics" : {
-
-    },
-    "Log 1000 events" : {
-
-    },
-    "Log error" : {
-
-    },
-    "Log warning" : {
-
-    },
-    "Logged: %lld events" : {
-
-    },
-    "Logging" : {
-
-    },
-    "Metrics" : {
-
     },
     "My IP" : {
       "localizations" : {
@@ -870,15 +843,6 @@
         }
       }
     },
-    "Rapid fire (10 per second for 30s)" : {
-
-    },
-    "Record timer (1s)" : {
-
-    },
-    "Recorded: %lld metrics" : {
-
-    },
     "Region" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -913,9 +877,6 @@
           }
         }
       }
-    },
-    "Running..." : {
-
     },
     "Save" : {
       "localizations" : {
@@ -1057,9 +1018,6 @@
           }
         }
       }
-    },
-    "Stress Test" : {
-
     },
     "Timezone" : {
       "extractionState" : "stale",
