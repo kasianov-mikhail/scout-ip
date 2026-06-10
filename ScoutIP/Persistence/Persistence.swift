@@ -4,26 +4,34 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
+//
 
-import CoreData
+import Foundation
+import SwiftData
 
 struct PersistenceController {
     static let shared = PersistenceController()
 
-    let container: NSPersistentContainer
+    let container: ModelContainer
 
     init() {
-        container = NSPersistentContainer(name: "ScoutIP")
-        container.persistentStoreDescriptions.first?.setOption(
-            true as NSNumber, forKey: NSPersistentHistoryTrackingKey
-        )
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                let tracker = PersistenceTracker()
-                tracker.loadFailure(error: error)
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        container.viewContext.automaticallyMergesChangesFromParent = true
+        do {
+            // Keep the store at the path used by the NSPersistentContainer-based
+            // setup so existing data survives the migration to SwiftData.
+            try FileManager.default.createDirectory(
+                at: .applicationSupportDirectory, withIntermediateDirectories: true
+            )
+            let configuration = ModelConfiguration(
+                url: URL.applicationSupportDirectory.appendingPathComponent("ScoutIP.sqlite")
+            )
+            container = try ModelContainer(
+                for: IPRecord.self, IPObject.self,
+                configurations: configuration
+            )
+        } catch {
+            let tracker = PersistenceTracker()
+            tracker.loadFailure(error: error)
+            fatalError("Unresolved error \(error)")
+        }
     }
 }

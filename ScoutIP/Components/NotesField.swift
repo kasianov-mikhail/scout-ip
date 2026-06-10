@@ -4,12 +4,14 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
+//
 
+import SwiftData
 import SwiftUI
 
 struct NotesField: View {
-    @ObservedObject var record: IPRecord
-    @Environment(\.managedObjectContext) var viewContext
+    @Bindable var record: IPRecord
+    @Environment(\.modelContext) var modelContext
     @FocusState private var isFocused: Bool
 
     private let tracker = NotesTracker()
@@ -29,10 +31,10 @@ struct NotesField: View {
 
                         Spacer()
 
-                        if !record.changedValues().isEmpty {
+                        if record.hasChanges {
                             Button("Save") {
                                 do {
-                                    try viewContext.save()
+                                    try modelContext.save()
                                 } catch {
                                 }
 

@@ -4,10 +4,11 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
+//
 
-import CoreData
 import Observation
 import Scout
+import SwiftData
 import SwiftUI
 
 @Observable class IPInfo {
@@ -16,11 +17,20 @@ import SwiftUI
     var record: IPRecord?
     var errorText: String?
 
-    var allowSearch: Bool {
-        ip.isEmpty || ip.isCompleteIP && record?.ip != ip
+    // The record can be deleted from the history while it is still
+    // referenced here, so reading its properties is no longer safe.
+    var activeRecord: IPRecord? {
+        guard let record, record.modelContext != nil, !record.isDeleted else {
+            return nil
+        }
+        return record
     }
 
-    @MainActor func record(context: NSManagedObjectContext) async {
+    var allowSearch: Bool {
+        ip.isEmpty || ip.isCompleteIP && activeRecord?.ip != ip
+    }
+
+    @MainActor func record(context: ModelContext) async {
         let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
 
         do {
@@ -41,12 +51,8 @@ import SwiftUI
             let provider = InfoProvider(token: token, ip: ip, context: context)
             let object = try await provider.ipObject()
 
-            let record = IPRecord(context: context)
-            record.date = Date()
-            record.id = UUID()
-            record.isFavorite = false
-            record.isUser = ip.isEmpty  // isUser
-            record.object = object
+            let record = IPRecord(date: Date(), isUser: ip.isEmpty, object: object)
+            context.insert(record)
             self.record = record
 
             do {

@@ -4,20 +4,38 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
+//
 
-import CoreData
 import Foundation
+import SwiftData
 
-class IPObject: NSManagedObject, Identifiable {
+@Model final class IPObject {
 
-    @NSManaged var city: String
-    @NSManaged var country: String
-    @NSManaged var ip: String
-    @NSManaged var loc: String
-    @NSManaged var org: String
-    @NSManaged var postal: String
-    @NSManaged var region: String
-    @NSManaged var timezone: String
+    var city = ""
+    var country = ""
+    var ip = ""
+    var loc = ""
+    var org = ""
+    var postal = ""
+    var region = ""
+    var timezone = ""
+
+    @Relationship(deleteRule: .cascade, inverse: \IPRecord.object)
+    var record: [IPRecord]?
+
+    init(
+        city: String, country: String, ip: String, loc: String,
+        org: String, postal: String, region: String, timezone: String
+    ) {
+        self.city = city
+        self.country = country
+        self.ip = ip
+        self.loc = loc
+        self.org = org
+        self.postal = postal
+        self.region = region
+        self.timezone = timezone
+    }
 
     var pairs: KeyValuePairs<String, String> {
         [

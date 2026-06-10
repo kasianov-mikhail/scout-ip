@@ -5,13 +5,13 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import CoreData
+import SwiftData
 import SwiftUI
 
 struct HistoryIPList: View {
     let records: [IPRecord]
 
-    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.modelContext) var modelContext
     @AppStorage("star_only") var isStarred = false
 
     var body: some View {
@@ -54,22 +54,18 @@ struct HistoryIPList: View {
     func delete(offsets: IndexSet) {
         withAnimation {
             let records = offsets.map { self.records[$0] }
-            let recordIDs = records.map(\.objectID)
-            let request = NSBatchDeleteRequest(objectIDs: recordIDs)
             let tracker = HistoryDeleteTracker()
 
             do {
-                try viewContext.execute(request)
+                for record in records {
+                    modelContext.delete(record)
+                }
+                try modelContext.save()
                 tracker.success(count: records.count)
 
             } catch {
                 tracker.failure(error: error)
             }
-
-            NSManagedObjectContext.mergeChanges(
-                fromRemoteContextSave: [NSDeletedObjectsKey: recordIDs],
-                into: [viewContext]
-            )
         }
     }
 }

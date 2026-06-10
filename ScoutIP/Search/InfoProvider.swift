@@ -5,8 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import CoreData
 import Foundation
+import SwiftData
 
 struct IPError: LocalizedError {
     let ip: String
@@ -43,7 +43,7 @@ private struct IPItem: Codable {
 @MainActor struct InfoProvider {
     let token: String
     let ip: String
-    let context: NSManagedObjectContext
+    let context: ModelContext
 
     func ipObject() async throws -> IPObject {
         guard let url = URL(string: "https://ipinfo.io/\(ip)?token=\(token)") else {
@@ -72,15 +72,17 @@ private struct IPItem: Codable {
 }
 
 extension IPObject {
-    fileprivate convenience init(item: IPItem, context: NSManagedObjectContext) {
-        self.init(context: context)
-        city = item.city ?? "–"
-        country = item.country
-        ip = item.ip
-        loc = item.loc
-        org = item.org ?? "–"
-        postal = item.postal ?? "–"
-        region = item.region
-        timezone = item.timezone
+    fileprivate convenience init(item: IPItem, context: ModelContext) {
+        self.init(
+            city: item.city ?? "–",
+            country: item.country,
+            ip: item.ip,
+            loc: item.loc,
+            org: item.org ?? "–",
+            postal: item.postal ?? "–",
+            region: item.region,
+            timezone: item.timezone
+        )
+        context.insert(self)
     }
 }
