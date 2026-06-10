@@ -66,3 +66,6 @@ fastlane/test_output
 
 # Secrets
 Secrets.xcconfig
+
+# Local build output
+build/
