@@ -16,6 +16,19 @@ struct IPError: LocalizedError {
     }
 }
 
+struct BogonError: LocalizedError {
+    let ip: String
+
+    var errorDescription: String? {
+        "\(ip) is a private or reserved IP address"
+    }
+}
+
+private struct BogonItem: Codable {
+    let ip: String
+    let bogon: Bool
+}
+
 private struct IPItem: Codable {
     let ip: String
     let city: String?
@@ -44,6 +57,9 @@ private struct IPItem: Codable {
 
         do {
             let data = try await URLSession.shared.data(from: url).0
+            if let bogon = try? JSONDecoder().decode(BogonItem.self, from: data), bogon.bogon {
+                throw BogonError(ip: bogon.ip)
+            }
             let item = try JSONDecoder().decode(IPItem.self, from: data)
             tracker.success(duration: start)
             return IPObject(item: item, context: context)
