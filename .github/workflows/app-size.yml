@@ -21,7 +21,7 @@ jobs:
 
       - name: Restore base size
         id: base-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: base-size.txt
           key: app-size-${{ github.event.pull_request.base.sha }}
