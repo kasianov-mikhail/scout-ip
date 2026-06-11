@@ -36,7 +36,7 @@ jobs:
             git commit -m "Update Scout dependency to $SHA"
             git push -u origin "$BRANCH"
             gh pr create --title "Update Scout dependency to $SHA" --body "Triggered by Scout update" --head "$BRANCH" --base main
-            gh pr merge "$BRANCH" --auto --rebase --delete-branch
+            gh pr merge "$BRANCH" --auto --squash --delete-branch
             gh pr list --state open --json number,headRefName \
               --jq '.[] | select(.headRefName | startswith("auto/update-scout-")) | select(.headRefName != "'"$BRANCH"'") | .number' \
               | xargs -I{} gh pr close {} --comment "Superseded by Scout update to $SHA" --delete-branch
