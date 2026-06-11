@@ -150,7 +150,17 @@ jobs:
           git commit -m "Bump version to $NEW_VERSION"
           git push -u origin "$BRANCH"
           gh pr create --title "Bump version to $NEW_VERSION" --body "$BODY" --head "$BRANCH" --base main
-          gh pr merge "$BRANCH" --auto --squash --delete-branch
+          # Mergeability is computed asynchronously, so poll until GitHub reports it
+          for _ in {1..10}; do
+            MERGEABLE=$(gh pr view "$BRANCH" --json mergeable --jq '.mergeable')
+            [ "$MERGEABLE" != "UNKNOWN" ] && break
+            sleep 3
+          done
+          if [ "$MERGEABLE" = "CONFLICTING" ]; then
+            gh pr close "$BRANCH" --comment "Closed due to merge conflicts" --delete-branch
+          else
+            gh pr merge "$BRANCH" --auto --squash --delete-branch
+          fi
 
       - name: Tag build
         if: steps.upload.outputs.needs_bump != 'true'
