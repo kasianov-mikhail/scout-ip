@@ -36,7 +36,17 @@ jobs:
             git commit -m "Update Scout dependency to $SHA"
             git push -u origin "$BRANCH"
             gh pr create --title "Update Scout dependency to $SHA" --body "Triggered by Scout update" --head "$BRANCH" --base main
-            gh pr merge "$BRANCH" --auto --rebase --delete-branch
+            # Mergeability is computed asynchronously, so poll until GitHub reports it
+            for _ in {1..10}; do
+              MERGEABLE=$(gh pr view "$BRANCH" --json mergeable --jq '.mergeable')
+              [ "$MERGEABLE" != "UNKNOWN" ] && break
+              sleep 3
+            done
+            if [ "$MERGEABLE" = "CONFLICTING" ]; then
+              gh pr close "$BRANCH" --comment "Closed due to merge conflicts" --delete-branch
+            else
+              gh pr merge "$BRANCH" --auto --squash --delete-branch
+            fi
             gh pr list --state open --json number,headRefName \
               --jq '.[] | select(.headRefName | startswith("auto/update-scout-")) | select(.headRefName != "'"$BRANCH"'") | .number' \
               | xargs -I{} gh pr close {} --comment "Superseded by Scout update to $SHA" --delete-branch
