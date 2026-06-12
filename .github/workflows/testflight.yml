@@ -71,6 +71,8 @@ jobs:
           set -o pipefail
           xcodebuild archive \
             IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
+            SCOUT_IP=${{ secrets.SCOUT_IP }} \
+            SCOUT_API_KEYS=${{ secrets.SCOUT_API_KEYS }} \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \
