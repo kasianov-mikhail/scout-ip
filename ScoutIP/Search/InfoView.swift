@@ -28,9 +28,9 @@ struct InfoView: View {
 
                 if state == .load {
                     SkeletonView()
-                } else if let record = ipInfo.activeRecord {
+                } else if let record = ipInfo.activeRecord, let object = record.object {
                     Section("Info") {
-                        ForEach(record.object.pairs, id: \.key) { pair in
+                        ForEach(object.pairs, id: \.key) { pair in
                             HStack {
                                 Text(pair.key)
                                 Spacer()
@@ -49,7 +49,7 @@ struct InfoView: View {
                         }
                     }
                     Section("Location") {
-                        if let location = Location(string: record.object.loc) {
+                        if let location = Location(string: object.loc) {
                             MapView(location: location)
                         }
                     }
@@ -69,8 +69,8 @@ struct InfoView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    if let record = ipInfo.activeRecord {
-                        ShareLink(item: record.object.shareDescription)
+                    if let record = ipInfo.activeRecord, let object = record.object {
+                        ShareLink(item: object.shareDescription)
                             .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
                         StarButton(record: record)
                     }
