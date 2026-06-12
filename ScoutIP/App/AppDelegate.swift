@@ -5,27 +5,23 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import CloudKit
 import Scout
 import UIKit
 
-let container = CKContainer(identifier: "iCloud.Logging.Scout.0001")
-
-/// CloudKit plus the self-hosted Scout server when its address is baked into
-/// the build (the `SCOUT_IP` and `SCOUT_API_KEYS` build settings).
+/// The self-hosted Scout server whose address is baked into the build (the
+/// `SCOUT_IP` and `SCOUT_API_KEYS` build settings). Empty when the build
+/// carries no address.
 ///
 var backends: [Backend] {
-    var backends: [Backend] = [.cloudKit(container)]
-
-    if let address = Bundle.main.infoDictionary?["SCOUT_IP"] as? String,
+    guard let address = Bundle.main.infoDictionary?["SCOUT_IP"] as? String,
         !address.isEmpty,
         let url = URL(string: address)
-    {
-        let apiKey = Bundle.main.infoDictionary?["SCOUT_API_KEYS"] as? String
-        backends.append(.server(url: url, apiKey: apiKey?.isEmpty == false ? apiKey : nil))
+    else {
+        return []
     }
 
-    return backends
+    let apiKey = Bundle.main.infoDictionary?["SCOUT_API_KEYS"] as? String
+    return [.server(url: url, apiKey: apiKey?.isEmpty == false ? apiKey : nil)]
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
