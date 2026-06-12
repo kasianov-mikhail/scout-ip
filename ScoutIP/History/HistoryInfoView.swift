@@ -12,19 +12,22 @@ struct HistoryInfoView: View {
 
     var body: some View {
         List {
-            Section("Info") {
-                ForEach(record.object.pairs, id: \.key) { pair in
-                    HStack {
-                        Text(pair.key)
-                        Spacer()
-                        Text(pair.value).font(.system(size: 16)).multilineTextAlignment(.trailing)
+            if let object = record.object {
+                Section("Info") {
+                    ForEach(object.pairs, id: \.key) { pair in
+                        HStack {
+                            Text(pair.key)
+                            Spacer()
+                            Text(pair.value).font(.system(size: 16)).multilineTextAlignment(
+                                .trailing)
+                        }
+                        .textSelection(.enabled)
                     }
-                    .textSelection(.enabled)
                 }
-            }
-            Section("Location") {
-                if let location = Location(string: record.object.loc) {
-                    MapView(location: location)
+                Section("Location") {
+                    if let location = Location(string: object.loc) {
+                        MapView(location: location)
+                    }
                 }
             }
             Section("Notes") {
@@ -32,8 +35,10 @@ struct HistoryInfoView: View {
             }
         }
         .toolbar {
-            ShareLink(item: record.object.shareDescription)
-                .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
+            if let object = record.object {
+                ShareLink(item: object.shareDescription)
+                    .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
+            }
             StarButton(record: record)
         }
         .scrollDismissesKeyboard(.interactively)

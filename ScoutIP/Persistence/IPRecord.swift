@@ -24,8 +24,11 @@ import SwiftData
     var isHidden = false
     var notes = ""
 
+    // Optional as required by CloudKit mirroring; in practice the object
+    // is only nil while a record synced from another device is partially
+    // downloaded.
     @Relationship(deleteRule: .cascade)
-    var object: IPObject
+    var object: IPObject?
 
     init(date: Date, isUser: Bool, object: IPObject) {
         self.date = date
@@ -34,7 +37,7 @@ import SwiftData
     }
 
     var ip: String {
-        object.ip
+        object?.ip ?? ""
     }
 
     var dateText: String {

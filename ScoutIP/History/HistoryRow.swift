@@ -96,7 +96,7 @@ struct HistoryRow: View {
     }
 
     var countryColor: Color {
-        let country = item.records.first?.object.country ?? ""
+        let country = item.records.first?.object?.country ?? ""
         let hash = abs(country.hashValue)
         let colors: [Color] = [
             .blue, .green, .orange, .purple, .pink, .teal, .indigo, .mint, .cyan, .brown,
