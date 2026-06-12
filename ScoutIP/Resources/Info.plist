@@ -10,5 +10,9 @@
 	</array>
 	<key>IPINFO_KEY</key>
 	<string>$(IPINFO_KEY)</string>
+	<key>SCOUT_IP</key>
+	<string>$(SCOUT_IP)</string>
+	<key>SCOUT_API_KEYS</key>
+	<string>$(SCOUT_API_KEYS)</string>
 </dict>
 </plist>
