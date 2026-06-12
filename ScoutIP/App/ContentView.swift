@@ -81,7 +81,7 @@ struct ContentView: View {
             #endif
         }
         .fullScreenCover(isPresented: $isScoutPresented) {
-            HomeView(container: container)
+            HomeView(backends: backends)
         }
     }
 
