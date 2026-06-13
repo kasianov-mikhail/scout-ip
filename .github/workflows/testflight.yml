@@ -90,10 +90,6 @@ jobs:
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \
             -exportOptionsPlist ExportOptions.plist \
             -exportPath $RUNNER_TEMP/export \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath ~/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_ID.p8 \
-            -authenticationKeyID $APP_STORE_CONNECT_KEY_ID \
-            -authenticationKeyIssuerID $APP_STORE_CONNECT_ISSUER_ID \
             | xcbeautify
 
       - name: Upload to TestFlight
