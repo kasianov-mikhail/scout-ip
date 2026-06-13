@@ -29,13 +29,21 @@ jobs:
           if git diff --quiet; then
             echo "No dependency changes"
           else
-            SHA=$(jq -r '.pins[] | select(.identity == "scout") | .state.revision' ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved | cut -c1-7)
+            FULL_SHA=$(jq -r '.pins[] | select(.identity == "scout") | .state.revision' ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+            SHA=$(echo "$FULL_SHA" | cut -c1-7)
+            # Link to the Scout PR that introduced this revision, falling back to the commit
+            SCOUT_PR_URL=$(gh api "repos/kasianov-mikhail/scout/commits/$FULL_SHA/pulls" --jq '.[0].html_url // empty' 2>/dev/null || true)
+            if [ -n "$SCOUT_PR_URL" ]; then
+              BODY="Scout PR: $SCOUT_PR_URL"
+            else
+              BODY="Scout commit: https://github.com/kasianov-mikhail/scout/commit/$FULL_SHA"
+            fi
             BRANCH="auto/update-scout-$(date +%s)"
             git checkout -b "$BRANCH"
             git add ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
-            git commit -m "Update Scout dependency to $SHA"
+            git commit -m "Update Scout dependency to $SHA" -m "$BODY"
             git push -u origin "$BRANCH"
-            gh pr create --title "Update Scout dependency to $SHA" --body "Triggered by Scout update" --head "$BRANCH" --base main
+            gh pr create --title "Update Scout dependency to $SHA" --body "$BODY" --head "$BRANCH" --base main
             # Mergeability is computed asynchronously, so poll until GitHub reports it
             for _ in {1..10}; do
               MERGEABLE=$(gh pr view "$BRANCH" --json mergeable --jq '.mergeable')
@@ -45,7 +53,7 @@ jobs:
             if [ "$MERGEABLE" = "CONFLICTING" ]; then
               gh pr close "$BRANCH" --comment "Closed due to merge conflicts" --delete-branch
             else
-              gh pr merge "$BRANCH" --auto --squash --delete-branch
+              gh pr merge "$BRANCH" --auto --squash --delete-branch --body "$BODY"
             fi
             gh pr list --state open --json number,headRefName \
               --jq '.[] | select(.headRefName | startswith("auto/update-scout-")) | select(.headRefName != "'"$BRANCH"'") | .number' \
