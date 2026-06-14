@@ -13,7 +13,10 @@ inputs:
     description: Base64-encoded development certificate (.p12).
     required: true
   p12-password:
-    description: Password for the .p12 certificates.
+    description: Password for the distribution .p12 certificate.
+    required: true
+  dev-p12-password:
+    description: Password for the development .p12 certificate (may differ from the distribution one).
     required: true
   keychain-password:
     description: Password for the temporary signing keychain.
@@ -37,6 +40,7 @@ runs:
         BUILD_CERTIFICATE_BASE64: ${{ inputs.build-certificate-base64 }}
         DEV_CERTIFICATE_BASE64: ${{ inputs.dev-certificate-base64 }}
         P12_PASSWORD: ${{ inputs.p12-password }}
+        DEV_P12_PASSWORD: ${{ inputs.dev-p12-password }}
         KEYCHAIN_PASSWORD: ${{ inputs.keychain-password }}
         PROVISIONING_PROFILE_BASE64: ${{ inputs.provisioning-profile-base64 }}
       run: |
@@ -54,7 +58,7 @@ runs:
         security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
 
         security import $DIST_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-        security import $DEV_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security import $DEV_PATH -P "$DEV_P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
 
         security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
         security list-keychain -d user -s $KEYCHAIN_PATH
