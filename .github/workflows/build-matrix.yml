@@ -35,9 +35,6 @@ jobs:
           - os: macos-26
             device: iPhone 17
             ios: 26
-          - os: macos-26
-            device: iPhone 17 Pro Max
-            ios: 26
 
     steps:
       - uses: actions/checkout@v6
