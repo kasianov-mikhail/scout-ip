@@ -19,9 +19,11 @@ var backends: [Backend] {
     let cloudKit = Backend.cloudKit(CKContainer(identifier: "iCloud.Logging.Scout.0001"))
     let info = Bundle.main.infoDictionary
 
-    guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty, let url = URL(string: address),
-        let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty
-    else {
+    guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty, let url = URL(string: address) else {
+        return [cloudKit]
+    }
+
+    guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
         return [cloudKit]
     }
 
