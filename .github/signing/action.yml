@@ -15,9 +15,13 @@ inputs:
   p12-password:
     description: Password for the distribution .p12 certificate.
     required: true
+  # Separate from p12-password because the development .p12 can carry its own
+  # password. It is currently exported without one, so this defaults to empty;
+  # to use a password, set it here (e.g. from a DEV_P12_PASSWORD secret).
   dev-p12-password:
-    description: Password for the development .p12 certificate (may differ from the distribution one).
-    required: true
+    description: Password for the development .p12 certificate (empty if it has none).
+    required: false
+    default: ""
   keychain-password:
     description: Password for the temporary signing keychain.
     required: true
