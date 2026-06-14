@@ -5,6 +5,10 @@ inputs:
   build-certificate-base64:
     description: Base64-encoded distribution certificate (.p12).
     required: true
+  # DO NOT REMOVE. The app uses automatic signing, so `xcodebuild archive`
+  # needs an Apple Development cert in the keychain even though the app-store
+  # export re-signs with Apple Distribution. Dropping this (and its
+  # DEV_CERTIFICATE_BASE64 secret) broke the deploy in #325; restored in #328.
   dev-certificate-base64:
     description: Base64-encoded development certificate (.p12).
     required: true

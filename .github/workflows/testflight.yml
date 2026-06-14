@@ -59,6 +59,7 @@ jobs:
         uses: ./.github/signing
         with:
           build-certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          # Required for archive under automatic signing — do not remove (see #325/#328).
           dev-certificate-base64: ${{ secrets.DEV_CERTIFICATE_BASE64 }}
           p12-password: ${{ secrets.P12_PASSWORD }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
