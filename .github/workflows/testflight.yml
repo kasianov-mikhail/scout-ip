@@ -62,6 +62,7 @@ jobs:
           # Required for archive under automatic signing — do not remove (see #325/#328).
           dev-certificate-base64: ${{ secrets.DEV_CERTIFICATE_BASE64 }}
           p12-password: ${{ secrets.P12_PASSWORD }}
+          dev-p12-password: ${{ secrets.DEV_P12_PASSWORD }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
           provisioning-profile-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
           api-key-base64: ${{ secrets.APP_STORE_CONNECT_KEY_BASE64 }}
