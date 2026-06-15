@@ -10,10 +10,10 @@ import Logging
 import Metrics
 import SwiftUI
 
-struct AppSceneTracker {
-    private let appLogger = Logger(label: "ScoutIP.App")
+enum AppSceneTracker {
+    private static let appLogger = Logger(label: "ScoutIP.App")
 
-    func scenePhaseChanged(_ scenePhase: ScenePhase) {
+    static func scenePhaseChanged(_ scenePhase: ScenePhase) {
         switch scenePhase {
 
         case .active:
@@ -25,7 +25,7 @@ struct AppSceneTracker {
         }
     }
 
-    func tabChanged(_ index: Int) {
+    static func tabChanged(_ index: Int) {
         let name: String =
             switch index {
             case 0: "info"
@@ -37,7 +37,7 @@ struct AppSceneTracker {
         appLogger.debug("TabChanged", metadata: ["tab": "\(name)"])
     }
 
-    func shortcutTriggered(_ shortcut: String?) {
+    static func shortcutTriggered(_ shortcut: String?) {
         appLogger.trace("ShortcutsHandling", metadata: ["shortcut": "\(shortcut ?? "nil")"])
 
         switch shortcut {

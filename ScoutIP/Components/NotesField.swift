@@ -14,8 +14,6 @@ struct NotesField: View {
     @Environment(\.modelContext) var modelContext
     @FocusState private var isFocused: Bool
 
-    private let tracker = NotesTracker()
-
     var body: some View {
         TextField("Add notes", text: $record.notes, axis: .vertical)
             .accessibilityIdentifier("NotesField")
@@ -25,7 +23,7 @@ struct NotesField: View {
                         if !record.notes.isEmpty {
                             Button("Clear") {
                                 record.notes = ""
-                                tracker.cleared()
+                                NotesTracker.cleared()
                             }
                         }
 
@@ -38,7 +36,7 @@ struct NotesField: View {
                                 } catch {
                                 }
 
-                                tracker.saved()
+                                NotesTracker.saved()
                                 isFocused = false
                             }
                         }

@@ -27,8 +27,6 @@ struct HistoryRow: View {
     @Environment(\.modelContext) var modelContext
     @State private var isConfirmationPresented = false
 
-    private let tracker = HistoryActionTracker()
-
     var body: some View {
         NavigationLink(destination: HistoryIPList(records: item.records)) {
             HStack(spacing: 8) {
@@ -56,7 +54,7 @@ struct HistoryRow: View {
             .tint(.yellow)
         }
         .simultaneousGesture(TapGesture().onEnded {
-            tracker.rowOpened()
+            HistoryActionTracker.rowOpened()
         })
         .confirmationDialog("Are your sure?", isPresented: $isConfirmationPresented) {
             Button("Delete", role: .destructive) {
@@ -89,7 +87,7 @@ struct HistoryRow: View {
             record.isFavorite = newValue
         }
         try? modelContext.save()
-        tracker.favoriteToggled(newValue)
+        HistoryActionTracker.favoriteToggled(newValue)
     }
 
     func hide() {

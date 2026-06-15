@@ -10,12 +10,10 @@ import SwiftUI
 struct StarListButton: View {
     @Binding var isStarred: Bool
 
-    private let tracker = HistoryActionTracker()
-
     var body: some View {
         Button {
             isStarred.toggle()
-            tracker.favoriteFilterToggled(isStarred)
+            HistoryActionTracker.favoriteFilterToggled(isStarred)
         } label: {
             Image(systemName: "list.star")
         }

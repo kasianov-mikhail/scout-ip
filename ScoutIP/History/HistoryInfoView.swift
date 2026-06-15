@@ -37,7 +37,7 @@ struct HistoryInfoView: View {
         .toolbar {
             if let object = record.object {
                 ShareLink(item: object.shareDescription)
-                    .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
+                    .simultaneousGesture(TapGesture().onEnded { ShareTracker.shared() })
             }
             StarButton(record: record)
         }

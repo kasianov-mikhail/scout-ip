@@ -32,8 +32,7 @@ struct PersistenceController {
                 configurations: configuration
             )
         } catch {
-            let tracker = PersistenceTracker()
-            tracker.loadFailure(error: error)
+            PersistenceTracker.loadFailure(error: error)
             fatalError("Unresolved error \(error)")
         }
     }

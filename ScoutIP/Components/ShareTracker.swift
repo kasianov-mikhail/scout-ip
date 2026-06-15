@@ -9,10 +9,10 @@ import Foundation
 import Logging
 import Metrics
 
-struct ShareTracker {
-    private let appLogger = Logger(label: "ScoutIP.App")
+enum ShareTracker {
+    private static let appLogger = Logger(label: "ScoutIP.App")
 
-    func shared() {
+    static func shared() {
         Counter(label: "share.count").increment()
         appLogger.info("Shared")
     }

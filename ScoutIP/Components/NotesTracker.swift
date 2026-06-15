@@ -9,15 +9,15 @@ import Foundation
 import Logging
 import Metrics
 
-struct NotesTracker {
-    private let appLogger = Logger(label: "ScoutIP.App")
+enum NotesTracker {
+    private static let appLogger = Logger(label: "ScoutIP.App")
 
-    func saved() {
+    static func saved() {
         Counter(label: "notes.saved.count").increment()
         appLogger.debug("NotesSaved")
     }
 
-    func cleared() {
+    static func cleared() {
         Counter(label: "notes.cleared.count").increment()
         appLogger.debug("NotesCleared")
     }

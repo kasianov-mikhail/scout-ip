@@ -9,10 +9,10 @@ import Foundation
 import Logging
 import Metrics
 
-struct InfoActionTracker {
-    private let appLogger = Logger(label: "ScoutIP.App")
+enum InfoActionTracker {
+    private static let appLogger = Logger(label: "ScoutIP.App")
 
-    func fieldCopied(key: String) {
+    static func fieldCopied(key: String) {
         Counter(label: "info.copy.count").increment()
         appLogger.debug("InfoFieldCopied", metadata: ["field": "\(key)"])
     }

@@ -35,16 +35,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        let tracker = AppLifecycleTracker()
-        tracker.launch()
+        AppLifecycleTracker.launch()
 
-        OnboardingTracker().startedIfFirstLaunch()
+        OnboardingTracker.startedIfFirstLaunch()
 
         Task {
             do {
                 try await Scout.setup(backends: backends)
             } catch {
-                tracker.scoutSetupFailure(error: error)
+                AppLifecycleTracker.scoutSetupFailure(error: error)
             }
         }
 
