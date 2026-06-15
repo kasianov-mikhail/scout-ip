@@ -9,10 +9,10 @@ import Foundation
 import Logging
 import Metrics
 
-struct ReviewTracker {
-    private let appLogger = Logger(label: "ScoutIP.App")
+enum ReviewTracker {
+    private static let appLogger = Logger(label: "ScoutIP.App")
 
-    func promptRequested() {
+    static func promptRequested() {
         Counter(label: "review.prompt.requested.count").increment()
         appLogger.info("ReviewPromptRequested")
     }

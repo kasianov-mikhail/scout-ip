@@ -154,7 +154,6 @@ struct HistoryList: View {
 
     func deleteSelected() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        let tracker = HistoryDeleteTracker()
         let selected = history.filter { selection.contains($0.ip) }
 
         do {
@@ -163,10 +162,10 @@ struct HistoryList: View {
             }
             try modelContext.save()
 
-            tracker.success(count: selected.count)
+            HistoryDeleteTracker.success(count: selected.count)
 
         } catch {
-            tracker.failure(error: error)
+            HistoryDeleteTracker.failure(error: error)
         }
     }
 }

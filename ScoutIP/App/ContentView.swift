@@ -33,8 +33,6 @@ struct ContentView: View {
         #endif
     }
 
-    private let sceneTracker = AppSceneTracker()
-
     var body: some View {
         TabView(selection: $index) {
             InfoView(state: $state, ipInfo: ipInfo)
@@ -63,14 +61,14 @@ struct ContentView: View {
             }
         }
         .onChange(of: scenePhase) {
-            sceneTracker.scenePhaseChanged(scenePhase)
+            AppSceneTracker.scenePhaseChanged(scenePhase)
 
             if scenePhase == .active {
                 handleActions()
             }
         }
         .onChange(of: index) { _, newIndex in
-            sceneTracker.tabChanged(newIndex)
+            AppSceneTracker.tabChanged(newIndex)
         }
         .onShake {
             #if DEBUG
@@ -86,7 +84,7 @@ struct ContentView: View {
     }
 
     private func handleActions() {
-        sceneTracker.shortcutTriggered(shortcut)
+        AppSceneTracker.shortcutTriggered(shortcut)
 
         if shortcut == "SearchAction" {
             index = 0

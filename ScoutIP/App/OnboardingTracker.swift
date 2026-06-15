@@ -9,16 +9,15 @@ import Foundation
 import Logging
 import Metrics
 
-struct OnboardingTracker {
-    private let appLogger = Logger(label: "ScoutIP.App")
-    private let defaults = UserDefaults.standard
-    private let key = "OnboardingStartedFired"
+enum OnboardingTracker {
+    private static let appLogger = Logger(label: "ScoutIP.App")
+    private static let key = "OnboardingStartedFired"
 
-    func startedIfFirstLaunch() {
-        guard !defaults.bool(forKey: key) else {
+    static func startedIfFirstLaunch() {
+        guard !UserDefaults.standard.bool(forKey: key) else {
             return
         }
-        defaults.set(true, forKey: key)
+        UserDefaults.standard.set(true, forKey: key)
         Counter(label: "onboarding.started.count").increment()
         appLogger.info("OnboardingStarted")
     }

@@ -41,7 +41,7 @@ struct InfoView: View {
                             .contextMenu {
                                 Button {
                                     UIPasteboard.general.string = pair.value
-                                    InfoActionTracker().fieldCopied(key: pair.key)
+                                    InfoActionTracker.fieldCopied(key: pair.key)
                                 } label: {
                                     Label("Copy \(pair.key)", systemImage: "doc.on.doc")
                                 }
@@ -71,7 +71,7 @@ struct InfoView: View {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     if let record = ipInfo.activeRecord, let object = record.object {
                         ShareLink(item: object.shareDescription)
-                            .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
+                            .simultaneousGesture(TapGesture().onEnded { ShareTracker.shared() })
                         StarButton(record: record)
                     }
                 }

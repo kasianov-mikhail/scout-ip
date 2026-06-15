@@ -9,10 +9,10 @@ import Foundation
 import Logging
 import Metrics
 
-struct FunnelTracker {
-    private let networkLogger = Logger(label: "ScoutIP.Network")
+enum FunnelTracker {
+    private static let networkLogger = Logger(label: "ScoutIP.Network")
 
-    func searchPerformed(term: String) {
+    static func searchPerformed(term: String) {
         Counter(label: "search.performed.count").increment()
         networkLogger.info(
             "SearchPerformed",

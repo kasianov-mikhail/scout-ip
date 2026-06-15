@@ -13,8 +13,6 @@ struct StarButton: View {
     var record: IPRecord
     @Environment(\.modelContext) var modelContext
 
-    private let tracker = HistoryActionTracker()
-
     var body: some View {
         Button(action: toggle) {
             Image(systemName: record.isFavorite ? "star.fill" : "star")
@@ -32,6 +30,6 @@ struct StarButton: View {
         } catch {
         }
 
-        tracker.favoriteToggled(record.isFavorite)
+        HistoryActionTracker.favoriteToggled(record.isFavorite)
     }
 }

@@ -42,7 +42,7 @@ struct HistoryIPList: View {
         .toolbar {
             if let object = records.first?.object {
                 ShareLink(item: object.shareDescription)
-                    .simultaneousGesture(TapGesture().onEnded { ShareTracker().shared() })
+                    .simultaneousGesture(TapGesture().onEnded { ShareTracker.shared() })
             }
             StarListButton(isStarred: $isStarred)
         }
@@ -54,17 +54,16 @@ struct HistoryIPList: View {
     func delete(offsets: IndexSet) {
         withAnimation {
             let records = offsets.map { self.records[$0] }
-            let tracker = HistoryDeleteTracker()
 
             do {
                 for record in records {
                     modelContext.delete(record)
                 }
                 try modelContext.save()
-                tracker.success(count: records.count)
+                HistoryDeleteTracker.success(count: records.count)
 
             } catch {
-                tracker.failure(error: error)
+                HistoryDeleteTracker.failure(error: error)
             }
         }
     }

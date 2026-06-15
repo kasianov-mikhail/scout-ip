@@ -9,20 +9,20 @@ import Foundation
 import Logging
 import Metrics
 
-struct HistoryActionTracker {
-    private let appLogger = Logger(label: "ScoutIP.App")
+enum HistoryActionTracker {
+    private static let appLogger = Logger(label: "ScoutIP.App")
 
-    func rowOpened() {
+    static func rowOpened() {
         Counter(label: "history.row.opened.count").increment()
         appLogger.debug("HistoryRowOpened")
     }
 
-    func favoriteToggled(_ isFavorite: Bool) {
+    static func favoriteToggled(_ isFavorite: Bool) {
         Counter(label: "history.favorite.toggled.count").increment()
         appLogger.debug("HistoryFavoriteToggled", metadata: ["favorite": "\(isFavorite)"])
     }
 
-    func favoriteFilterToggled(_ isEnabled: Bool) {
+    static func favoriteFilterToggled(_ isEnabled: Bool) {
         Counter(label: "history.favorite.filter.count").increment()
         appLogger.debug("HistoryFavoriteFilterToggled", metadata: ["enabled": "\(isEnabled)"])
     }

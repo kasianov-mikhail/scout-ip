@@ -9,15 +9,15 @@ import Foundation
 import Logging
 import Metrics
 
-struct AppLifecycleTracker {
-    private let appLogger = Logger(label: "ScoutIP.App")
+enum AppLifecycleTracker {
+    private static let appLogger = Logger(label: "ScoutIP.App")
 
-    func launch() {
+    static func launch() {
         Counter(label: "app.launch.count").increment()
         appLogger.info("AppLaunched")
     }
 
-    func scoutSetupFailure(error: Error) {
+    static func scoutSetupFailure(error: Error) {
         appLogger.error("ScoutSetupFailed", metadata: ["error": "\(error)"])
     }
 }
