@@ -31,7 +31,7 @@ jobs:
           else
             FULL_SHA=$(jq -r '.pins[] | select(.identity == "scout") | .state.revision' ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
             SHA=$(echo "$FULL_SHA" | cut -c1-7)
-            TITLE="Update Scout to $SHA"
+            TITLE="Update Scout dependency to $SHA"
             # Reference the Scout PR that introduced this revision in the body, falling back to the commit
             PR_INFO=$(gh api "repos/kasianov-mikhail/scout/commits/$FULL_SHA/pulls" 2>/dev/null || echo '[]')
             PR_NUMBER=$(echo "$PR_INFO" | jq -r '.[0].number // empty')
