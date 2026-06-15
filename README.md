@@ -24,13 +24,24 @@ A companion app for the [Scout](https://github.com/kasianov-mikhail/scout) packa
 1. Clone the repository:
     ```sh
     git clone https://github.com/kasianov-mikhail/scout-ip.git
+    cd scout-ip
     ```
 2. Copy the secrets template and fill in your API key:
     ```sh
     cp Secrets.xcconfig.template Secrets.xcconfig
     ```
 3. Get your token from [ipinfo.io/account/token](https://ipinfo.io/account/token) and set it in `Secrets.xcconfig`.
-4. Open `ScoutIP.xcodeproj` and run.
+4. Open `ScoutIP.xcodeproj` and run. The [Scout](https://github.com/kasianov-mikhail/scout) package is fetched automatically as a remote dependency.
+
+## Workspace (optional)
+
+`ScoutIP.xcworkspace` also surfaces the source of the [`scout`](https://github.com/kasianov-mikhail/scout) and [`scout-server`](https://github.com/kasianov-mikhail/scout-server) packages so you can edit them alongside the app. They live as sibling folders next to `scout-ip`; run the bootstrap script to clone any that are missing:
+
+```sh
+./bootstrap.sh
+```
+
+Then open `ScoutIP.xcworkspace` instead of the project. With `scout` checked out locally, Xcode builds against your local copy instead of the remote dependency.
 
 ## App Store
 
