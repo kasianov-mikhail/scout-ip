@@ -47,9 +47,10 @@ jobs:
             git commit -m "$TITLE" -m "$BODY"
             git push -u origin "$BRANCH"
             gh pr create --title "$TITLE" --body "$BODY" --head "$BRANCH" --base main
-            # Mergeability is computed asynchronously, so poll until GitHub reports it
+            # Mergeability is computed asynchronously, so poll until GitHub reports it.
+            # Tolerate transient API failures so a timeout here doesn't abort the job after the PR is already open.
             for _ in {1..10}; do
-              MERGEABLE=$(gh pr view "$BRANCH" --json mergeable --jq '.mergeable')
+              MERGEABLE=$(gh pr view "$BRANCH" --json mergeable --jq '.mergeable' 2>/dev/null || echo UNKNOWN)
               [ "$MERGEABLE" != "UNKNOWN" ] && break
               sleep 3
             done
