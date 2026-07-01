@@ -7,3 +7,5 @@ Trackers carry no per-call state: define them as caseless `enum`s with `static` 
 Document only public API: write doc comments (`///`) for `public`/`open` declarations only, and leave `internal`, `private`, and `fileprivate` declarations undocumented (an inline `//` note for genuinely non-obvious logic is still fine).
 
 Don't use `// MARK:` comments to divide code into sections.
+
+When your edits make git treat a source file as new — a file you just created, or a move/rewrite git records as an add rather than a rename — set that file's MIT header year (`// Copyright <year> Mikhail Kasianov`) to the current year. Leave the year untouched on files git still sees as edits to an existing file.
