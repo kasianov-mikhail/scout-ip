@@ -22,7 +22,6 @@ struct ContentView: View {
 
     @State private var index = 0
     @State private var state: UpdateState = .idle
-    @State private var isScoutPresented = false
     @State private var ipInfo = IPInfo()
 
     private var isBeta: Bool {
@@ -58,6 +57,13 @@ struct ContentView: View {
                         Text("Debug")
                     }
                     .tag(2)
+
+                HomeView(backends: backends)
+                    .tabItem {
+                        Image(systemName: "chart.bar.xaxis")
+                        Text("Scout")
+                    }
+                    .tag(3)
             }
         }
         .onChange(of: scenePhase) {
@@ -69,17 +75,6 @@ struct ContentView: View {
         }
         .onChange(of: index) { _, newIndex in
             AppSceneTracker.tabChanged(newIndex)
-        }
-        .onShake {
-            #if DEBUG
-                isScoutPresented = true
-            #else
-                isScoutPresented =
-                    Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
-            #endif
-        }
-        .fullScreenCover(isPresented: $isScoutPresented) {
-            HomeView(backends: backends)
         }
     }
 
