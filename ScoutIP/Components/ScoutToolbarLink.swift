@@ -9,6 +9,8 @@ import Scout
 import SwiftUI
 
 struct ScoutToolbarLink: View {
+    @State private var isPresented = false
+
     private var isVisible: Bool {
         #if DEBUG
             return true
@@ -19,12 +21,15 @@ struct ScoutToolbarLink: View {
 
     var body: some View {
         if isVisible {
-            NavigationLink {
-                HomeView(backends: backends)
+            Button {
+                isPresented = true
             } label: {
                 Image(systemName: "chart.bar.xaxis")
             }
             .accessibilityLabel("Scout")
+            .fullScreenCover(isPresented: $isPresented) {
+                HomeView(backends: backends)
+            }
         }
     }
 }
