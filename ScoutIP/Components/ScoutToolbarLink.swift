@@ -27,9 +27,7 @@ struct ScoutToolbarLink: View {
                 Image(systemName: "chart.bar.xaxis")
             }
             .accessibilityLabel("Scout")
-            .fullScreenCover(isPresented: $isPresented) {
-                HomeView(backends: backends)
-            }
+            .scoutHome(isPresented: $isPresented, backends: backends)
         }
     }
 }

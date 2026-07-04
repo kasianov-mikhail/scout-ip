@@ -73,8 +73,6 @@ struct HistoryList: View {
                     } else {
                         StarListButton(isStarred: $isStarred)
                     }
-
-                    ScoutToolbarLink()
                 }
             }
             .overlay {
