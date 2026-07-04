@@ -7,7 +7,16 @@
       "location" : "https://github.com/kasianov-mikhail/scout",
       "state" : {
         "branch" : "main",
-        "revision" : "0422c153b82357c0cd7b2a7fa55de2a86aeb86ca"
+        "revision" : "4d8ef8cfcf783c74462d796e67cbd48fc2af9b2c"
+      }
+    },
+    {
+      "identity" : "scout-db",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kasianov-mikhail/scout-db.git",
+      "state" : {
+        "revision" : "f9a75651c531d324265785b332702d971948f921",
+        "version" : "0.7.0"
       }
     },
     {
@@ -15,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "92448c359f00ebe36ae97d3bd9086f13c7692b5a",
-        "version" : "1.13.2"
+        "revision" : "a878e7f8f46cfc0e1125e565b5c08e7d5272dc9a",
+        "version" : "1.14.0"
       }
     },
     {

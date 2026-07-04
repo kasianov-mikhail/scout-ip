@@ -8,6 +8,9 @@
       location = "group:../scout">
    </FileRef>
    <FileRef
+      location = "group:../scout-db">
+   </FileRef>
+   <FileRef
       location = "group:../scout-server">
    </FileRef>
 </Workspace>

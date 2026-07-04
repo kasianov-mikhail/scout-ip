@@ -15,8 +15,8 @@ import UIKit
 /// present, the analytics screen shows a picker to choose which one reads are
 /// served from.
 ///
-var backends: [any Backend] {
-    let cloudKit = NativeBackend(container: CKContainer(identifier: "iCloud.Logging.Scout.0001"))
+var backends: [Backend] {
+    let cloudKit = Backend.cloudKit(container: CKContainer(identifier: "iCloud.Logging.Scout.0002"))
     let info = Bundle.main.infoDictionary
 
     guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty, let url = URL(string: address) else {
@@ -27,7 +27,7 @@ var backends: [any Backend] {
         return [cloudKit]
     }
 
-    return [HostedBackend(url: url, apiKey: apiKey), cloudKit]
+    return [Backend.server(url: url, apiKey: apiKey), cloudKit]
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
