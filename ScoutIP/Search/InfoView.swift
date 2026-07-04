@@ -74,6 +74,8 @@ struct InfoView: View {
                             .simultaneousGesture(TapGesture().onEnded { ShareTracker.shared() })
                         StarButton(record: record)
                     }
+
+                    ScoutToolbarLink()
                 }
             }
             .checkmark(isPresented: showCheckmark)

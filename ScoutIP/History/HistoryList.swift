@@ -60,7 +60,7 @@ struct HistoryList: View {
                         }
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     if editMode == .active {
                         Button {
                             isConfirmationPresented = true
@@ -73,6 +73,8 @@ struct HistoryList: View {
                     } else {
                         StarListButton(isStarred: $isStarred)
                     }
+
+                    ScoutToolbarLink()
                 }
             }
             .overlay {
