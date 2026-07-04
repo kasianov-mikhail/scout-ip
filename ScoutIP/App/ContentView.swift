@@ -6,7 +6,6 @@
 // https://opensource.org/licenses/MIT.
 
 import CloudKit
-import Scout
 import SwiftData
 import SwiftUI
 
@@ -57,13 +56,6 @@ struct ContentView: View {
                         Text("Debug")
                     }
                     .tag(2)
-
-                HomeView(backends: backends)
-                    .tabItem {
-                        Image(systemName: "chart.bar.xaxis")
-                        Text("Scout")
-                    }
-                    .tag(3)
             }
         }
         .onChange(of: scenePhase) {
