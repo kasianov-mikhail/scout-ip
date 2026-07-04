@@ -55,17 +55,19 @@ private struct IPItem: Codable {
         tracker.lookupStarted()
         FunnelTracker.searchPerformed(term: ip)
 
+        var status: Int?
         do {
-            let data = try await URLSession.shared.data(from: url).0
+            let (data, response) = try await URLSession.shared.data(from: url)
+            status = (response as? HTTPURLResponse)?.statusCode
             if let bogon = try? JSONDecoder().decode(BogonItem.self, from: data), bogon.bogon {
                 throw BogonError(ip: bogon.ip)
             }
             let item = try JSONDecoder().decode(IPItem.self, from: data)
-            tracker.success(duration: start)
+            tracker.success(duration: start, status: status)
             return IPObject(item: item, context: context)
 
         } catch {
-            tracker.failure(duration: start, error: error)
+            tracker.failure(duration: start, status: status, error: error)
             throw error
         }
     }

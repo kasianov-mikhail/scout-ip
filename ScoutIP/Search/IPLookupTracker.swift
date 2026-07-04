@@ -12,22 +12,33 @@ import Metrics
 struct IPLookupTracker {
     let source: TrackerSource
 
+    // The shared label joins the latency timer and the status counter into a
+    // single endpoint on Scout's Network screen.
+    private static let endpoint = "GET ipinfo.io"
+
     private let networkLogger = Logger(label: "ScoutIP.Network")
 
     func lookupStarted() {
         networkLogger.trace("IPLookupStarted", metadata: ["source": "\(source.rawValue)"])
     }
 
-    func success(duration start: DispatchTime) {
-        Timer(label: "ip.lookup.duration").recordInterval(since: start)
+    func success(duration start: DispatchTime, status: Int?) {
+        record(duration: start, status: status)
         Counter(label: "ip.lookup.success.count").increment()
         networkLogger.info("IPLookupSucceeded", metadata: ["source": "\(source.rawValue)"])
     }
 
-    func failure(duration start: DispatchTime, error: Error) {
-        Timer(label: "ip.lookup.duration").recordInterval(since: start)
+    func failure(duration start: DispatchTime, status: Int?, error: Error) {
+        record(duration: start, status: status)
         Counter(label: "ip.lookup.failure.count").increment()
         networkLogger.error(
             "IPLookupFailed", metadata: ["source": "\(source.rawValue)", "error": "\(error)"])
+    }
+
+    private func record(duration start: DispatchTime, status: Int?) {
+        Timer(label: Self.endpoint).recordInterval(since: start)
+        if let status {
+            Counter(label: Self.endpoint, dimensions: [("status", String(status))]).increment()
+        }
     }
 }
