@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 #
 # bootstrap.sh — clone the sibling repositories that ScoutIP.xcworkspace
-# references through relative paths (../scout, ../scout-server).
+# references through relative paths (../scout, ../scout-db, ../scout-server).
 #
 # The workspace expects this on-disk layout:
 #
 #   <parent>/
 #   ├── scout-ip/        (this repo)
 #   ├── scout/
+#   ├── scout-db/
 #   └── scout-server/
 #
 # Run once after cloning scout-ip on a fresh machine, then open
@@ -19,7 +20,7 @@
 set -euo pipefail
 
 # Sibling repos the workspace references — see contents.xcworkspacedata.
-SIBLINGS=(scout scout-server)
+SIBLINGS=(scout scout-db scout-server)
 
 # Directory of this script == the scout-ip repo root.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
