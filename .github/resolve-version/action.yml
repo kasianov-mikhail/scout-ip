@@ -1,0 +1,49 @@
+name: Resolve version
+description: >-
+  Computes the marketing version to build, bumping past the live App Store
+  version when the repo has drifted behind it.
+
+outputs:
+  value:
+    description: The marketing version to build.
+    value: ${{ steps.resolve.outputs.value }}
+  original:
+    description: The marketing version currently in the repo.
+    value: ${{ steps.resolve.outputs.original }}
+  drift:
+    description: "true when the repo version was behind the App Store and was bumped."
+    value: ${{ steps.resolve.outputs.drift }}
+
+runs:
+  using: composite
+  steps:
+    - id: resolve
+      shell: bash
+      run: |
+        BUNDLE_ID=com.kasianov.ScoutIP
+        REPO_VERSION=$(grep -m1 MARKETING_VERSION ScoutIP.xcodeproj/project.pbxproj | sed 's/.*= //;s/;//;s/ //g')
+
+        LIVE_VERSION=$(curl -s "https://itunes.apple.com/lookup?bundleId=$BUNDLE_ID" \
+          | grep -o '"version":"[^"]*"' | head -1 | sed 's/.*:"//;s/"//')
+
+        NEW_VERSION="$REPO_VERSION"
+        DRIFT=false
+
+        if [ -n "$LIVE_VERSION" ]; then
+          HIGHEST=$(printf '%s\n%s\n' "$REPO_VERSION" "$LIVE_VERSION" | sort -V | tail -1)
+          if [ "$REPO_VERSION" = "$LIVE_VERSION" ] || [ "$HIGHEST" != "$REPO_VERSION" ]; then
+            LIVE_MAJOR=$(echo "$LIVE_VERSION" | cut -d. -f1)
+            NEW_VERSION="$((LIVE_MAJOR + 1)).0"
+            DRIFT=true
+            sed -i '' "s/MARKETING_VERSION = $REPO_VERSION;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
+            echo "Repo $REPO_VERSION is behind App Store $LIVE_VERSION; building $NEW_VERSION"
+          else
+            echo "Repo $REPO_VERSION is ahead of App Store $LIVE_VERSION; building $REPO_VERSION"
+          fi
+        else
+          echo "Could not resolve App Store version; building repo version $REPO_VERSION"
+        fi
+
+        echo "value=$NEW_VERSION" >> $GITHUB_OUTPUT
+        echo "original=$REPO_VERSION" >> $GITHUB_OUTPUT
+        echo "drift=$DRIFT" >> $GITHUB_OUTPUT
