@@ -16,7 +16,7 @@ import UIKit
 /// served from.
 ///
 var backends: [Backend] {
-    let cloudKit = Backend.cloudKit(container: CKContainer(identifier: "iCloud.Logging.Scout.0002"))
+    let cloudKit = Backend.cloudKit(container: CKContainer(identifier: "iCloud.Logging.Scout.0003"))
     let info = Bundle.main.infoDictionary
 
     guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty, let url = URL(string: address) else {
