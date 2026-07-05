@@ -63,7 +63,6 @@ jobs:
           dev-certificate-base64: ${{ secrets.DEV_CERTIFICATE_BASE64 }}
           p12-password: ${{ secrets.P12_PASSWORD }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
-          provisioning-profile-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
           api-key-base64: ${{ secrets.APP_STORE_CONNECT_KEY_BASE64 }}
           api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
 
@@ -91,6 +90,10 @@ jobs:
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \
             -exportOptionsPlist ExportOptions.plist \
             -exportPath $RUNNER_TEMP/export \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath ~/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_ID.p8 \
+            -authenticationKeyID $APP_STORE_CONNECT_KEY_ID \
+            -authenticationKeyIssuerID $APP_STORE_CONNECT_ISSUER_ID \
             | xcbeautify
 
       - name: Upload to TestFlight

@@ -1,5 +1,5 @@
 name: Set up signing
-description: Imports signing certificates, the provisioning profile, and the App Store Connect API key into the runner.
+description: Imports signing certificates and the App Store Connect API key into the runner.
 
 inputs:
   build-certificate-base64:
@@ -25,9 +25,6 @@ inputs:
   keychain-password:
     description: Password for the temporary signing keychain.
     required: true
-  provisioning-profile-base64:
-    description: Base64-encoded provisioning profile.
-    required: true
   api-key-base64:
     description: Base64-encoded App Store Connect API key (.p8).
     required: true
@@ -46,16 +43,13 @@ runs:
         P12_PASSWORD: ${{ inputs.p12-password }}
         DEV_P12_PASSWORD: ${{ inputs.dev-p12-password }}
         KEYCHAIN_PASSWORD: ${{ inputs.keychain-password }}
-        PROVISIONING_PROFILE_BASE64: ${{ inputs.provisioning-profile-base64 }}
       run: |
         DIST_PATH=$RUNNER_TEMP/distribution.p12
         DEV_PATH=$RUNNER_TEMP/development.p12
         KEYCHAIN_PATH=$RUNNER_TEMP/signing.keychain-db
-        PP_PATH=$RUNNER_TEMP/profile.mobileprovision
 
         echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $DIST_PATH
         echo -n "$DEV_CERTIFICATE_BASE64" | base64 --decode -o $DEV_PATH
-        echo -n "$PROVISIONING_PROFILE_BASE64" | base64 --decode -o $PP_PATH
 
         security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
         security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
@@ -66,9 +60,6 @@ runs:
 
         security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
         security list-keychain -d user -s $KEYCHAIN_PATH
-
-        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
 
     - name: Write API key
       shell: bash
