@@ -17,17 +17,24 @@ import UIKit
 ///
 var backends: [Backend] {
     let cloudKit = Backend.cloudKit(container: CKContainer(identifier: "iCloud.Logging.Scout.0003"))
-    let info = Bundle.main.infoDictionary
 
-    guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty, let url = URL(string: address) else {
+    #if targetEnvironment(simulator)
         return [cloudKit]
-    }
+    #else
+        let info = Bundle.main.infoDictionary
 
-    guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
-        return [cloudKit]
-    }
+        guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty,
+            let url = URL(string: address)
+        else {
+            return [cloudKit]
+        }
 
-    return [Backend.server(url: url, apiKey: apiKey), cloudKit]
+        guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
+            return [cloudKit]
+        }
+
+        return [Backend.server(url: url, apiKey: apiKey), cloudKit]
+    #endif
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {

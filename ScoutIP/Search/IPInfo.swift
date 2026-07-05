@@ -34,15 +34,7 @@ import SwiftUI
         let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
 
         do {
-            let token: String
-            if let keychainToken = KeychainHelper.load(key: "IPINFO_KEY") {
-                token = keychainToken
-            } else if let plistToken = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String,
-                !plistToken.isEmpty
-            {
-                KeychainHelper.save(key: "IPINFO_KEY", value: plistToken)
-                token = plistToken
-            } else {
+            guard let token else {
                 return
             }
 
@@ -68,5 +60,23 @@ import SwiftUI
             errorText = error.localizedDescription
             tracker.failure(error: error)
         }
+    }
+
+    private var token: String? {
+        #if DEBUG
+            if let envToken = ProcessInfo.processInfo.environment["IPINFO_KEY"], !envToken.isEmpty {
+                return envToken
+            }
+        #endif
+        if let keychainToken = KeychainHelper.load(key: "IPINFO_KEY") {
+            return keychainToken
+        }
+        if let plistToken = Bundle.main.infoDictionary?["IPINFO_KEY"] as? String,
+            !plistToken.isEmpty
+        {
+            KeychainHelper.save(key: "IPINFO_KEY", value: plistToken)
+            return plistToken
+        }
+        return nil
     }
 }

@@ -68,8 +68,5 @@ fastlane/test_output
 # MacOS
 .DS_Store
 
-# Secrets
-Secrets.xcconfig
-
 # Local build output
 build/

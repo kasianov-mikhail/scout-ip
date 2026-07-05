@@ -25,6 +25,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
 
+    env:
+      IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
+
     strategy:
       fail-fast: false
       matrix:
@@ -49,7 +52,7 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild build \
-            IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
+            IPINFO_KEY="$IPINFO_KEY" \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -destination 'platform=iOS Simulator,name=${{ matrix.device }}' \
