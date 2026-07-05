@@ -67,6 +67,7 @@ jobs:
           api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
 
       - name: Archive
+        id: archive
         run: |
           set -o pipefail
           xcodebuild archive \
@@ -81,9 +82,21 @@ jobs:
             -authenticationKeyPath ~/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_ID.p8 \
             -authenticationKeyID $APP_STORE_CONNECT_KEY_ID \
             -authenticationKeyIssuerID $APP_STORE_CONNECT_ISSUER_ID \
-            | xcbeautify
+            2>&1 | tee "$RUNNER_TEMP/archive.log" | xcbeautify --renderer github-actions
+
+      - name: Surface archive errors
+        if: steps.archive.outcome == 'failure'
+        run: |
+          echo "::group::Full archive log"
+          cat "$RUNNER_TEMP/archive.log" || true
+          echo "::endgroup::"
+          ERR=$(grep -iE 'error:|error |fatal|failed' "$RUNNER_TEMP/archive.log" | tail -20)
+          if [ -n "$ERR" ]; then
+            echo "::error title=Archive failed::$(echo "$ERR" | sed ':a;N;$!ba;s/\n/%0A/g')"
+          fi
 
       - name: Export archive
+        id: export
         run: |
           set -o pipefail
           xcodebuild -exportArchive \
@@ -94,7 +107,18 @@ jobs:
             -authenticationKeyPath ~/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_ID.p8 \
             -authenticationKeyID $APP_STORE_CONNECT_KEY_ID \
             -authenticationKeyIssuerID $APP_STORE_CONNECT_ISSUER_ID \
-            | xcbeautify
+            2>&1 | tee "$RUNNER_TEMP/export.log" | xcbeautify --renderer github-actions
+
+      - name: Surface export errors
+        if: steps.export.outcome == 'failure'
+        run: |
+          echo "::group::Full export log"
+          cat "$RUNNER_TEMP/export.log" || true
+          echo "::endgroup::"
+          ERR=$(grep -iE 'error:|error |fatal|failed' "$RUNNER_TEMP/export.log" | tail -20)
+          if [ -n "$ERR" ]; then
+            echo "::error title=Export failed::$(echo "$ERR" | sed ':a;N;$!ba;s/\n/%0A/g')"
+          fi
 
       - name: Upload to TestFlight
         id: upload
