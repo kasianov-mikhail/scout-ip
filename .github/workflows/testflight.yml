@@ -26,34 +26,7 @@ jobs:
 
       - name: Resolve version
         id: version
-        run: |
-          BUNDLE_ID=com.kasianov.ScoutIP
-          REPO_VERSION=$(grep -m1 MARKETING_VERSION ScoutIP.xcodeproj/project.pbxproj | sed 's/.*= //;s/;//;s/ //g')
-
-          LIVE_VERSION=$(curl -s "https://itunes.apple.com/lookup?bundleId=$BUNDLE_ID" \
-            | grep -o '"version":"[^"]*"' | head -1 | sed 's/.*:"//;s/"//')
-
-          NEW_VERSION="$REPO_VERSION"
-          DRIFT=false
-
-          if [ -n "$LIVE_VERSION" ]; then
-            HIGHEST=$(printf '%s\n%s\n' "$REPO_VERSION" "$LIVE_VERSION" | sort -V | tail -1)
-            if [ "$REPO_VERSION" = "$LIVE_VERSION" ] || [ "$HIGHEST" != "$REPO_VERSION" ]; then
-              LIVE_MAJOR=$(echo "$LIVE_VERSION" | cut -d. -f1)
-              NEW_VERSION="$((LIVE_MAJOR + 1)).0"
-              DRIFT=true
-              sed -i '' "s/MARKETING_VERSION = $REPO_VERSION;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
-              echo "Repo $REPO_VERSION is behind App Store $LIVE_VERSION; building $NEW_VERSION"
-            else
-              echo "Repo $REPO_VERSION is ahead of App Store $LIVE_VERSION; building $REPO_VERSION"
-            fi
-          else
-            echo "Could not resolve App Store version; building repo version $REPO_VERSION"
-          fi
-
-          echo "value=$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "original=$REPO_VERSION" >> $GITHUB_OUTPUT
-          echo "drift=$DRIFT" >> $GITHUB_OUTPUT
+        uses: ./.github/resolve-version
 
       - name: Set up signing
         uses: ./.github/signing
@@ -85,15 +58,11 @@ jobs:
             2>&1 | tee "$RUNNER_TEMP/archive.log" | xcbeautify --renderer github-actions
 
       - name: Surface archive errors
-        if: steps.archive.outcome == 'failure'
-        run: |
-          echo "::group::Full archive log"
-          cat "$RUNNER_TEMP/archive.log" || true
-          echo "::endgroup::"
-          ERR=$(grep -iE 'error:|error |fatal|failed' "$RUNNER_TEMP/archive.log" | tail -20)
-          if [ -n "$ERR" ]; then
-            echo "::error title=Archive failed::$(echo "$ERR" | sed ':a;N;$!ba;s/\n/%0A/g')"
-          fi
+        if: failure() && steps.archive.outcome == 'failure'
+        uses: ./.github/surface-errors
+        with:
+          log: ${{ runner.temp }}/archive.log
+          title: Archive failed
 
       - name: Export archive
         id: export
@@ -110,15 +79,11 @@ jobs:
             2>&1 | tee "$RUNNER_TEMP/export.log" | xcbeautify --renderer github-actions
 
       - name: Surface export errors
-        if: steps.export.outcome == 'failure'
-        run: |
-          echo "::group::Full export log"
-          cat "$RUNNER_TEMP/export.log" || true
-          echo "::endgroup::"
-          ERR=$(grep -iE 'error:|error |fatal|failed' "$RUNNER_TEMP/export.log" | tail -20)
-          if [ -n "$ERR" ]; then
-            echo "::error title=Export failed::$(echo "$ERR" | sed ':a;N;$!ba;s/\n/%0A/g')"
-          fi
+        if: failure() && steps.export.outcome == 'failure'
+        uses: ./.github/surface-errors
+        with:
+          log: ${{ runner.temp }}/export.log
+          title: Export failed
 
       - name: Upload to TestFlight
         id: upload
@@ -146,51 +111,12 @@ jobs:
 
       - name: Persist version via PR
         if: steps.upload.outputs.needs_bump == 'true' || steps.version.outputs.drift == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          git config user.name "Mikhail Kasianov"
-          git config user.email "96941969+kasianov-mikhail@users.noreply.github.com"
-
-          ORIGINAL=${{ steps.version.outputs.original }}
-          BUILT=${{ steps.version.outputs.value }}
-
-          if [ "${{ steps.upload.outputs.needs_bump }}" = "true" ]; then
-            BUILT_MAJOR=$(echo "$BUILT" | cut -d. -f1)
-            NEW_VERSION="$((BUILT_MAJOR + 1)).0"
-            BODY="Auto-bump: App Store rejected version $BUILT"
-          else
-            NEW_VERSION="$BUILT"
-            BODY="Auto-bump: repo version $ORIGINAL was behind the App Store"
-          fi
-
-          if gh pr list --base main --state open --json title --jq '.[].title' | grep -qx "Bump version to $NEW_VERSION"; then
-            echo "PR to bump to $NEW_VERSION already open; skipping"
-            exit 0
-          fi
-
-          BRANCH="auto/bump-$NEW_VERSION-$GITHUB_RUN_NUMBER"
-          git checkout -b "$BRANCH"
-
-          git checkout HEAD -- ScoutIP.xcodeproj/project.pbxproj
-
-          sed -i '' "s/MARKETING_VERSION = $ORIGINAL;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
-
-          git add ScoutIP.xcodeproj/project.pbxproj
-          git commit -m "Bump version to $NEW_VERSION"
-          git push -u origin "$BRANCH"
-          gh pr create --title "Bump version to $NEW_VERSION" --body "$BODY" --head "$BRANCH" --base main
-          # Mergeability is computed asynchronously, so poll until GitHub reports it
-          for _ in {1..10}; do
-            MERGEABLE=$(gh pr view "$BRANCH" --json mergeable --jq '.mergeable')
-            [ "$MERGEABLE" != "UNKNOWN" ] && break
-            sleep 3
-          done
-          if [ "$MERGEABLE" = "CONFLICTING" ]; then
-            gh pr close "$BRANCH" --comment "Closed due to merge conflicts" --delete-branch
-          else
-            gh pr merge "$BRANCH" --auto --squash --delete-branch
-          fi
+        uses: ./.github/persist-version
+        with:
+          original: ${{ steps.version.outputs.original }}
+          built: ${{ steps.version.outputs.value }}
+          needs-bump: ${{ steps.upload.outputs.needs_bump }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Tag build
         if: steps.upload.outputs.needs_bump != 'true'

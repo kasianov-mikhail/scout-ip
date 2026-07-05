@@ -1,0 +1,69 @@
+name: Persist version
+description: >-
+  Opens (and auto-merges) a PR that bumps MARKETING_VERSION when the build
+  drifted ahead of the repo or the App Store rejected the uploaded version.
+
+inputs:
+  original:
+    description: The marketing version currently in the repo.
+    required: true
+  built:
+    description: The marketing version that was built.
+    required: true
+  needs-bump:
+    description: "true when the App Store rejected the uploaded version and a further bump is required."
+    required: false
+    default: "false"
+  token:
+    description: GitHub token with permission to push branches and open PRs.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        ORIGINAL: ${{ inputs.original }}
+        BUILT: ${{ inputs.built }}
+        NEEDS_BUMP: ${{ inputs.needs-bump }}
+      run: |
+        git config user.name "Mikhail Kasianov"
+        git config user.email "96941969+kasianov-mikhail@users.noreply.github.com"
+
+        if [ "$NEEDS_BUMP" = "true" ]; then
+          BUILT_MAJOR=$(echo "$BUILT" | cut -d. -f1)
+          NEW_VERSION="$((BUILT_MAJOR + 1)).0"
+          BODY="Auto-bump: App Store rejected version $BUILT"
+        else
+          NEW_VERSION="$BUILT"
+          BODY="Auto-bump: repo version $ORIGINAL was behind the App Store"
+        fi
+
+        if gh pr list --base main --state open --json title --jq '.[].title' | grep -qx "Bump version to $NEW_VERSION"; then
+          echo "PR to bump to $NEW_VERSION already open; skipping"
+          exit 0
+        fi
+
+        BRANCH="auto/bump-$NEW_VERSION-$GITHUB_RUN_NUMBER"
+        git checkout -b "$BRANCH"
+
+        git checkout HEAD -- ScoutIP.xcodeproj/project.pbxproj
+
+        sed -i '' "s/MARKETING_VERSION = $ORIGINAL;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
+
+        git add ScoutIP.xcodeproj/project.pbxproj
+        git commit -m "Bump version to $NEW_VERSION"
+        git push -u origin "$BRANCH"
+        gh pr create --title "Bump version to $NEW_VERSION" --body "$BODY" --head "$BRANCH" --base main
+        # Mergeability is computed asynchronously, so poll until GitHub reports it
+        for _ in {1..10}; do
+          MERGEABLE=$(gh pr view "$BRANCH" --json mergeable --jq '.mergeable')
+          [ "$MERGEABLE" != "UNKNOWN" ] && break
+          sleep 3
+        done
+        if [ "$MERGEABLE" = "CONFLICTING" ]; then
+          gh pr close "$BRANCH" --comment "Closed due to merge conflicts" --delete-branch
+        else
+          gh pr merge "$BRANCH" --auto --squash --delete-branch
+        fi
