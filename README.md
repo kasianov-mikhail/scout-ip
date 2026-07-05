@@ -35,7 +35,7 @@ A companion app for the [Scout](https://github.com/kasianov-mikhail/scout) packa
 
 ## Workspace (optional)
 
-`ScoutIP.xcworkspace` also surfaces the source of the [`scout`](https://github.com/kasianov-mikhail/scout) and [`scout-server`](https://github.com/kasianov-mikhail/scout-server) packages so you can edit them alongside the app. They live as sibling folders next to `scout-ip`; run the bootstrap script to clone any that are missing:
+`ScoutIP.xcworkspace` also surfaces the source of the [`scout`](https://github.com/kasianov-mikhail/scout), [`scout-db`](https://github.com/kasianov-mikhail/scout-db), and [`scout-server`](https://github.com/kasianov-mikhail/scout-server) packages so you can edit them alongside the app. They live as sibling folders next to `scout-ip`; run the bootstrap script to clone any that are missing:
 
 ```sh
 ./bootstrap.sh
