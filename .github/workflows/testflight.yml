@@ -15,6 +15,9 @@ jobs:
     env:
       APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
       APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      IPINFO_KEY: ${{ secrets.IPINFO_KEY }}
+      SCOUT_IP: ${{ secrets.SCOUT_IP }}
+      SCOUT_API_KEYS: ${{ secrets.SCOUT_API_KEYS }}
 
     steps:
       - uses: actions/checkout@v7
@@ -44,9 +47,9 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild archive \
-            IPINFO_KEY=${{ secrets.IPINFO_KEY }} \
-            SCOUT_IP=${{ secrets.SCOUT_IP }} \
-            SCOUT_API_KEYS=${{ secrets.SCOUT_API_KEYS }} \
+            IPINFO_KEY="$IPINFO_KEY" \
+            SCOUT_IP="$SCOUT_IP" \
+            SCOUT_API_KEYS="$SCOUT_API_KEYS" \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \

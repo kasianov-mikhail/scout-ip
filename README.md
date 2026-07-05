@@ -26,11 +26,8 @@ A companion app for the [Scout](https://github.com/kasianov-mikhail/scout) packa
     git clone https://github.com/kasianov-mikhail/scout-ip.git
     cd scout-ip
     ```
-2. Copy the secrets template and fill in your API key:
-    ```sh
-    cp Secrets.xcconfig.template Secrets.xcconfig
-    ```
-3. Get your token from [ipinfo.io/account/token](https://ipinfo.io/account/token) and set it in `Secrets.xcconfig`.
+2. Get an API token from [ipinfo.io/account/token](https://ipinfo.io/account/token).
+3. Expose it to the app as the `IPINFO_KEY` environment variable — Debug builds read it at runtime. In Xcode, open **Product → Scheme → Edit Scheme → Run → Arguments → Environment Variables** and add `IPINFO_KEY` with your token. Keep the value out of version control. Without a token the app still runs and simply skips IP lookups.
 4. Open `ScoutIP.xcodeproj` and run. The [Scout](https://github.com/kasianov-mikhail/scout) package is fetched automatically as a remote dependency.
 
 ## Workspace (optional)
