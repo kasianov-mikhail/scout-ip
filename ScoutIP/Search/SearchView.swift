@@ -100,7 +100,6 @@ struct SearchView: View {
             }
             if ipInfo.errorText != nil {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-            } else {
             }
             requestReview()
         }

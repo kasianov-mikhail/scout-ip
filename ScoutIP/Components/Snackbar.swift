@@ -33,6 +33,7 @@ struct Snackbar: View {
             if let text {
                 Text(text)
                     .lineSpacing(2)
+                    .multilineTextAlignment(.center)
                     .foregroundColor(.white)
                     .font(.system(size: 14, weight: .medium))
                     .padding(.init(top: 12, leading: 16, bottom: 12, trailing: 16))
