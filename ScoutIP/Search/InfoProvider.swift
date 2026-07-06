@@ -16,6 +16,12 @@ struct IPError: LocalizedError {
     }
 }
 
+struct TokenError: LocalizedError {
+    var errorDescription: String? {
+        "IP lookup is not configured: the API token is missing"
+    }
+}
+
 struct BogonError: LocalizedError {
     let ip: String
 

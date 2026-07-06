@@ -32,10 +32,11 @@ import SwiftUI
 
     @MainActor func record(context: ModelContext) async {
         let tracker = IPRecordTracker(source: ip.isEmpty ? .user : .manual)
+        errorText = nil
 
         do {
             guard let token else {
-                return
+                throw TokenError()
             }
 
             tracker.requested()
