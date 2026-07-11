@@ -5,6 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import Scout
 import SwiftData
 import SwiftUI
 
@@ -15,6 +16,7 @@ struct InfoView: View {
     @Bindable var ipInfo: IPInfo
     @State private var showCheckmark = false
     @State private var showConfetti = false
+    @State private var isScoutPresented = false
 
     @Query(IPRecord.visible)
     var records: [IPRecord]
@@ -75,7 +77,7 @@ struct InfoView: View {
                         StarButton(record: record)
                     }
 
-                    ScoutToolbarLink()
+                    ScoutToolbarLink(isPresented: $isScoutPresented)
                 }
             }
             .checkmark(isPresented: showCheckmark)
@@ -94,6 +96,7 @@ struct InfoView: View {
             }
             .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Info")
+            .scoutHome(isPresented: $isScoutPresented, backends: backends)
         }
         .confetti(isPresented: showConfetti)
         .snackbar(text: $ipInfo.errorText)
