@@ -11,6 +11,7 @@ struct DebugView: View {
     var body: some View {
         List {
             CrashSection()
+            HangSection()
         }
         .navigationTitle("Debug")
     }
