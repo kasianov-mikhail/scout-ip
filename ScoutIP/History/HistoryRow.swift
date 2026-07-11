@@ -35,7 +35,7 @@ struct HistoryRow: View {
                     Circle().foregroundColor(.yellow).frame(width: 6, height: 6)
                 }
                 Spacer()
-                Text(item.records.countText).font(.system(size: 16))
+                Text(String(localized: "\(item.records.count) times")).font(.system(size: 16))
             }
             .foregroundColor(highlight.isEmpty ? .primary : .gray)
         }

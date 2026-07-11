@@ -63,7 +63,8 @@ struct InfoView: View {
                             HStack {
                                 Text(record.ip).font(.system(size: 17))
                                 Spacer()
-                                Text(ipRecords.countText).font(.system(size: 16))
+                                Text(String(localized: "\(ipRecords.count) times")).font(
+                                    .system(size: 16))
                             }
                         }
                     }
