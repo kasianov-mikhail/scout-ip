@@ -5,11 +5,10 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import Scout
 import SwiftUI
 
 struct ScoutToolbarLink: View {
-    @State private var isPresented = false
+    @Binding var isPresented: Bool
 
     private var isVisible: Bool {
         #if DEBUG
@@ -27,7 +26,6 @@ struct ScoutToolbarLink: View {
                 Image(systemName: "chart.bar.xaxis")
             }
             .accessibilityLabel("Scout")
-            .scoutHome(isPresented: $isPresented, backends: backends)
         }
     }
 }
