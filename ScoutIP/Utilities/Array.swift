@@ -9,6 +9,6 @@ import Foundation
 
 extension Array {
     var countText: String {
-        count == 1 ? "1 time" : "\(count) times"
+        String(localized: "\(count) times")
     }
 }
