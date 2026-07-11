@@ -21,6 +21,27 @@ struct CrashSection: View {
             Button("Fatal Error") {
                 fatalError("Test fatal error")
             }
+
+            Button("EXC_BAD_ACCESS") {
+                UnsafeMutablePointer<Int>(bitPattern: 0x10)!.pointee = 0
+            }
+
+            Button("Stack Overflow") {
+                func recurse(_ n: Int) -> Int {
+                    var result = n
+                    if n < .max {
+                        result += recurse(n + 1)
+                    }
+                    return result
+                }
+                _ = recurse(0)
+            }
+
+            Button("Background Thread") {
+                DispatchQueue.global().async {
+                    fatalError("Test crash on background thread")
+                }
+            }
         }
     }
 }
