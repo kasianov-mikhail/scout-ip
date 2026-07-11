@@ -56,7 +56,7 @@ struct HistoryRow: View {
         .simultaneousGesture(TapGesture().onEnded {
             HistoryActionTracker.rowOpened()
         })
-        .confirmationDialog("Are your sure?", isPresented: $isConfirmationPresented) {
+        .confirmationDialog("Are you sure?", isPresented: $isConfirmationPresented) {
             Button("Delete", role: .destructive) {
                 withAnimation {
                     hide()

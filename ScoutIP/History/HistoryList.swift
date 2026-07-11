@@ -93,7 +93,7 @@ struct HistoryList: View {
                     .foregroundColor(.gray)
                 }
             }
-            .confirmationDialog("Are your sure?", isPresented: $isConfirmationPresented) {
+            .confirmationDialog("Are you sure?", isPresented: $isConfirmationPresented) {
                 Button("Delete", role: .destructive) {
                     deleteSelected()
                     withAnimation {
