@@ -231,6 +231,9 @@
         }
       }
     },
+    "Background Thread" : {
+      "shouldTranslate" : false
+    },
     "Cancel" : {
       "localizations" : {
         "de" : {
@@ -477,6 +480,9 @@
           }
         }
       }
+    },
+    "EXC_BAD_ACCESS" : {
+      "shouldTranslate" : false
     },
     "Fatal Error" : {
 
@@ -1177,6 +1183,9 @@
           }
         }
       }
+    },
+    "Stack Overflow" : {
+      "shouldTranslate" : false
     },
     "Timezone" : {
       "extractionState" : "stale",
