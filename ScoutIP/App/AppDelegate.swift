@@ -18,23 +18,27 @@ import UIKit
 var backends: [Backend] {
     let cloudKit = Backend.cloudKit(container: CKContainer(identifier: "iCloud.Logging.Scout.0003"))
 
-    #if targetEnvironment(simulator)
-        return [cloudKit]
-    #else
-        let info = Bundle.main.infoDictionary
+    // TODO: The hosted (self-hosted Scout server) backend is temporarily
+    // disabled. Restore the block below to re-enable it.
+    return [cloudKit]
 
-        guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty,
-            let url = URL(string: address)
-        else {
-            return [cloudKit]
-        }
-
-        guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
-            return [cloudKit]
-        }
-
-        return [Backend.server(url: url, apiKey: apiKey), cloudKit]
-    #endif
+//    #if targetEnvironment(simulator)
+//        return [cloudKit]
+//    #else
+//        let info = Bundle.main.infoDictionary
+//
+//        guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty,
+//            let url = URL(string: address)
+//        else {
+//            return [cloudKit]
+//        }
+//
+//        guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
+//            return [cloudKit]
+//        }
+//
+//        return [Backend.server(url: url, apiKey: apiKey), cloudKit]
+//    #endif
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
