@@ -56,4 +56,6 @@ jobs:
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -destination 'platform=iOS Simulator,name=${{ matrix.device }}' \
+            -skipMacroValidation \
+            -skipPackagePluginValidation \
             | xcbeautify

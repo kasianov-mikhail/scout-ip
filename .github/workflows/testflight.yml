@@ -54,6 +54,8 @@ jobs:
             -scheme ScoutIP \
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \
             -destination 'generic/platform=iOS' \
+            -skipMacroValidation \
+            -skipPackagePluginValidation \
             -allowProvisioningUpdates \
             -authenticationKeyPath ~/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_ID.p8 \
             -authenticationKeyID $APP_STORE_CONNECT_KEY_ID \
