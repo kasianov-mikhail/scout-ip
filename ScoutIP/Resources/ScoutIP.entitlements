@@ -7,7 +7,7 @@
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
 		<string>iCloud.com.kasianov.ScoutIP</string>
-		<string>iCloud.Logging.Scout.0003</string>
+		<string>iCloud.Logging.Scout.0004</string>
 	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
