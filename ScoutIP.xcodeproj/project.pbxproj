@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7779C6992E8F49ED001726C5 /* Scout in Frameworks */ = {isa = PBXBuildFile; productRef = 7779C6982E8F49ED001726C5 /* Scout */; };
+		7779C6A12E8F49ED001726C5 /* ScoutCache in Frameworks */ = {isa = PBXBuildFile; productRef = 7779C6A02E8F49ED001726C5 /* ScoutCache */; };
 		77AC0B912CE582B200C61FA5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 77AC0B902CE582B200C61FA5 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7779C6992E8F49ED001726C5 /* Scout in Frameworks */,
+				7779C6A12E8F49ED001726C5 /* ScoutCache in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +116,7 @@
 			name = ScoutIP;
 			packageProductDependencies = (
 				7779C6982E8F49ED001726C5 /* Scout */,
+				7779C6A02E8F49ED001726C5 /* ScoutCache */,
 			);
 			productName = ScoutIP;
 			productReference = 775BB1962CE4B2AC00096886 /* ScoutIP.app */;
@@ -514,6 +517,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7779C6972E8F49ED001726C5 /* XCRemoteSwiftPackageReference "scout" */;
 			productName = Scout;
+		};
+		7779C6A02E8F49ED001726C5 /* ScoutCache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7779C6972E8F49ED001726C5 /* XCRemoteSwiftPackageReference "scout" */;
+			productName = ScoutCache;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
