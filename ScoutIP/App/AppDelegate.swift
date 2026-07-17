@@ -7,6 +7,7 @@
 
 import CloudKit
 import Scout
+import ScoutCache
 import UIKit
 
 /// The backends Scout reads from and syncs to. CloudKit is always included;
@@ -22,23 +23,23 @@ var backends: [Backend] {
     // disabled. Restore the block below to re-enable it.
     return [cloudKit]
 
-//    #if targetEnvironment(simulator)
-//        return [cloudKit]
-//    #else
-//        let info = Bundle.main.infoDictionary
-//
-//        guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty,
-//            let url = URL(string: address)
-//        else {
-//            return [cloudKit]
-//        }
-//
-//        guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
-//            return [cloudKit]
-//        }
-//
-//        return [Backend.server(url: url, apiKey: apiKey), cloudKit]
-//    #endif
+    //    #if targetEnvironment(simulator)
+    //        return [cloudKit]
+    //    #else
+    //        let info = Bundle.main.infoDictionary
+    //
+    //        guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty,
+    //            let url = URL(string: address)
+    //        else {
+    //            return [cloudKit]
+    //        }
+    //
+    //        guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
+    //            return [cloudKit]
+    //        }
+    //
+    //        return [Backend.server(url: url, apiKey: apiKey), cloudKit]
+    //    #endif
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -49,6 +50,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         AppLifecycleTracker.launch()
 
         OnboardingTracker.startedIfFirstLaunch()
+
+        ScoutCache.enable()
 
         Task {
             do {
