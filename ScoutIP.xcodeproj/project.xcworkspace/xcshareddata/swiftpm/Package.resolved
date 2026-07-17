@@ -1,51 +1,51 @@
 {
-  "originHash" : "8146b52b686ef86b233426688ef013d889a0bca91c7c717e1e3488ea17903620",
-  "pins" : [
+  "originHash": "8146b52b686ef86b233426688ef013d889a0bca91c7c717e1e3488ea17903620",
+  "pins": [
     {
-      "identity" : "scout",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kasianov-mikhail/scout",
-      "state" : {
-        "branch" : "main",
-        "revision" : "00a89923d63b96d805074f3b0ef6ac26f3c6c3bb"
+      "identity": "scout",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/kasianov-mikhail/scout",
+      "state": {
+        "branch": "main",
+        "revision": "ae79ffa021de0b33730dffcbd9284577154d5740"
       }
     },
     {
-      "identity" : "scout-db",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kasianov-mikhail/scout-db.git",
-      "state" : {
-        "revision" : "4ca4e327bb9328eaae55b75a26ca46d89e2bb8fc",
-        "version" : "0.9.0"
+      "identity": "scout-db",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/kasianov-mikhail/scout-db.git",
+      "state": {
+        "revision": "4ca4e327bb9328eaae55b75a26ca46d89e2bb8fc",
+        "version": "0.9.0"
       }
     },
     {
-      "identity" : "swift-log",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-log.git",
-      "state" : {
-        "revision" : "a878e7f8f46cfc0e1125e565b5c08e7d5272dc9a",
-        "version" : "1.14.0"
+      "identity": "swift-log",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-log.git",
+      "state": {
+        "revision": "a878e7f8f46cfc0e1125e565b5c08e7d5272dc9a",
+        "version": "1.14.0"
       }
     },
     {
-      "identity" : "swift-metrics",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-metrics.git",
-      "state" : {
-        "revision" : "087e8074afa97040c3b870c8664fe5482fb87cc4",
-        "version" : "2.11.0"
+      "identity": "swift-metrics",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-metrics.git",
+      "state": {
+        "revision": "087e8074afa97040c3b870c8664fe5482fb87cc4",
+        "version": "2.11.0"
       }
     },
     {
-      "identity" : "swift-syntax",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swiftlang/swift-syntax.git",
-      "state" : {
-        "revision" : "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
-        "version" : "603.0.2"
+      "identity": "swift-syntax",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-syntax.git",
+      "state": {
+        "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version": "603.0.2"
       }
     }
   ],
-  "version" : 3
+  "version": 3
 }
