@@ -5,9 +5,10 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import Cache
 import CloudKit
+import NativeConnector
 import Scout
-import ScoutCache
 import UIKit
 
 /// The backends Scout reads from and syncs to. CloudKit is always included;
@@ -51,7 +52,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         OnboardingTracker.startedIfFirstLaunch()
 
-        ScoutCache.enable()
+        Cache.enable()
 
         Task {
             do {

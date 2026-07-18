@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 import Scout
+import ScoutUI
 import SwiftData
 import SwiftUI
 
