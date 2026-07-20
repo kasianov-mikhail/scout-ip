@@ -11,7 +11,12 @@
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
 		<string>remote-notification</string>
+	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>scout.alert.refresh</string>
 	</array>
 	<key>IPINFO_KEY</key>
 	<string>$(IPINFO_KEY)</string>

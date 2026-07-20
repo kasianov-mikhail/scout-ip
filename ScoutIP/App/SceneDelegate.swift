@@ -5,6 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import ScoutUI
 import UIKit
 
 @MainActor var shortcut: String?
@@ -15,6 +16,10 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         shortcut = connectionOptions.shortcutItem?.type
+    }
+
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        ScoutAlerts.scheduleBackgroundRefresh()
     }
 
     func windowScene(

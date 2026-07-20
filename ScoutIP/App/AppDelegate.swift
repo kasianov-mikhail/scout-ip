@@ -9,6 +9,7 @@ import Cache
 import CloudKit
 import NativeConnector
 import Scout
+import ScoutUI
 import UIKit
 
 /// The backends Scout reads from and syncs to. CloudKit is always included;
@@ -53,6 +54,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         OnboardingTracker.startedIfFirstLaunch()
 
         Cache.enable()
+
+        ScoutAlerts.registerBackgroundRefresh(backends: backends)
 
         Task {
             do {
