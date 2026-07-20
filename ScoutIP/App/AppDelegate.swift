@@ -5,7 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import Cache
+import LookupIndex
 import CloudKit
 import NativeConnector
 import Scout
@@ -53,7 +53,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         OnboardingTracker.startedIfFirstLaunch()
 
-        Cache.enable()
+        LookupIndex.enable()
 
         ScoutAlerts.registerBackgroundRefresh(backends: backends)
 
