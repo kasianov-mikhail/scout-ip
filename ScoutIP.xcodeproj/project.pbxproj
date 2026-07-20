@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7779C6992E8F49ED001726C5 /* Scout in Frameworks */ = {isa = PBXBuildFile; productRef = 7779C6982E8F49ED001726C5 /* Scout */; };
-		7779C6A12E8F49ED001726C5 /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = 7779C6A02E8F49ED001726C5 /* Cache */; };
+		7779C6A12E8F49ED001726C5 /* LookupIndex in Frameworks */ = {isa = PBXBuildFile; productRef = 7779C6A02E8F49ED001726C5 /* LookupIndex */; };
 		1187B450BA7733E2D06FC6A7 /* ScoutUI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA26C3FB2FFA8A3BCF3314B /* ScoutUI */; };
 		A66A00D7A1AECBFC9BAD453A /* NativeConnector in Frameworks */ = {isa = PBXBuildFile; productRef = 22B4AD5357FD128ACB58437E /* NativeConnector */; };
 		77AC0B912CE582B200C61FA5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 77AC0B902CE582B200C61FA5 /* README.md */; };
@@ -57,7 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7779C6992E8F49ED001726C5 /* Scout in Frameworks */,
-				7779C6A12E8F49ED001726C5 /* Cache in Frameworks */,
+				7779C6A12E8F49ED001726C5 /* LookupIndex in Frameworks */,
 				1187B450BA7733E2D06FC6A7 /* ScoutUI in Frameworks */,
 				A66A00D7A1AECBFC9BAD453A /* NativeConnector in Frameworks */,
 			);
@@ -120,7 +120,7 @@
 			name = ScoutIP;
 			packageProductDependencies = (
 				7779C6982E8F49ED001726C5 /* Scout */,
-				7779C6A02E8F49ED001726C5 /* Cache */,
+				7779C6A02E8F49ED001726C5 /* LookupIndex */,
 				CAA26C3FB2FFA8A3BCF3314B /* ScoutUI */,
 				22B4AD5357FD128ACB58437E /* NativeConnector */,
 			);
@@ -524,10 +524,10 @@
 			package = 7779C6972E8F49ED001726C5 /* XCRemoteSwiftPackageReference "scout" */;
 			productName = Scout;
 		};
-		7779C6A02E8F49ED001726C5 /* Cache */ = {
+		7779C6A02E8F49ED001726C5 /* LookupIndex */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7779C6972E8F49ED001726C5 /* XCRemoteSwiftPackageReference "scout" */;
-			productName = Cache;
+			productName = LookupIndex;
 		};
 		CAA26C3FB2FFA8A3BCF3314B /* ScoutUI */ = {
 			isa = XCSwiftPackageProductDependency;
