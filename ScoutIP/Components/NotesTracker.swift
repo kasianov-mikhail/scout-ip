@@ -12,9 +12,10 @@ import Metrics
 enum NotesTracker {
     private static let appLogger = Logger(label: "ScoutIP.App")
 
-    static func saved() {
+    static func saved(length: Int) {
         Counter(label: "notes.saved.count").increment()
-        appLogger.debug("NotesSaved")
+        Recorder(label: "notes.length").record(length)
+        appLogger.debug("NotesSaved", metadata: ["length": "\(length)"])
     }
 
     static func cleared() {

@@ -44,6 +44,9 @@ struct HistoryList: View {
                     HistoryRow(item: item, highlight: searchText)
                 }
             }
+            .onAppear {
+                HistoryActionTracker.historyPresented(total: records.count)
+            }
             .onDisappear {
                 selection = []
             }

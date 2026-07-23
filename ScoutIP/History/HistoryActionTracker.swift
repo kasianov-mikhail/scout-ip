@@ -19,7 +19,20 @@ enum HistoryActionTracker {
 
     static func favoriteToggled(_ isFavorite: Bool) {
         Counter(label: "history.favorite.toggled.count").increment()
+
+        let favorites = Meter(label: "history.favorites.current")
+        if isFavorite {
+            favorites.increment()
+        } else {
+            favorites.decrement()
+        }
+
         appLogger.debug("HistoryFavoriteToggled", metadata: ["favorite": "\(isFavorite)"])
+    }
+
+    static func historyPresented(total: Int) {
+        Gauge(label: "history.records.total").record(total)
+        appLogger.debug("HistoryPresented", metadata: ["total": "\(total)"])
     }
 
     static func favoriteFilterToggled(_ isEnabled: Bool) {
