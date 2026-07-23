@@ -37,6 +37,10 @@ struct IPLookupTracker {
 
     private func record(duration start: DispatchTime, status: Int?) {
         Timer(label: Self.endpoint).recordInterval(since: start)
+
+        let seconds = Double(DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000
+        FloatingPointCounter(label: "ip.lookup.duration.seconds.total").increment(by: seconds)
+
         if let status {
             Counter(label: Self.endpoint, dimensions: [("status", String(status))]).increment()
         }

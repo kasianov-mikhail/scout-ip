@@ -36,7 +36,7 @@ struct NotesField: View {
                                 } catch {
                                 }
 
-                                NotesTracker.saved()
+                                NotesTracker.saved(length: record.notes.count)
                                 isFocused = false
                             }
                         }
