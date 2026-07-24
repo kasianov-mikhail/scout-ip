@@ -10,6 +10,7 @@ import SwiftUI
 struct DebugView: View {
     var body: some View {
         List {
+            TrafficSection()
             CrashSection()
             HangSection()
         }
