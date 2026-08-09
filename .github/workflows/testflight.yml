@@ -35,8 +35,6 @@ jobs:
         uses: ./.github/signing
         with:
           build-certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          # Required for archive under automatic signing — do not remove (see #325/#328).
-          dev-certificate-base64: ${{ secrets.DEV_CERTIFICATE_BASE64 }}
           p12-password: ${{ secrets.P12_PASSWORD }}
           keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
           api-key-base64: ${{ secrets.APP_STORE_CONNECT_KEY_BASE64 }}
@@ -50,6 +48,7 @@ jobs:
             IPINFO_KEY="$IPINFO_KEY" \
             SCOUT_IP="$SCOUT_IP" \
             SCOUT_API_KEYS="$SCOUT_API_KEYS" \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \
