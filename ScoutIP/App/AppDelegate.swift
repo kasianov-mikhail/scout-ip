@@ -60,7 +60,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Task {
             do {
                 try await Scout.setup(backends: backends)
-                TrafficGenerator.shared.start()
             } catch {
                 AppLifecycleTracker.scoutSetupFailure(error: error)
             }
