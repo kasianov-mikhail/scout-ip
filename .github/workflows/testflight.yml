@@ -40,6 +40,9 @@ jobs:
           api-key-base64: ${{ secrets.APP_STORE_CONNECT_KEY_BASE64 }}
           api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
 
+      # The archive is built unsigned: under automatic signing xcodebuild would
+      # otherwise reach for an Apple Development certificate, which the runner
+      # has no reason to carry. The export step signs with Apple Distribution.
       - name: Archive
         id: archive
         run: |
@@ -48,17 +51,13 @@ jobs:
             IPINFO_KEY="$IPINFO_KEY" \
             SCOUT_IP="$SCOUT_IP" \
             SCOUT_API_KEYS="$SCOUT_API_KEYS" \
-            CODE_SIGN_IDENTITY="Apple Distribution" \
+            CODE_SIGNING_ALLOWED=NO \
             -project ScoutIP.xcodeproj \
             -scheme ScoutIP \
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \
             -destination 'generic/platform=iOS' \
             -skipMacroValidation \
             -skipPackagePluginValidation \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath ~/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_ID.p8 \
-            -authenticationKeyID $APP_STORE_CONNECT_KEY_ID \
-            -authenticationKeyIssuerID $APP_STORE_CONNECT_ISSUER_ID \
             2>&1 | tee "$RUNNER_TEMP/archive.log" | xcbeautify --renderer github-actions
 
       - name: Surface archive errors
@@ -88,6 +87,13 @@ jobs:
         with:
           log: ${{ runner.temp }}/export.log
           title: Export failed
+
+      - name: TEMP inspect exported entitlements
+        run: |
+          rm -rf $RUNNER_TEMP/ipa && mkdir -p $RUNNER_TEMP/ipa
+          unzip -q $RUNNER_TEMP/export/ScoutIP.ipa -d $RUNNER_TEMP/ipa
+          codesign -d --entitlements :- $RUNNER_TEMP/ipa/Payload/ScoutIP.app
+          codesign -dvv $RUNNER_TEMP/ipa/Payload/ScoutIP.app
 
       - name: Upload to TestFlight
         id: upload
