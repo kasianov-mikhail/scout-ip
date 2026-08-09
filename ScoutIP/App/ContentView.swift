@@ -53,7 +53,7 @@ struct ContentView: View {
                 DebugView()
                     .tabItem {
                         Image(systemName: "ant")
-                        Text("Debug")
+                        Text(verbatim: "Debug")
                     }
                     .tag(2)
             }

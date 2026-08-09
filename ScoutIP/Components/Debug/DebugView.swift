@@ -14,6 +14,6 @@ struct DebugView: View {
             CrashSection()
             HangSection()
         }
-        .navigationTitle("Debug")
+        .navigationTitle(Text(verbatim: "Debug"))
     }
 }

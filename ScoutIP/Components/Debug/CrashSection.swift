@@ -9,24 +9,32 @@ import SwiftUI
 
 struct CrashSection: View {
     var body: some View {
-        Section("Crash") {
-            Button("NSGenericException") {
+        Section {
+            Button {
                 NSException(name: .genericException, reason: "Test crash", userInfo: nil).raise()
+            } label: {
+                Text(verbatim: "NSGenericException")
             }
 
-            Button("SIGABRT") {
+            Button {
                 abort()
+            } label: {
+                Text(verbatim: "SIGABRT")
             }
 
-            Button("Fatal Error") {
+            Button {
                 fatalError("Test fatal error")
+            } label: {
+                Text(verbatim: "Fatal Error")
             }
 
-            Button("EXC_BAD_ACCESS") {
+            Button {
                 UnsafeMutablePointer<Int>(bitPattern: 0x10)!.pointee = 0
+            } label: {
+                Text(verbatim: "EXC_BAD_ACCESS")
             }
 
-            Button("Stack Overflow") {
+            Button {
                 func recurse(_ n: Int) -> Int {
                     var result = n
                     if n < .max {
@@ -35,13 +43,19 @@ struct CrashSection: View {
                     return result
                 }
                 _ = recurse(0)
+            } label: {
+                Text(verbatim: "Stack Overflow")
             }
 
-            Button("Background Thread") {
+            Button {
                 DispatchQueue.global().async {
                     fatalError("Test crash on background thread")
                 }
+            } label: {
+                Text(verbatim: "Background Thread")
             }
+        } header: {
+            Text(verbatim: "Crash")
         }
     }
 }
