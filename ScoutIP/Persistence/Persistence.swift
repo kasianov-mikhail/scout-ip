@@ -21,9 +21,6 @@ struct PersistenceController {
             try FileManager.default.createDirectory(
                 at: .applicationSupportDirectory, withIntermediateDirectories: true
             )
-            // Sync is off: the store stays local, so .none also keeps
-            // .automatic from picking up the Scout logging container that the
-            // entitlements list.
             let configuration = ModelConfiguration(
                 url: URL.applicationSupportDirectory.appendingPathComponent("ScoutIP.sqlite"),
                 cloudKitDatabase: .none
