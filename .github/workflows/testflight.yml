@@ -73,7 +73,7 @@ jobs:
       - name: Ad-hoc sign the archive
         run: |
           codesign --force --sign - \
-            --entitlements ScoutIP/Resources/ScoutIP.entitlements \
+            --entitlements ScoutIP/ScoutIP.entitlements \
             $RUNNER_TEMP/ScoutIP.xcarchive/Products/Applications/ScoutIP.app
 
       - name: Export archive
