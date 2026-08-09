@@ -231,9 +231,6 @@
         }
       }
     },
-    "Background Thread" : {
-      "shouldTranslate" : false
-    },
     "Cancel" : {
       "localizations" : {
         "de" : {
@@ -375,40 +372,6 @@
         }
       }
     },
-    "Crash" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crash"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crash"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crash"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crash"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сбой"
-          }
-        }
-      }
-    },
     "Crash Test" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -444,9 +407,6 @@
         }
       }
     },
-    "Debug" : {
-
-    },
     "Delete" : {
       "localizations" : {
         "de" : {
@@ -480,12 +440,6 @@
           }
         }
       }
-    },
-    "EXC_BAD_ACCESS" : {
-      "shouldTranslate" : false
-    },
-    "Fatal Error" : {
-
     },
     "Filter" : {
       "localizations" : {
@@ -521,40 +475,6 @@
         }
       }
     },
-    "Hang" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hänger"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cuelgue"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blocage"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blocco"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Зависание"
-          }
-        }
-      }
-    },
     "History" : {
       "localizations" : {
         "de" : {
@@ -585,40 +505,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "История"
-          }
-        }
-      }
-    },
-    "Infinite Loop" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Endlosschleife"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bucle infinito"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Boucle infinie"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ciclo infinito"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Бесконечный цикл"
           }
         }
       }
@@ -760,40 +646,6 @@
         }
       }
     },
-    "Main Thread Sleep" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hauptthread-Sleep"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suspensión del hilo principal"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Veille du thread principal"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sospensione del thread principale"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сон главного потока"
-          }
-        }
-      }
-    },
     "My IP" : {
       "localizations" : {
         "de" : {
@@ -931,9 +783,6 @@
           }
         }
       }
-    },
-    "NSGenericException" : {
-
     },
     "Organisation" : {
       "extractionState" : "stale",
@@ -1111,9 +960,6 @@
         }
       }
     },
-    "SIGABRT" : {
-
-    },
     "Signal" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1183,9 +1029,6 @@
           }
         }
       }
-    },
-    "Stack Overflow" : {
-      "shouldTranslate" : false
     },
     "Timezone" : {
       "extractionState" : "stale",

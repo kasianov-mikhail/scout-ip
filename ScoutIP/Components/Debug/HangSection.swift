@@ -9,14 +9,20 @@ import SwiftUI
 
 struct HangSection: View {
     var body: some View {
-        Section("Hang") {
-            Button("Main Thread Sleep") {
+        Section {
+            Button {
                 Thread.sleep(forTimeInterval: .random(in: 1...10))
+            } label: {
+                Text(verbatim: "Main Thread Sleep")
             }
 
-            Button("Infinite Loop") {
+            Button {
                 while true {}
+            } label: {
+                Text(verbatim: "Infinite Loop")
             }
+        } header: {
+            Text(verbatim: "Hang")
         }
     }
 }
