@@ -38,6 +38,9 @@ jobs:
           - os: macos-26
             device: iPhone 17
             ios: 26
+          - os: xcode-27
+            device: iPhone 17
+            ios: 27
 
     steps:
       - uses: actions/checkout@v7
