@@ -21,11 +21,9 @@ struct PersistenceController {
             try FileManager.default.createDirectory(
                 at: .applicationSupportDirectory, withIntermediateDirectories: true
             )
-            // The container is named explicitly because the entitlements also
-            // list the Scout logging container, which .automatic would pick up.
             let configuration = ModelConfiguration(
                 url: URL.applicationSupportDirectory.appendingPathComponent("ScoutIP.sqlite"),
-                cloudKitDatabase: .private("iCloud.com.kasianov.ScoutIP")
+                cloudKitDatabase: .none
             )
             container = try ModelContainer(
                 for: IPRecord.self, IPObject.self,
