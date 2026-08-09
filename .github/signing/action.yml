@@ -1,27 +1,13 @@
 name: Set up signing
-description: Imports signing certificates and the App Store Connect API key into the runner.
+description: Imports the signing certificate and the App Store Connect API key into the runner.
 
 inputs:
   build-certificate-base64:
     description: Base64-encoded distribution certificate (.p12).
     required: true
-  # DO NOT REMOVE. The app uses automatic signing, so `xcodebuild archive`
-  # needs an Apple Development cert in the keychain even though the app-store
-  # export re-signs with Apple Distribution. Dropping this (and its
-  # DEV_CERTIFICATE_BASE64 secret) broke the deploy in #325; restored in #328.
-  dev-certificate-base64:
-    description: Base64-encoded development certificate (.p12).
-    required: true
   p12-password:
     description: Password for the distribution .p12 certificate.
     required: true
-  # Separate from p12-password because the development .p12 can carry its own
-  # password. It is currently exported without one, so this defaults to empty;
-  # to use a password, set it here (e.g. from a DEV_P12_PASSWORD secret).
-  dev-p12-password:
-    description: Password for the development .p12 certificate (empty if it has none).
-    required: false
-    default: ""
   keychain-password:
     description: Password for the temporary signing keychain.
     required: true
@@ -35,28 +21,23 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install certificates and profile
+    - name: Install certificate
       shell: bash
       env:
         BUILD_CERTIFICATE_BASE64: ${{ inputs.build-certificate-base64 }}
-        DEV_CERTIFICATE_BASE64: ${{ inputs.dev-certificate-base64 }}
         P12_PASSWORD: ${{ inputs.p12-password }}
-        DEV_P12_PASSWORD: ${{ inputs.dev-p12-password }}
         KEYCHAIN_PASSWORD: ${{ inputs.keychain-password }}
       run: |
         DIST_PATH=$RUNNER_TEMP/distribution.p12
-        DEV_PATH=$RUNNER_TEMP/development.p12
         KEYCHAIN_PATH=$RUNNER_TEMP/signing.keychain-db
 
         echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $DIST_PATH
-        echo -n "$DEV_CERTIFICATE_BASE64" | base64 --decode -o $DEV_PATH
 
         security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
         security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
         security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
 
         security import $DIST_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-        security import $DEV_PATH -P "$DEV_P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
 
         security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
         security list-keychain -d user -s $KEYCHAIN_PATH
