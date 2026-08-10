@@ -19,7 +19,7 @@ import UIKit
 /// served from.
 ///
 var backends: [Backend] {
-    let container = CKContainer(identifier: "iCloud.Logging.Scout.0007")
+    let container = CKContainer(identifier: "iCloud.Logging.Scout.0008")
 
     guard let cloudKit = try? Backend.cloudKit(container: container) else {
         return []
