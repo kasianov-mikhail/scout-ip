@@ -19,10 +19,12 @@ import UIKit
 /// served from.
 ///
 var backends: [Backend] {
-    let cloudKit = Backend.cloudKit(container: CKContainer(identifier: "iCloud.Logging.Scout.0006"))
+    let container = CKContainer(identifier: "iCloud.Logging.Scout.0006")
 
-    // TODO: The hosted (self-hosted Scout server) backend is temporarily
-    // disabled. Restore the block below to re-enable it.
+    guard let cloudKit = try? Backend.cloudKit(container: container) else {
+        return []
+    }
+
     return [cloudKit]
 
     //    #if targetEnvironment(simulator)
