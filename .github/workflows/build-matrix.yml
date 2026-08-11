@@ -57,7 +57,7 @@ jobs:
           xcodebuild build \
             IPINFO_KEY="$IPINFO_KEY" \
             -project ScoutIP.xcodeproj \
-            -scheme ScoutIP \
+            -scheme "ScoutIP Actions" \
             -destination 'platform=iOS Simulator,name=${{ matrix.device }}' \
             -skipMacroValidation \
             -skipPackagePluginValidation \
