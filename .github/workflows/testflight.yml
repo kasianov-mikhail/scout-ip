@@ -53,7 +53,7 @@ jobs:
             SCOUT_API_KEYS="$SCOUT_API_KEYS" \
             CODE_SIGNING_ALLOWED=NO \
             -project ScoutIP.xcodeproj \
-            -scheme ScoutIP \
+            -scheme "ScoutIP Actions" \
             -archivePath $RUNNER_TEMP/ScoutIP.xcarchive \
             -destination 'generic/platform=iOS' \
             -skipMacroValidation \
