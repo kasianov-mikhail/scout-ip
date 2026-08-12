@@ -6,7 +6,9 @@
 // https://opensource.org/licenses/MIT.
 
 import CloudKit
+import Logging
 import LookupIndex
+import Metrics
 import NativeConnector
 import Scout
 import ScoutUI
@@ -51,6 +53,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        let scout = Runtime(backends: backends)
+
+        LoggingSystem.bootstrap {
+            ScoutLogHandler(label: $0, runtime: scout)
+        }
+        MetricsSystem.bootstrap(
+            ScoutMetricsFactory(runtime: scout)
+        )
+
         AppLifecycleTracker.launch()
 
         OnboardingTracker.startedIfFirstLaunch()
@@ -58,14 +69,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         LookupIndex.enable()
 
         ScoutAlerts.registerBackgroundRefresh(backends: backends)
-
-        Task {
-            do {
-                try await Scout.setup(backends: backends)
-            } catch {
-                AppLifecycleTracker.scoutSetupFailure(error: error)
-            }
-        }
 
         return true
     }
