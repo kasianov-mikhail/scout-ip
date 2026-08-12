@@ -16,8 +16,4 @@ enum AppLifecycleTracker {
         Counter(label: "app.launch.count").increment()
         appLogger.info("AppLaunched")
     }
-
-    static func scoutSetupFailure(error: Error) {
-        appLogger.error("ScoutSetupFailed", metadata: ["error": "\(error)"])
-    }
 }
