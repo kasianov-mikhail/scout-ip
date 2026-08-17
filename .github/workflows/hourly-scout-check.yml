@@ -1,0 +1,63 @@
+name: Hourly Scout Check
+
+on:
+  schedule:
+    - cron: '20 * * * *'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check the pinned Scout revision
+        id: drift
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          SCOUT: kasianov-mikhail/scout
+        run: |
+          OPEN=$(gh pr list --repo ${{ github.repository }} --state open --json headRefName \
+            --jq '[.[] | select(.headRefName | startswith("auto/update-scout-"))] | length')
+          if [ "$OPEN" != "0" ]; then
+            echo "An update PR is already open, so the dispatch got through"
+            exit 0
+          fi
+
+          # Mirror the gate Notify applies on the Scout side: only a commit whose iOS
+          # matrix passed is worth pinning here.
+          VALIDATED=""
+          while read -r ID SHA; do
+            CONCLUSIONS=$(gh api --paginate "repos/$SCOUT/actions/runs/$ID/jobs" \
+              --jq '.jobs[] | select(.name | startswith("test-ios-")) | .conclusion')
+            if grep -qx success <<<"$CONCLUSIONS"; then
+              VALIDATED=$SHA
+              break
+            fi
+          done < <(gh run list --repo "$SCOUT" --workflow swift.yml --branch main --status success \
+            --limit 20 --json databaseId,headSha --jq '.[] | "\(.databaseId) \(.headSha)"')
+
+          if [ -z "$VALIDATED" ]; then
+            echo "No recent Scout run with a passing iOS matrix"
+            exit 0
+          fi
+
+          PINNED=$(jq -r '.pins[] | select(.identity == "scout") | .state.revision' \
+            ScoutIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+
+          # Compare rather than test for equality: the pin may sit on a later commit whose
+          # iOS matrix never ran, and that is not drift.
+          STATUS=$(gh api "repos/$SCOUT/compare/$PINNED...$VALIDATED" --jq '.status')
+          if [ "$STATUS" = "ahead" ] || [ "$STATUS" = "diverged" ]; then
+            echo "Pinned $PINNED predates $VALIDATED, so the dispatch was missed"
+            echo "drifted=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Pinned revision already contains $VALIDATED ($STATUS)"
+          fi
+
+      - name: Trigger the update
+        if: steps.drift.outputs.drifted == 'true'
+        run: gh workflow run update-dependency.yml --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}

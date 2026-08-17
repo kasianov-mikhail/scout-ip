@@ -3,6 +3,7 @@ name: Update Scout
 on:
   repository_dispatch:
     types: [scout-updated]
+  workflow_dispatch:
 
 concurrency:
   group: update-scout
