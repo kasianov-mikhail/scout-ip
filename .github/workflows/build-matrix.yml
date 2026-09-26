@@ -22,7 +22,7 @@ jobs:
 
   build:
     name: ${{ matrix.device }} (iOS ${{ matrix.ios }})
-    runs-on: ${{ matrix.os }}
+    runs-on: xcode-27
     timeout-minutes: 15
 
     env:
@@ -32,23 +32,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-15
-            device: iPhone 16
-            ios: 18
-          - os: macos-26
-            device: iPhone 17
-            ios: 26
-          - os: xcode-27
-            device: iPhone 17
-            ios: 27
+          - device: iPhone 17
+            ios: "26.4"
+          - device: iPhone 17
+            ios: "27.0"
 
     steps:
       - uses: actions/checkout@v7
 
       - name: Prepare simulator
         run: |
-          if ! xcrun simctl list devices available | grep -q "iPhone"; then
-            xcodebuild -downloadPlatform iOS
+          if ! xcrun simctl list devices available "iOS ${{ matrix.ios }}" | grep -q "${{ matrix.device }}"; then
+            xcodebuild -downloadPlatform iOS -buildVersion ${{ matrix.ios }}
           fi
 
       - name: Build
@@ -58,7 +53,7 @@ jobs:
             IPINFO_KEY="$IPINFO_KEY" \
             -project ScoutIP.xcodeproj \
             -scheme "ScoutIP Actions" \
-            -destination 'platform=iOS Simulator,name=${{ matrix.device }}' \
+            -destination 'platform=iOS Simulator,name=${{ matrix.device }},OS=${{ matrix.ios }}' \
             -skipMacroValidation \
             -skipPackagePluginValidation \
             | xcbeautify
