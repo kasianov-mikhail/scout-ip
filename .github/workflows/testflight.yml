@@ -24,9 +24,6 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
 
-      - name: Set build number
-        run: agvtool new-version -all $GITHUB_RUN_NUMBER
-
       - name: Resolve version
         id: version
         uses: ./.github/resolve-version
@@ -51,6 +48,7 @@ jobs:
             IPINFO_KEY="$IPINFO_KEY" \
             SCOUT_IP="$SCOUT_IP" \
             SCOUT_API_KEYS="$SCOUT_API_KEYS" \
+            CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
             CODE_SIGNING_ALLOWED=NO \
             -project ScoutIP.xcodeproj \
             -scheme "ScoutIP Actions" \
