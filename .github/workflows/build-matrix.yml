@@ -32,12 +32,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-15
-            device: iPhone 16
-            ios: 18
-          - os: macos-26
-            device: iPhone 17
-            ios: 26
           - os: xcode-27
             device: iPhone 17
             ios: 27
