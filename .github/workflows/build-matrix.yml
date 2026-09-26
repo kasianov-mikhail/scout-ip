@@ -32,10 +32,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - device: iPhone 15
-            ios: "17.0"
-          - device: iPhone 16
-            ios: "18.0"
           - device: iPhone 17
             ios: "26.4"
           - device: iPhone 17
