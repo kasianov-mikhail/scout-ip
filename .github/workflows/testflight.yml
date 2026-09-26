@@ -24,9 +24,6 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
 
-      - name: Set build number
-        run: agvtool new-version -all $GITHUB_RUN_NUMBER
-
       - name: Resolve version
         id: version
         uses: ./.github/resolve-version
@@ -43,6 +40,11 @@ jobs:
       # The archive is built unsigned: under automatic signing xcodebuild would
       # otherwise reach for an Apple Development certificate, which the runner
       # has no reason to carry. The export step signs with Apple Distribution.
+      #
+      # The build number is passed as a build setting override rather than
+      # via `agvtool new-version`: agvtool only knows the legacy pbxproj
+      # format and corrupts the JSON-based project it can't find, leaving
+      # xcodebuild unable to parse it.
       - name: Archive
         id: archive
         run: |
@@ -51,6 +53,7 @@ jobs:
             IPINFO_KEY="$IPINFO_KEY" \
             SCOUT_IP="$SCOUT_IP" \
             SCOUT_API_KEYS="$SCOUT_API_KEYS" \
+            CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
             CODE_SIGNING_ALLOWED=NO \
             -project ScoutIP.xcodeproj \
             -scheme "ScoutIP Actions" \
