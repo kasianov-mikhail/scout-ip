@@ -21,7 +21,7 @@ runs:
       shell: bash
       run: |
         BUNDLE_ID=com.kasianov.ScoutIP
-        REPO_VERSION=$(grep -m1 MARKETING_VERSION ScoutIP.xcodeproj/project.pbxproj | sed 's/.*= //;s/;//;s/ //g')
+        REPO_VERSION=$(grep -m1 MARKETING_VERSION ScoutIP.xcodeproj/project.xcproj | sed 's/.*: *"//;s/".*//')
 
         LIVE_VERSION=$(curl -s "https://itunes.apple.com/lookup?bundleId=$BUNDLE_ID" \
           | grep -o '"version":"[^"]*"' | head -1 | sed 's/.*:"//;s/"//')
@@ -35,7 +35,7 @@ runs:
             LIVE_MAJOR=$(echo "$LIVE_VERSION" | cut -d. -f1)
             NEW_VERSION="$((LIVE_MAJOR + 1)).0"
             DRIFT=true
-            sed -i '' "s/MARKETING_VERSION = $REPO_VERSION;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
+            sed -i '' "s/\"MARKETING_VERSION\": \"$REPO_VERSION\"/\"MARKETING_VERSION\": \"$NEW_VERSION\"/g" ScoutIP.xcodeproj/project.xcproj
             echo "Repo $REPO_VERSION is behind App Store $LIVE_VERSION; building $NEW_VERSION"
           else
             echo "Repo $REPO_VERSION is ahead of App Store $LIVE_VERSION; building $REPO_VERSION"

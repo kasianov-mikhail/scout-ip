@@ -48,11 +48,11 @@ runs:
         BRANCH="auto/bump-$NEW_VERSION-$GITHUB_RUN_NUMBER"
         git checkout -b "$BRANCH"
 
-        git checkout HEAD -- ScoutIP.xcodeproj/project.pbxproj
+        git checkout HEAD -- ScoutIP.xcodeproj/project.xcproj
 
-        sed -i '' "s/MARKETING_VERSION = $ORIGINAL;/MARKETING_VERSION = $NEW_VERSION;/g" ScoutIP.xcodeproj/project.pbxproj
+        sed -i '' "s/\"MARKETING_VERSION\": \"$ORIGINAL\"/\"MARKETING_VERSION\": \"$NEW_VERSION\"/g" ScoutIP.xcodeproj/project.xcproj
 
-        git add ScoutIP.xcodeproj/project.pbxproj
+        git add ScoutIP.xcodeproj/project.xcproj
         git commit -m "Bump version to $NEW_VERSION"
         git push -u origin "$BRANCH"
         gh pr create --title "Bump version to $NEW_VERSION" --body "$BODY" --head "$BRANCH" --base main
