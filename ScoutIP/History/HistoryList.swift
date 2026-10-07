@@ -93,7 +93,7 @@ struct HistoryList: View {
                                 .font(.system(size: 12, weight: .regular))
                         }
                     }
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                 }
             }
             .confirmationDialog("Are you sure?", isPresented: $isConfirmationPresented) {

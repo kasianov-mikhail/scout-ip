@@ -32,12 +32,12 @@ struct HistoryRow: View {
             HStack(spacing: 8) {
                 Text(title).font(.system(size: 17))
                 if item.records.contains(where: { !$0.notes.isEmpty }) {
-                    Circle().foregroundColor(.yellow).frame(width: 6, height: 6)
+                    Circle().foregroundStyle(.yellow).frame(width: 6, height: 6)
                 }
                 Spacer()
                 Text(item.records.countText).font(.system(size: 16))
             }
-            .foregroundColor(highlight.isEmpty ? .primary : .gray)
+            .foregroundStyle(highlight.isEmpty ? Color.primary : Color.gray)
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button("Delete") {

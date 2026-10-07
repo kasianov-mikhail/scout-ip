@@ -21,7 +21,7 @@ struct HistoryIPList: View {
                     HStack {
                         Text(record.ip).font(.system(size: 17))
                         if !record.notes.isEmpty {
-                            Image(systemName: "note.text").foregroundColor(.yellow)
+                            Image(systemName: "note.text").foregroundStyle(.yellow)
                         }
                         Spacer()
                         Text(record.dateText).font(.system(size: 16))

@@ -34,7 +34,7 @@ struct Snackbar: View {
                 Text(text)
                     .lineSpacing(2)
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .font(.system(size: 14, weight: .medium))
                     .padding(.init(top: 12, leading: 16, bottom: 12, trailing: 16))
                     .frame(maxWidth: .infinity, minHeight: 44)
