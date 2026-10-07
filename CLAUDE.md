@@ -5,3 +5,7 @@
 # Trackers
 
 - Trackers carry no per-call state: define them as caseless `enum`s with `static` methods rather than instantiable `struct`s, so call sites read `FooTracker.event()` instead of `FooTracker().event()`. The exception is a tracker that holds a value for the span of a single operation (e.g. `source`), which stays a `struct`.
+
+# Initializer assignments
+
+- In an initializer, if at least one property assignment needs `self.` (a parameter or local shadows the property), prefix every property assignment with `self.` for consistency; if none needs it, omit `self.` from all of them.
