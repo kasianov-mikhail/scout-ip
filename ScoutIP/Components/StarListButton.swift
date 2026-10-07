@@ -18,6 +18,6 @@ struct StarListButton: View {
             Image(systemName: "list.star")
         }
         .buttonStyle(.plain)
-        .foregroundColor(isStarred ? .blue : .secondary)
+        .foregroundStyle(isStarred ? .blue : .secondary)
     }
 }
