@@ -86,7 +86,7 @@ struct HistoryRow: View {
         for record in item.records {
             record.isFavorite = newValue
         }
-        try? modelContext.save()
+        save()
         HistoryActionTracker.favoriteToggled(newValue)
     }
 
@@ -94,6 +94,14 @@ struct HistoryRow: View {
         for record in item.records {
             modelContext.delete(record)
         }
-        try? modelContext.save()
+        save()
+    }
+
+    private func save() {
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save the history: \(error)")
+        }
     }
 }

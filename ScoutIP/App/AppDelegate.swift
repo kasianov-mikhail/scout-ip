@@ -23,7 +23,12 @@ import UIKit
 var backends: [Backend] {
     let container = CKContainer(identifier: "iCloud.Logging.Scout.0013")
 
-    guard let cloudKit = try? Backend.cloudKit(container: container) else {
+    let cloudKit: Backend
+
+    do {
+        cloudKit = try Backend.cloudKit(container: container)
+    } catch {
+        print("Failed to create the CloudKit backend: \(error)")
         return []
     }
 
