@@ -102,7 +102,7 @@ struct InfoView: View {
         .confetti(isPresented: showConfetti)
         .snackbar(text: $ipInfo.errorText)
         .onChange(of: records.count) {
-            if records.count > 0 && records.count % 100 == 0 {
+            if !records.isEmpty && records.count % 100 == 0 {
                 showConfetti = true
                 Task {
                     try? await Task.sleep(for: .seconds(2))

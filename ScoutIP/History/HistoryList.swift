@@ -88,7 +88,7 @@ struct HistoryList: View {
                         )
                         .font(.system(size: 14, weight: .medium))
 
-                        if records.count > 0 {
+                        if !records.isEmpty {
                             Text("Some results are hidden".uppercased())
                                 .font(.system(size: 12, weight: .regular))
                         }
