@@ -35,7 +35,7 @@ jobs:
               VALIDATED=$SHA
               break
             fi
-          done < <(gh run list --repo "$SCOUT" --workflow swift.yml --branch main --status success \
+          done < <(gh run list --repo "$SCOUT" --workflow ci.yml --branch main --status success \
             --limit 20 --json databaseId,headSha --jq '.[] | "\(.databaseId) \(.headSha)"')
 
           if [ -z "$VALIDATED" ]; then
