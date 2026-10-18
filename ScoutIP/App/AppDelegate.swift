@@ -7,7 +7,6 @@
 
 import CloudKit
 import Logging
-import LookupIndex
 import Metrics
 import NativeConnector
 import Scout
@@ -70,8 +69,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         AppLifecycleTracker.launch()
 
         OnboardingTracker.startedIfFirstLaunch()
-
-        LookupIndex.enable()
 
         ScoutAlerts.registerBackgroundRefresh(backends: backends)
 

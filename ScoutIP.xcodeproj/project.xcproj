@@ -72,10 +72,6 @@
       "package-product-members": [
         {
           "package": "scout",
-          "product-name": "LookupIndex",
-          "build-phase": { "build-phase": "frameworks" },
-        }, {
-          "package": "scout",
           "product-name": "NativeConnector",
           "build-phase": { "build-phase": "frameworks" },
         }, {
