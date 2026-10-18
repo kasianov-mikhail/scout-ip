@@ -60,7 +60,7 @@
           "kind": "script",
           "name": "Bundle Scout Symbols",
           "shell": "/bin/sh",
-          "script": "script=\"${SRCROOT}/../scout/Scripts/scout-symbols.sh\"\nif [ ! -f \"${script}\" ]; then\n    script=\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/scout/Scripts/scout-symbols.sh\"\nfi\nif [ ! -f \"${script}\" ]; then\n    echo \"warning: Scout symbols skipped because this Scout version has no Scripts/scout-symbols.sh.\"\n    exit 0\nfi\nexec \"${script}\"\n",
+          "script": "script=\"${SRCROOT}/../scout/scripts/scout-symbols.sh\"\nif [ ! -f \"${script}\" ]; then\n    script=\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/scout/scripts/scout-symbols.sh\"\nfi\nif [ ! -f \"${script}\" ]; then\n    echo \"warning: Scout symbols skipped because this Scout version has no scripts/scout-symbols.sh.\"\n    exit 0\nfi\nexec \"${script}\"\n",
           "input-paths": [
             "${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${EXECUTABLE_NAME}",
           ],
