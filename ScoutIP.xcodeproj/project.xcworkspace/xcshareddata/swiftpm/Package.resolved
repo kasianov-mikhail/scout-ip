@@ -7,7 +7,7 @@
       "location" : "https://github.com/kasianov-mikhail/scout",
       "state" : {
         "branch" : "main",
-        "revision" : "03127d5b21e6c466622d471e7df8103dbd4d0e69"
+        "revision" : "f66278a4b54ee021ba80ea0fc56be385b35973af"
       }
     },
     {
@@ -15,8 +15,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kasianov-mikhail/scout-db.git",
       "state" : {
-        "revision" : "70ef2f3cf53a05994fb64c9e13c5808f4b5d8096",
-        "version" : "0.1.0"
+        "revision" : "3a922675e33172d063f9199a7d9600c21bf7971a"
       }
     },
     {
