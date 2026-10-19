@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 import CloudKit
+import HostedConnector
 import Logging
 import Metrics
 import NativeConnector
