@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 import CloudKit
+import HostedConnector
 import Logging
 import Metrics
 import NativeConnector
@@ -13,12 +14,6 @@ import Scout
 import ScoutUI
 import UIKit
 
-/// The backends Scout reads from and syncs to. CloudKit is always included;
-/// the self-hosted Scout server (the `SCOUT_IP` and `SCOUT_API_KEYS` build
-/// settings) is added when an address is baked into the build. With both
-/// present, the analytics screen shows a picker to choose which one reads are
-/// served from.
-///
 var backends: [Backend] {
     let container = CKContainer(identifier: "iCloud.Logging.Scout.0013")
 
@@ -31,25 +26,20 @@ var backends: [Backend] {
         return []
     }
 
-    return [cloudKit]
+    #if targetEnvironment(simulator)
+        return [cloudKit]
+    #else
+        let info = Bundle.main.infoDictionary
 
-    //    #if targetEnvironment(simulator)
-    //        return [cloudKit]
-    //    #else
-    //        let info = Bundle.main.infoDictionary
-    //
-    //        guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty,
-    //            let url = URL(string: address)
-    //        else {
-    //            return [cloudKit]
-    //        }
-    //
-    //        guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
-    //            return [cloudKit]
-    //        }
-    //
-    //        return [Backend.server(url: url, apiKey: apiKey), cloudKit]
-    //    #endif
+        guard let address = info?["SCOUT_IP"] as? String, !address.isEmpty, let url = URL(string: address) else {
+            return [cloudKit]
+        }
+        guard let apiKey = info?["SCOUT_API_KEYS"] as? String, !apiKey.isEmpty else {
+            return [cloudKit]
+        }
+
+        return [Backend.server(url: url, apiKey: apiKey), cloudKit]
+    #endif
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -67,9 +57,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         )
 
         AppLifecycleTracker.launch()
-
         OnboardingTracker.startedIfFirstLaunch()
-
         ScoutAlerts.registerBackgroundRefresh(backends: backends)
 
         return true
