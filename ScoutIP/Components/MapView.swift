@@ -14,9 +14,10 @@ struct Location: Identifiable {
 
     init?(string: String) {
         let components = string.components(separatedBy: ",")
-        guard components.count == 2, let latitude = Double(components[0]),
-            let longitude = Double(components[1])
-        else {
+        guard components.count == 2 else {
+            return nil
+        }
+        guard let latitude = Double(components[0]), let longitude = Double(components[1]) else {
             return nil
         }
         coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
