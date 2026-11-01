@@ -70,3 +70,6 @@ fastlane/test_output
 
 # Local build output
 build/
+
+# Local agent configuration
+.agents/
