@@ -8,6 +8,7 @@ A companion app for the [Scout](https://github.com/kasianov-mikhail/scout) packa
 ## Table of Contents
 - [Features](#features)
 - [Setup](#setup)
+- [Workspace (optional)](#workspace-optional)
 - [App Store](#app-store)
 
 ## Features
