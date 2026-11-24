@@ -14,7 +14,7 @@ import Scout
 import ScoutUI
 import UIKit
 
-let backends: [Backend] = {
+var backends: [Backend] {
     let container = CKContainer(identifier: "iCloud.Logging.Scout.0013")
 
     let cloudKit: Backend
@@ -40,7 +40,7 @@ let backends: [Backend] = {
 
         return [Backend.server(url: url, apiKey: apiKey), cloudKit]
     #endif
-}()
+}
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
