@@ -43,14 +43,11 @@ let backends: [Backend] = {
 }()
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    private var runtime: Runtime?
-
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         let scout = Runtime(backends: backends)
-        runtime = scout
 
         LoggingSystem.bootstrap {
             ScoutLogHandler(label: $0, runtime: scout)
@@ -62,18 +59,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         AppLifecycleTracker.launch()
         OnboardingTracker.startedIfFirstLaunch()
         ScoutAlerts.registerBackgroundRefresh(backends: backends)
-        application.registerForRemoteNotifications()
 
         return true
-    }
-
-    func application(
-        _ application: UIApplication,
-        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completion: @escaping (UIBackgroundFetchResult) -> Void
-    ) {
-        let handled = runtime?.handleCloudKitNotification(userInfo) == true
-        completion(handled ? .newData : .noData)
     }
 
     func application(
